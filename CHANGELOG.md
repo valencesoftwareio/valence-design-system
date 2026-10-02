@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.2.0...v0.3.0) (2026-10-02)
+
+
+### Features
+
+* add foundational components ([#28](https://github.com/valencesoftwareio/valence-design-system/issues/28)) ([dbec076](https://github.com/valencesoftwareio/valence-design-system/commit/dbec076119f261f23afae7f4f44fc6fdd2ed9a50))
+
+
+### Bug Fixes
+
+* build tokens before deploying storybook ([#25](https://github.com/valencesoftwareio/valence-design-system/issues/25)) ([3fca57a](https://github.com/valencesoftwareio/valence-design-system/commit/3fca57a72e747e1bbaddd93be0e9758f2fd62f40))
+* build workspace before deploying storybook ([#26](https://github.com/valencesoftwareio/valence-design-system/issues/26)) ([f0afad5](https://github.com/valencesoftwareio/valence-design-system/commit/f0afad5227bbad533c5602b8f6a6e4caa8e45115))
+
 ## [0.2.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.1.0...v0.2.0) (2026-10-01)
 
 

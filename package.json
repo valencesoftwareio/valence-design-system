@@ -1,6 +1,6 @@
 {
   "name": "valence-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Valence Software's private design system for React and React Native.",
