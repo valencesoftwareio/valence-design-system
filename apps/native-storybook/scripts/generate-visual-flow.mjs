@@ -34,6 +34,10 @@ for (const storyId of storyIds) {
     }
 
     commands.push(
+      '- extendedWaitUntil:',
+      '    visible:',
+      '      id: visual-story-content',
+      '    timeout: 30000',
       '- waitForAnimationToEnd:',
       '    timeout: 30000',
       `- takeScreenshot: ${storyId}-${mode}`,

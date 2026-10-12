@@ -88,7 +88,9 @@ const ValenceDecorator = ({ children }: ValenceDecoratorProps) => {
                 </Pressable>
               </View>
             )}
-            <View style={{ flex: 1, padding: 16 }}>{children}</View>
+            <View testID="visual-story-content" style={{ flex: 1, padding: 16 }}>
+              {children}
+            </View>
           </View>
         </ThemeProvider>
       </SafeAreaProvider>

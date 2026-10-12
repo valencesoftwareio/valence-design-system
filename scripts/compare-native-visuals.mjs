@@ -20,6 +20,7 @@ if (
 const currentRoot = path.resolve(currentDirectory);
 const baselineRoot = path.resolve(baselineDirectory);
 const resultsRoot = path.resolve(resultsDirectory);
+const statusBarHeight = platform === 'android' ? 96 : 186;
 const currentFiles = readdirSync(currentRoot)
   .filter((file) => file.endsWith('.png'))
   .sort();
@@ -63,6 +64,11 @@ for (const file of currentFiles) {
   }
 
   const difference = new PNG({ width: actual.width, height: actual.height });
+
+  for (let index = 0; index < actual.width * statusBarHeight * 4; index += 1) {
+    expected.data[index] = actual.data[index];
+  }
+
   const differentPixels = pixelmatch(
     expected.data,
     actual.data,
