@@ -33,11 +33,16 @@ for (const storyId of storyIds) {
       );
     }
 
+    if (!storyId.endsWith('--open')) {
+      commands.push(
+        '- extendedWaitUntil:',
+        '    visible:',
+        '      id: visual-story-content',
+        '    timeout: 30000',
+      );
+    }
+
     commands.push(
-      '- extendedWaitUntil:',
-      '    visible:',
-      '      id: visual-story-content',
-      '    timeout: 30000',
       '- waitForAnimationToEnd:',
       '    timeout: 30000',
       `- takeScreenshot: ${storyId}-${mode}`,
