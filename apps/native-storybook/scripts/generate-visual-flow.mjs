@@ -23,7 +23,14 @@ for (const storyId of storyIds) {
     );
 
     if (platform === 'ios') {
-      commands.push('- tapOn:', '    text: Open', '    optional: true');
+      commands.push(
+        '- runFlow:',
+        '    when:',
+        '      visible: "Open in .*native-storybook.*"',
+        '    commands:',
+        '      - tapOn:',
+        '          text: "^Open$"',
+      );
     }
 
     commands.push(
