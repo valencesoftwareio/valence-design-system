@@ -12,17 +12,16 @@ const storyIds = execFileSync(process.execPath, ['scripts/list-visual-stories.mj
 })
   .trim()
   .split('\n');
-const commands = [];
+const commands = ['- stopApp'];
+let firstLink = true;
 
 for (const storyId of storyIds) {
-  commands.push('- stopApp');
-
   for (const mode of ['light', 'dark']) {
     commands.push(
       `- openLink: valence-storybook://storybook?STORYBOOK_STORY_ID=${storyId}&preset=hi-vis&mode=${mode}`,
     );
 
-    if (platform === 'ios') {
+    if (platform === 'ios' && firstLink) {
       commands.push(
         '- runFlow:',
         '    when:',
@@ -33,11 +32,13 @@ for (const storyId of storyIds) {
       );
     }
 
+    firstLink = false;
+
     if (!storyId.includes('--open')) {
       commands.push(
         '- extendedWaitUntil:',
         '    visible:',
-        '      id: visual-story-content',
+        `      id: visual-story-${storyId}`,
         '    timeout: 30000',
       );
     }
