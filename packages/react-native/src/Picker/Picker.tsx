@@ -58,6 +58,7 @@ export const Picker = ({
           accessibilityHint={helperText}
           accessibilityState={{ disabled: isDisabled }}
           dropdownIconColor={isDisabled ? theme.colorTextMuted : theme.colorTextPrimary}
+          itemStyle={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
           style={{
             minHeight: theme.controlFieldHeight,
             color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary,
