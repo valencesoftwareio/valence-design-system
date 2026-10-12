@@ -62,10 +62,10 @@ jobs:
 
       - name: Install Maestro
         run: |
-          curl --fail --location --silent --show-error \
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
             --output maestro.zip \
             https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
-          curl --fail --location --silent --show-error \
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
             --output maestro-checksums.txt \
             https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
           grep ' maestro.zip$' maestro-checksums.txt | sha256sum --check
@@ -116,10 +116,10 @@ jobs:
 
       - name: Install Maestro
         run: |
-          curl --fail --location --silent --show-error \
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
             --output maestro.zip \
             https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
-          curl --fail --location --silent --show-error \
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
             --output maestro-checksums.txt \
             https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
           grep ' maestro.zip$' maestro-checksums.txt | shasum --algorithm 256 --check
