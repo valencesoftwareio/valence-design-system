@@ -33,7 +33,7 @@ for (const storyId of storyIds) {
       );
     }
 
-    if (!storyId.endsWith('--open')) {
+    if (!storyId.includes('--open')) {
       commands.push(
         '- extendedWaitUntil:',
         '    visible:',
