@@ -2,14 +2,20 @@
   "expo": {
     "name": "native-storybook",
     "slug": "native-storybook",
+    "scheme": "valence-storybook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "statusBar": {
+      "hidden": true
+    },
     "ios": {
+      "bundleIdentifier": "io.valencesoftware.storybook",
       "supportsTablet": true
     },
     "android": {
+      "package": "io.valencesoftware.storybook",
       "adaptiveIcon": {
         "backgroundColor": "#081219",
         "foregroundImage": "./assets/android-icon-foreground.png",

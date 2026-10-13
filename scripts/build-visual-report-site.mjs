@@ -83,9 +83,13 @@ const createReport = (prDirectory) => {
     const relativePath = path.relative(prDirectory, file);
     const stats = lstatSync(file);
     const match = path.basename(file).match(/^(.+)-(light|dark)-(actual|diff|expected)\.png$/);
-    const viewportMatch = path.dirname(relativePath).match(/-(desktop|mobile)-chromium$/);
+    const webTarget = path.dirname(relativePath).match(/-(desktop|mobile)-chromium$/)?.[1];
+    const nativeTarget = relativePath
+      .split(path.sep)
+      .find((part) => ['android', 'ios'].includes(part));
+    const target = nativeTarget ?? (webTarget ? `web-${webTarget}` : undefined);
 
-    if (!match || !viewportMatch || stats.size > MAX_FILE_SIZE) {
+    if (!match || !target || stats.size > MAX_FILE_SIZE) {
       throw new Error(`Unexpected visual artifact: ${relativePath}`);
     }
 
@@ -111,9 +115,8 @@ const createReport = (prDirectory) => {
     }
 
     const [, storyId, mode, kind] = match;
-    const viewport = viewportMatch[1];
-    const key = `${storyId}-${mode}-${viewport}`;
-    const comparison = comparisons.get(key) ?? { storyId, mode, viewport, images: {} };
+    const key = `${storyId}-${mode}-${target}`;
+    const comparison = comparisons.get(key) ?? { storyId, mode, target, images: {} };
 
     if (comparison.images[kind]) {
       throw new Error(`Duplicate ${kind} image for ${key}.`);
@@ -124,8 +127,8 @@ const createReport = (prDirectory) => {
   }
 
   const sortedComparisons = [...comparisons.values()].sort((left, right) => {
-    return `${left.storyId}-${left.mode}-${left.viewport}`.localeCompare(
-      `${right.storyId}-${right.mode}-${right.viewport}`,
+    return `${left.storyId}-${left.mode}-${left.target}`.localeCompare(
+      `${right.storyId}-${right.mode}-${right.target}`,
     );
   });
 
@@ -172,7 +175,7 @@ const createReport = (prDirectory) => {
     return `<section class="comparison">
       <header>
         <h2>${escapeHtml(component)} / ${escapeHtml(story)}</h2>
-        <span>${escapeHtml(titleCase(comparison.mode))} · ${escapeHtml(titleCase(comparison.viewport))}</span>
+        <span>${escapeHtml(titleCase(comparison.mode))} · ${escapeHtml(titleCase(comparison.target))}</span>
       </header>
       <div class="images">
         ${['expected', 'actual', 'diff']

@@ -1,0 +1,187 @@
+name: Update Visual Native Baselines
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number
+        required: true
+        type: number
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: update-visual-native-${{ inputs.pr_number }}
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    outputs:
+      head_ref: ${{ steps.pull-request.outputs.head_ref }}
+      head_sha: ${{ steps.pull-request.outputs.head_sha }}
+    steps:
+      - name: Resolve pull request
+        id: pull-request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        run: |
+          pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")"
+          test "$(jq -r '.state' <<< "$pr")" = "open"
+          test "$(jq -r '.head.repo.full_name' <<< "$pr")" = "$GITHUB_REPOSITORY"
+          test "$(jq -r '.head.ref' <<< "$pr")" != "main"
+          echo "head_ref=$(jq -r '.head.ref' <<< "$pr")" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$(jq -r '.head.sha' <<< "$pr")" >> "$GITHUB_OUTPUT"
+
+  android:
+    needs: resolve
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.1.0
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter native-storybook... build
+
+      - name: Install Maestro
+        run: |
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro.zip \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro-checksums.txt \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
+          grep ' maestro.zip$' maestro-checksums.txt | sha256sum --check
+          unzip -q maestro.zip -d "$RUNNER_TEMP/maestro"
+          echo "$RUNNER_TEMP/maestro/maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' |
+            sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Capture Android stories
+        uses: reactivecircus/android-emulator-runner@c9c93e6ba9c4194322e114c40970d5983d9a07cc # v2.38.0
+        with:
+          api-level: 34
+          arch: x86_64
+          disable-animations: true
+          profile: pixel_6
+          script: |
+            EXPO_PUBLIC_VISUAL_TEST=true pnpm --dir apps/native-storybook exec expo run:android --variant release --no-bundler
+            ./scripts/capture-native-visuals.sh android native-baselines/android
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: native-baselines-android
+          path: native-baselines/android/*.png
+          retention-days: 1
+
+  ios:
+    needs: resolve
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter native-storybook... build
+
+      - name: Install Maestro
+        run: |
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro.zip \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro-checksums.txt \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
+          grep ' maestro.zip$' maestro-checksums.txt | shasum --algorithm 256 --check
+          unzip -q maestro.zip -d "$RUNNER_TEMP/maestro"
+          echo "$RUNNER_TEMP/maestro/maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Capture iOS stories
+        run: |
+          device_id=$(xcrun simctl list devices available --json |
+            jq -r '[.devices | to_entries[] | select(.key | contains("iOS")) | .value[] | select(.name | startswith("iPhone"))][0].udid')
+          test -n "$device_id"
+          xcrun simctl boot "$device_id"
+          xcrun simctl bootstatus "$device_id" -b
+          xcrun simctl spawn "$device_id" defaults write com.apple.Accessibility ReduceMotionEnabled -bool true
+          xcrun simctl spawn "$device_id" notifyutil -p com.apple.Accessibility.ReduceMotionStatusDidChange
+          EXPO_PUBLIC_VISUAL_TEST=true pnpm --dir apps/native-storybook exec expo run:ios \
+            --configuration Release --device generic --output "$RUNNER_TEMP/native-storybook"
+          app_path=$(find "$RUNNER_TEMP/native-storybook" -maxdepth 1 -type d -name '*.app' -print -quit)
+          test -n "$app_path"
+          xcrun simctl install "$device_id" "$app_path"
+          xcrun simctl launch "$device_id" io.valencesoftware.storybook
+          ./scripts/capture-native-visuals.sh ios native-baselines/ios
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: native-baselines-ios
+          path: native-baselines/ios/*.png
+          retention-days: 1
+
+  commit:
+    needs: [resolve, android, ios]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: native-baselines-android
+          path: tests/visual/native/android/baselines
+
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: native-baselines-ios
+          path: tests/visual/native/ios/baselines
+
+      - name: Commit baselines
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_REF: ${{ needs.resolve.outputs.head_ref }}
+          HEAD_SHA: ${{ needs.resolve.outputs.head_sha }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        run: |
+          current_sha="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.head.sha')"
+          test "$current_sha" = "$HEAD_SHA"
+          git add tests/visual/native
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test: update native visual baselines"
+          git push --force-with-lease="refs/heads/$HEAD_REF:$HEAD_SHA" origin "HEAD:refs/heads/$HEAD_REF"
+          gh workflow run visual-web.yml --ref "$HEAD_REF"

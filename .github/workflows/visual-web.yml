@@ -1,4 +1,4 @@
-name: Visual Web
+name: Visual
 
 on:
   pull_request:
@@ -12,7 +12,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      scope: ${{ steps.scope.outputs.scope }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Find affected components
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if test -z "$BASE_SHA"; then
+            scope='*'
+          else
+            scope=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" |
+              node scripts/list-affected-visual-components.mjs)
+          fi
+          echo "scope=$scope" >> "$GITHUB_OUTPUT"
+
   compare:
+    needs: changes
+    if: needs.changes.outputs.scope != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -27,6 +52,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:visual:web
+        env:
+          VISUAL_COMPONENTS: ${{ needs.changes.outputs.scope }}
 
       - name: Upload visual differences
         if: failure()
@@ -36,3 +63,153 @@ jobs:
           path: test-results/visual-web/**/*.png
           if-no-files-found: ignore
           retention-days: 14
+
+  android:
+    needs: changes
+    if: needs.changes.outputs.scope != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.1.0
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter native-storybook... build
+
+      - name: Install Maestro
+        run: |
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro.zip \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro-checksums.txt \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
+          grep ' maestro.zip$' maestro-checksums.txt | sha256sum --check
+          unzip -q maestro.zip -d "$RUNNER_TEMP/maestro"
+          echo "$RUNNER_TEMP/maestro/maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' |
+            sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Capture Android stories
+        uses: reactivecircus/android-emulator-runner@c9c93e6ba9c4194322e114c40970d5983d9a07cc # v2.38.0
+        env:
+          VISUAL_COMPONENTS: ${{ needs.changes.outputs.scope }}
+        with:
+          api-level: 34
+          arch: x86_64
+          disable-animations: true
+          profile: pixel_6
+          script: |
+            EXPO_PUBLIC_VISUAL_TEST=true pnpm --dir apps/native-storybook exec expo run:android --variant release --no-bundler
+            ./scripts/capture-native-visuals.sh android test-results/visual-native/current/android
+
+      - name: Compare Android screenshots
+        run: >-
+          node scripts/compare-native-visuals.mjs android
+          test-results/visual-native/current/android
+          tests/visual/native/android/baselines
+          test-results/visual-native/differences
+
+      - name: Upload Android differences
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-android-differences
+          path: test-results/visual-native/differences/android/*.png
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload Android captures
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-android-captures
+          path: test-results/visual-native/current/android/*.png
+          retention-days: 1
+
+  ios:
+    needs: changes
+    if: needs.changes.outputs.scope != ''
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter native-storybook... build
+
+      - name: Install Maestro
+        run: |
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro.zip \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --output maestro-checksums.txt \
+            https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/checksums_sha256.txt
+          grep ' maestro.zip$' maestro-checksums.txt | shasum --algorithm 256 --check
+          unzip -q maestro.zip -d "$RUNNER_TEMP/maestro"
+          echo "$RUNNER_TEMP/maestro/maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Capture iOS stories
+        env:
+          VISUAL_COMPONENTS: ${{ needs.changes.outputs.scope }}
+        run: |
+          device_id=$(xcrun simctl list devices available --json |
+            jq -r '[.devices | to_entries[] | select(.key | contains("iOS")) | .value[] | select(.name | startswith("iPhone"))][0].udid')
+          test -n "$device_id"
+          xcrun simctl boot "$device_id"
+          xcrun simctl bootstatus "$device_id" -b
+          xcrun simctl spawn "$device_id" defaults write com.apple.Accessibility ReduceMotionEnabled -bool true
+          xcrun simctl spawn "$device_id" notifyutil -p com.apple.Accessibility.ReduceMotionStatusDidChange
+          EXPO_PUBLIC_VISUAL_TEST=true pnpm --dir apps/native-storybook exec expo run:ios \
+            --configuration Release --device generic --output "$RUNNER_TEMP/native-storybook"
+          app_path=$(find "$RUNNER_TEMP/native-storybook" -maxdepth 1 -type d -name '*.app' -print -quit)
+          test -n "$app_path"
+          xcrun simctl install "$device_id" "$app_path"
+          xcrun simctl launch "$device_id" io.valencesoftware.storybook
+          ./scripts/capture-native-visuals.sh ios test-results/visual-native/current/ios
+
+      - name: Compare iOS screenshots
+        run: >-
+          node scripts/compare-native-visuals.mjs ios
+          test-results/visual-native/current/ios
+          tests/visual/native/ios/baselines
+          test-results/visual-native/differences
+
+      - name: Upload iOS differences
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-ios-differences
+          path: test-results/visual-native/differences/ios/*.png
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload iOS captures
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-ios-captures
+          path: test-results/visual-native/current/ios/*.png
+          retention-days: 1

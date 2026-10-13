@@ -15,9 +15,15 @@ type StoryIndex = {
 
 const STORY_INDEX_PATH = 'packages/react/storybook-static/index.json';
 const MODES: ('light' | 'dark')[] = ['light', 'dark'];
+const requestedComponents = process.env.VISUAL_COMPONENTS?.split(',').filter(Boolean);
 const storyIndex = JSON.parse(readFileSync(STORY_INDEX_PATH, 'utf8')) as StoryIndex;
 const stories = Object.values(storyIndex.entries).filter(
-  (entry) => entry.type === 'story' && !entry.tags?.includes('visual-skip'),
+  (entry) =>
+    entry.type === 'story' &&
+    !entry.tags?.includes('visual-skip') &&
+    (requestedComponents?.[0] === '*' ||
+      !requestedComponents ||
+      requestedComponents.includes(entry.title.split('/').at(-1) ?? '')),
 );
 
 for (const story of stories) {

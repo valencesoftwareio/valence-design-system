@@ -48,11 +48,11 @@ pnpm storybook:ios
 
 ## Visual changes
 
-Every pull request runs the `Visual Web` workflow. It builds the web Storybook and compares each story with the screenshots in `tests/visual/web/baselines`. The suite covers desktop and mobile widths in the `hi-vis` light and dark themes. Open overlays and focused controls are captured through their Storybook stories, so they go through the same public interactions a user would.
+Every pull request runs the `Visual` workflow. Component changes capture that component on web, Android, and iOS. Changes to shared tokens, themes, fonts, or visual-test setup capture the full system. Changes that cannot affect rendered components skip visual capture. Web runs at desktop and mobile widths. Native runs on a fixed Android emulator and iOS Simulator. All three cover the `hi-vis` light and dark themes.
 
 The workflow keeps one status comment on the pull request and updates it after each run. When a comparison fails, the comment links to a visual report hosted with Storybook. The report shows the saved screenshot, the current result, and the pixels that changed. GitHub also retains the PNG files as a workflow artifact for 14 days.
 
-The pull request workflow cannot publish to GitHub Pages. After it finishes, the trusted Pages workflow verifies the current pull request commit, accepts only the generated PNG files, and builds the report from code on `main`.
+The pull request workflow cannot publish to GitHub Pages. After it finishes, the trusted Pages workflow verifies the current pull request commit, accepts only the generated PNG files, and builds the combined web, Android, and iOS report from code on `main`.
 
 If the change is intentional:
 
@@ -60,6 +60,8 @@ If the change is intentional:
 2. Open **Actions**, choose **Update Visual Web Baselines**, and run it with the pull request number.
 3. The workflow adds the new screenshots to that pull request and starts the comparison again.
 4. Review the screenshot commit and wait for the pull request checks to pass.
+
+For Android or iOS changes, choose **Update Visual Native Baselines** instead. It captures both native platforms on the same fixed devices used by pull requests and commits both sets together.
 
 Do not update the screenshots until the rendered change has been reviewed. A new Storybook story is included automatically unless it has the `visual-skip` tag.
 

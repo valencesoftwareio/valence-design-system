@@ -58,14 +58,27 @@ export const Picker = ({
           accessibilityHint={helperText}
           accessibilityState={{ disabled: isDisabled }}
           dropdownIconColor={isDisabled ? theme.colorTextMuted : theme.colorTextPrimary}
+          itemStyle={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
           style={{
             minHeight: theme.controlFieldHeight,
             color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary,
           }}
         >
-          {placeholder && <NativePicker.Item label={placeholder} value="" enabled={false} />}
+          {placeholder && (
+            <NativePicker.Item
+              label={placeholder}
+              value=""
+              enabled={false}
+              color={theme.colorTextMuted}
+            />
+          )}
           {options.map((option) => (
-            <NativePicker.Item key={option.value} label={option.label} value={option.value} />
+            <NativePicker.Item
+              key={option.value}
+              label={option.label}
+              value={option.value}
+              color={isDisabled ? theme.colorTextMuted : theme.colorTextPrimary}
+            />
           ))}
         </NativePicker>
       </View>
