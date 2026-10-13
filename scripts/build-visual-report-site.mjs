@@ -94,64 +94,114 @@ const createBaselineGallery = () => {
     { id: 'android', label: 'Android', path: 'native/android/baselines' },
     { id: 'ios', label: 'iOS', path: 'native/ios/baselines' },
   ];
-  const summaries = [];
+  const componentLabels = [
+    'Accordion',
+    'Alert',
+    'Alert Dialog',
+    'Bottom Sheet',
+    'Button',
+    'Card',
+    'Checkbox',
+    'Chip',
+    'Date Picker',
+    'Delta Pill',
+    'Dialog',
+    'Divider',
+    'Duration Pill',
+    'Icon',
+    'Icon Button',
+    'Link',
+    'List Row',
+    'Menu',
+    'Number Field',
+    'Picker',
+    'Popover',
+    'Progress Bar',
+    'Radio',
+    'Radio Group',
+    'Search Field',
+    'Segmented Control',
+    'Slider',
+    'Spinner',
+    'Status Badge',
+    'Step Button',
+    'Surface',
+    'Tabs',
+    'Text Area',
+    'Text Field',
+    'Toast',
+    'Toggle',
+    'Typography',
+  ];
+  const labelsById = new Map(
+    componentLabels.map((label) => [label.toLowerCase().replaceAll(' ', ''), label]),
+  );
+  const components = new Map();
 
   rmSync(galleryRoot, { recursive: true, force: true });
   mkdirSync(galleryRoot, { recursive: true });
 
   for (const target of targets) {
     const sourceDirectory = path.join(baselinesRoot, target.path);
-    const outputDirectory = path.join(galleryRoot, target.id);
-    const imageDirectory = path.join(outputDirectory, 'images');
-    const stories = walk(sourceDirectory)
-      .map((file) => {
-        const fileName = path.basename(file);
-        const match = fileName.match(/^(.+)-(light|dark)\.png$/);
+    const imageDirectory = path.join(galleryRoot, 'images', target.id);
 
-        if (!match) {
-          throw new Error(`Unexpected baseline file: ${file}`);
-        }
+    mkdirSync(imageDirectory, { recursive: true });
 
-        validatePng(file);
-        mkdirSync(imageDirectory, { recursive: true });
-        copyFileSync(file, path.join(imageDirectory, fileName));
+    for (const file of walk(sourceDirectory)) {
+      const fileName = path.basename(file);
+      const match = fileName.match(/^components-(.+)--(.+)-(light|dark)\.png$/);
 
-        const [, fullStoryId, mode] = match;
-        const [componentId, storyId = 'default'] = fullStoryId.split('--');
+      if (!match) {
+        throw new Error(`Unexpected baseline file: ${file}`);
+      }
 
-        return {
-          component: titleCase(componentId.replace(/^components-/, '')),
-          fileName,
-          mode,
-          story: titleCase(storyId),
-        };
-      })
-      .sort((left, right) => {
-        return `${left.component}-${left.story}-${left.mode}`.localeCompare(
-          `${right.component}-${right.story}-${right.mode}`,
-        );
-      });
-    const groups = Map.groupBy(stories, (story) => story.component);
-    const navigation = targets
-      .map(
-        (entry) =>
-          `<a href="../${entry.id}/"${entry.id === target.id ? ' aria-current="page"' : ''}>${escapeHtml(entry.label)}</a>`,
-      )
-      .join('');
-    const sections = [...groups]
-      .map(([component, componentStories]) => {
-        const cards = componentStories
-          .map(
-            (story) => `<figure>
-              <a href="images/${encodeURIComponent(story.fileName)}"><img src="images/${encodeURIComponent(story.fileName)}" alt="${escapeHtml(`${story.component} ${story.story}, ${story.mode} mode`)}" loading="lazy"></a>
-              <figcaption><strong>${escapeHtml(story.story)}</strong><span>${escapeHtml(titleCase(story.mode))}</span></figcaption>
-            </figure>`,
-          )
+      validatePng(file);
+      copyFileSync(file, path.join(imageDirectory, fileName));
+
+      const [, componentId, storyId, mode] = match;
+      const component = components.get(componentId) ?? {
+        id: componentId,
+        label: labelsById.get(componentId) ?? titleCase(componentId),
+        screenshots: [],
+      };
+
+      component.screenshots.push({ fileName, mode, storyId, target });
+      components.set(componentId, component);
+    }
+  }
+
+  const sortedComponents = [...components.values()].sort((left, right) => {
+    return left.label.localeCompare(right.label);
+  });
+
+  for (const component of sortedComponents) {
+    const stories = Map.groupBy(component.screenshots, (screenshot) => screenshot.storyId);
+    const sections = [...stories]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([storyId, screenshots]) => {
+        const platforms = targets
+          .map((target) => {
+            const platformScreenshots = screenshots
+              .filter((screenshot) => screenshot.target.id === target.id)
+              .sort((left, right) => left.mode.localeCompare(right.mode))
+              .map(
+                (screenshot) => `<figure>
+                  <a href="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}"><img src="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}" alt="${escapeHtml(`${component.label} ${titleCase(storyId)}, ${target.label}, ${screenshot.mode} mode`)}" loading="lazy"></a>
+                  <figcaption>${escapeHtml(titleCase(screenshot.mode))}</figcaption>
+                </figure>`,
+              )
+              .join('\n');
+
+            return `<section class="platform">
+              <h3>${escapeHtml(target.label)}</h3>
+              <div class="modes">${platformScreenshots}</div>
+            </section>`;
+          })
           .join('\n');
 
-        return `<section>
-          <h2>${escapeHtml(component)}</h2>
-          <div class="grid">${cards}</div>
+        return `<section class="story">
+          <h2>${escapeHtml(titleCase(storyId))}</h2>
+          <div class="platforms">${platforms}</div>
         </section>`;
       })
       .join('\n');
@@ -161,45 +211,47 @@ const createBaselineGallery = () => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-    <title>${escapeHtml(target.label)} visual baselines</title>
+    <title>${escapeHtml(component.label)} visual baselines</title>
     <style>
       :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
       body { margin: 0 auto; max-width: 1600px; padding: 32px; background: Canvas; color: CanvasText; }
       h1 { margin: 0; font-size: 28px; }
-      h2 { margin: 32px 0 12px; font-size: 20px; }
-      .summary { margin: 8px 0 24px; color: GrayText; }
-      nav { display: flex; flex-wrap: wrap; gap: 8px; }
-      nav a { padding: 8px 12px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 999px; color: inherit; text-decoration: none; }
-      nav a[aria-current="page"] { background: CanvasText; color: Canvas; }
-      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+      h2 { margin: 0 0 16px; font-size: 20px; }
+      h3 { margin: 0 0 12px; font-size: 16px; }
+      .back { display: inline-block; margin-bottom: 20px; color: inherit; }
+      .summary { margin: 8px 0 32px; color: GrayText; }
+      .story { margin-top: 40px; }
+      .platforms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .platform { padding: 16px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 12px; }
+      .modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
       figure { margin: 0; overflow: hidden; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 12px; }
       figure a { display: block; aspect-ratio: 4 / 3; overflow: auto; background: color-mix(in srgb, CanvasText 5%, Canvas); }
       img { display: block; width: 100%; height: auto; }
-      figcaption { display: flex; justify-content: space-between; gap: 12px; padding: 12px; font-size: 14px; }
-      figcaption span { color: GrayText; }
-      @media (max-width: 600px) { body { padding: 16px; } }
+      figcaption { padding: 10px 12px; color: GrayText; font-size: 14px; }
+      @media (max-width: 900px) { .platforms { grid-template-columns: 1fr; } }
+      @media (max-width: 600px) { body { padding: 16px; } .modes { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
     <main>
-      <h1>${escapeHtml(target.label)} visual baselines</h1>
-      <p class="summary">${stories.length} approved screenshots</p>
-      <nav aria-label="Baseline platform">${navigation}</nav>
+      <a class="back" href="../">All components</a>
+      <h1>${escapeHtml(component.label)}</h1>
+      <p class="summary">${stories.size} ${stories.size === 1 ? 'story' : 'stories'} across Web Desktop, Web Mobile, Android, and iOS</p>
       ${sections}
     </main>
   </body>
 </html>`;
+    const outputDirectory = path.join(galleryRoot, component.id);
 
     mkdirSync(outputDirectory, { recursive: true });
     writeFileSync(path.join(outputDirectory, 'index.html'), html);
-    summaries.push({ ...target, count: stories.length });
   }
 
-  const cards = summaries
+  const cards = sortedComponents
     .map(
-      (target) => `<a href="${target.id}/">
-        <strong>${escapeHtml(target.label)}</strong>
-        <span>${target.count} screenshots</span>
+      (component) => `<a href="${component.id}/">
+        <strong>${escapeHtml(component.label)}</strong>
+        <span>${new Set(component.screenshots.map((screenshot) => screenshot.storyId)).size} stories</span>
       </a>`,
     )
     .join('\n');
@@ -225,7 +277,7 @@ const createBaselineGallery = () => {
   <body>
     <main>
       <h1>Visual baselines</h1>
-      <p>Approved component screenshots used by visual regression checks.</p>
+      <p>Choose a component to compare its approved Web Desktop, Web Mobile, Android, and iOS screenshots.</p>
       <div class="grid">${cards}</div>
     </main>
   </body>
