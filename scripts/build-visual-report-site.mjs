@@ -21,6 +21,8 @@ const MAX_SITE_COMPARISONS = 1800;
 const inputRoot = path.resolve(process.argv[2] ?? 'visual-report-inputs');
 const siteRoot = path.resolve(process.argv[3] ?? 'packages/react/storybook-static');
 const reportsRoot = path.join(siteRoot, 'visual-reports');
+const baselinesRoot = path.resolve(process.argv[4] ?? 'tests/visual');
+const galleryRoot = path.join(siteRoot, 'visual-baselines');
 let siteSize = 0;
 let siteFiles = 0;
 let siteComparisons = 0;
@@ -60,6 +62,176 @@ const walk = (directory) => {
 
     return entryPath;
   });
+};
+
+const validatePng = (file) => {
+  const stats = lstatSync(file);
+
+  if (stats.size > MAX_FILE_SIZE) {
+    throw new Error(`PNG file is too large: ${file}`);
+  }
+
+  const image = readFileSync(file);
+  const signature = image.subarray(0, 8).toString('hex');
+  const width = image.readUInt32BE(16);
+  const height = image.readUInt32BE(20);
+
+  if (
+    signature !== PNG_SIGNATURE ||
+    width === 0 ||
+    height === 0 ||
+    width > MAX_DIMENSION ||
+    height > MAX_DIMENSION
+  ) {
+    throw new Error(`Invalid PNG file: ${file}`);
+  }
+};
+
+const createBaselineGallery = () => {
+  const targets = [
+    { id: 'web-desktop', label: 'Web Desktop', path: 'web/baselines/desktop-chromium' },
+    { id: 'web-mobile', label: 'Web Mobile', path: 'web/baselines/mobile-chromium' },
+    { id: 'android', label: 'Android', path: 'native/android/baselines' },
+    { id: 'ios', label: 'iOS', path: 'native/ios/baselines' },
+  ];
+  const summaries = [];
+
+  rmSync(galleryRoot, { recursive: true, force: true });
+  mkdirSync(galleryRoot, { recursive: true });
+
+  for (const target of targets) {
+    const sourceDirectory = path.join(baselinesRoot, target.path);
+    const outputDirectory = path.join(galleryRoot, target.id);
+    const imageDirectory = path.join(outputDirectory, 'images');
+    const stories = walk(sourceDirectory)
+      .map((file) => {
+        const fileName = path.basename(file);
+        const match = fileName.match(/^(.+)-(light|dark)\.png$/);
+
+        if (!match) {
+          throw new Error(`Unexpected baseline file: ${file}`);
+        }
+
+        validatePng(file);
+        mkdirSync(imageDirectory, { recursive: true });
+        copyFileSync(file, path.join(imageDirectory, fileName));
+
+        const [, fullStoryId, mode] = match;
+        const [componentId, storyId = 'default'] = fullStoryId.split('--');
+
+        return {
+          component: titleCase(componentId.replace(/^components-/, '')),
+          fileName,
+          mode,
+          story: titleCase(storyId),
+        };
+      })
+      .sort((left, right) => {
+        return `${left.component}-${left.story}-${left.mode}`.localeCompare(
+          `${right.component}-${right.story}-${right.mode}`,
+        );
+      });
+    const groups = Map.groupBy(stories, (story) => story.component);
+    const navigation = targets
+      .map(
+        (entry) =>
+          `<a href="../${entry.id}/"${entry.id === target.id ? ' aria-current="page"' : ''}>${escapeHtml(entry.label)}</a>`,
+      )
+      .join('');
+    const sections = [...groups]
+      .map(([component, componentStories]) => {
+        const cards = componentStories
+          .map(
+            (story) => `<figure>
+              <a href="images/${encodeURIComponent(story.fileName)}"><img src="images/${encodeURIComponent(story.fileName)}" alt="${escapeHtml(`${story.component} ${story.story}, ${story.mode} mode`)}" loading="lazy"></a>
+              <figcaption><strong>${escapeHtml(story.story)}</strong><span>${escapeHtml(titleCase(story.mode))}</span></figcaption>
+            </figure>`,
+          )
+          .join('\n');
+
+        return `<section>
+          <h2>${escapeHtml(component)}</h2>
+          <div class="grid">${cards}</div>
+        </section>`;
+      })
+      .join('\n');
+    const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+    <title>${escapeHtml(target.label)} visual baselines</title>
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+      body { margin: 0 auto; max-width: 1600px; padding: 32px; background: Canvas; color: CanvasText; }
+      h1 { margin: 0; font-size: 28px; }
+      h2 { margin: 32px 0 12px; font-size: 20px; }
+      .summary { margin: 8px 0 24px; color: GrayText; }
+      nav { display: flex; flex-wrap: wrap; gap: 8px; }
+      nav a { padding: 8px 12px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 999px; color: inherit; text-decoration: none; }
+      nav a[aria-current="page"] { background: CanvasText; color: Canvas; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+      figure { margin: 0; overflow: hidden; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 12px; }
+      figure a { display: block; aspect-ratio: 4 / 3; overflow: auto; background: color-mix(in srgb, CanvasText 5%, Canvas); }
+      img { display: block; width: 100%; height: auto; }
+      figcaption { display: flex; justify-content: space-between; gap: 12px; padding: 12px; font-size: 14px; }
+      figcaption span { color: GrayText; }
+      @media (max-width: 600px) { body { padding: 16px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>${escapeHtml(target.label)} visual baselines</h1>
+      <p class="summary">${stories.length} approved screenshots</p>
+      <nav aria-label="Baseline platform">${navigation}</nav>
+      ${sections}
+    </main>
+  </body>
+</html>`;
+
+    mkdirSync(outputDirectory, { recursive: true });
+    writeFileSync(path.join(outputDirectory, 'index.html'), html);
+    summaries.push({ ...target, count: stories.length });
+  }
+
+  const cards = summaries
+    .map(
+      (target) => `<a href="${target.id}/">
+        <strong>${escapeHtml(target.label)}</strong>
+        <span>${target.count} screenshots</span>
+      </a>`,
+    )
+    .join('\n');
+  const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+    <title>Visual baselines</title>
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+      body { margin: 0 auto; max-width: 960px; padding: 32px; background: Canvas; color: CanvasText; }
+      h1 { margin: 0; font-size: 28px; }
+      p { margin: 8px 0 24px; color: GrayText; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+      a { display: flex; flex-direction: column; gap: 6px; padding: 20px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 12px; color: inherit; text-decoration: none; }
+      a:hover { border-color: CanvasText; }
+      span { color: GrayText; font-size: 14px; }
+      @media (max-width: 600px) { body { padding: 16px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Visual baselines</h1>
+      <p>Approved component screenshots used by visual regression checks.</p>
+      <div class="grid">${cards}</div>
+    </main>
+  </body>
+</html>`;
+
+  writeFileSync(path.join(galleryRoot, 'index.html'), html);
 };
 
 const createReport = (prDirectory) => {
@@ -257,3 +429,5 @@ for (const entry of readdirSync(inputRoot, { withFileTypes: true })) {
     console.error(`Skipping ${entry.name}: ${error.message}`);
   }
 }
+
+createBaselineGallery();

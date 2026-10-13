@@ -50,6 +50,8 @@ pnpm storybook:ios
 
 Every pull request runs the `Visual` workflow. Component changes capture that component on web, Android, and iOS. Changes to shared tokens, themes, fonts, or visual-test setup capture the full system. Changes that cannot affect rendered components skip visual capture. Web runs at desktop and mobile widths. Native runs on a fixed Android emulator and iOS Simulator. All three cover the `hi-vis` light and dark themes.
 
+The [visual baseline gallery](https://valencesoftwareio.github.io/valence-design-system/visual-baselines/) shows every approved Web Desktop, Web Mobile, Android, and iOS screenshot.
+
 The workflow keeps one status comment on the pull request and updates it after each run. When a comparison fails, the comment links to a visual report hosted with Storybook. The report shows the saved screenshot, the current result, and the pixels that changed. GitHub also retains the PNG files as a workflow artifact for 14 days.
 
 The pull request workflow cannot publish to GitHub Pages. After it finishes, the trusted Pages workflow verifies the current pull request commit, accepts only the generated PNG files, and builds the combined web, Android, and iOS report from code on `main`.
