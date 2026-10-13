@@ -9,6 +9,7 @@
   "packages": {
     ".": {
       "package-name": "valence-design-system",
+      "exclude-paths": ["scripts/build-visual-report-site.mjs"],
       "extra-files": [
         {
           "type": "json",
