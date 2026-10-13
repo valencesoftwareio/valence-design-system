@@ -10,14 +10,14 @@ const meta: Meta<typeof Icon> = {
   argTypes: { name: { control: 'select', options: ICON_NAMES } },
 };
 
-export const Default: Story = { args: { name: 'check', size: 64, color: '#0c0c0c' } };
+export const Default: Story = { args: { name: 'check', size: 64 } };
 
 export const AllGlyphs: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 32 }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32 }}>
       {ICON_NAMES.map((name) => (
         <div key={name} style={{ textAlign: 'center' }}>
-          <Icon name={name} size={48} color="#0c0c0c" />
+          <Icon name={name} size={48} />
           <div style={{ fontSize: 12, marginTop: 8 }}>{name}</div>
         </div>
       ))}

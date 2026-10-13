@@ -64,6 +64,15 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      - name: Upload web test report
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: test-web-report
+          path: test-results/web-results.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   android:
     needs: changes
     if: needs.changes.outputs.scope != ''
@@ -117,6 +126,7 @@ jobs:
           script: |
             EXPO_PUBLIC_VISUAL_TEST=true pnpm --dir apps/native-storybook exec expo run:android --variant release --no-bundler
             ./scripts/capture-native-visuals.sh android test-results/visual-native/current/android
+            ./scripts/test-native-interactions.sh android test-results/interactions/android
 
       - name: Compare Android screenshots
         run: >-
@@ -141,6 +151,15 @@ jobs:
           name: visual-android-captures
           path: test-results/visual-native/current/android/*.png
           retention-days: 1
+
+      - name: Upload Android test report
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: test-android-report
+          path: test-results/interactions/android/report.xml
+          if-no-files-found: ignore
+          retention-days: 14
 
   ios:
     needs: changes
@@ -189,6 +208,7 @@ jobs:
           xcrun simctl install "$device_id" "$app_path"
           xcrun simctl launch "$device_id" io.valencesoftware.storybook
           ./scripts/capture-native-visuals.sh ios test-results/visual-native/current/ios
+          ./scripts/test-native-interactions.sh ios test-results/interactions/ios
 
       - name: Compare iOS screenshots
         run: >-
@@ -213,3 +233,12 @@ jobs:
           name: visual-ios-captures
           path: test-results/visual-native/current/ios/*.png
           retention-days: 1
+
+      - name: Upload iOS test report
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: test-ios-report
+          path: test-results/interactions/ios/report.xml
+          if-no-files-found: ignore
+          retention-days: 14

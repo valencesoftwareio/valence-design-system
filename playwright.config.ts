@@ -6,7 +6,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
-  reporter: 'line',
+  reporter: [['line'], ['json', { outputFile: 'test-results/web-results.json' }]],
   expect: {
     toHaveScreenshot: {
       animations: 'disabled',

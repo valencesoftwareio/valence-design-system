@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 type StoryIndexEntry = {
   id: string;
@@ -43,7 +44,13 @@ for (const story of stories) {
 
         await renderedStory.waitFor({ state: 'attached' });
 
-        await expect(page).toHaveScreenshot(`${story.id}-${mode}.png`);
+        const accessibility = story.tags?.includes('play-fn')
+          ? undefined
+          : await new AxeBuilder({ page }).include('#storybook-root').analyze();
+
+        await expect.soft(page).toHaveScreenshot(`${story.id}-${mode}.png`);
+
+        expect.soft(accessibility?.violations ?? []).toEqual([]);
       });
     }
   });

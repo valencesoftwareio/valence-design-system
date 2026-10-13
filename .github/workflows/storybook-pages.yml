@@ -26,6 +26,7 @@ jobs:
       actions: read
       contents: read
     outputs:
+      quality_report_available: ${{ steps.trigger.outputs.quality_report_available }}
       report_available: ${{ steps.trigger.outputs.report_available }}
       trigger_conclusion: ${{ steps.trigger.outputs.conclusion }}
       trigger_pr: ${{ steps.trigger.outputs.pr }}
@@ -77,6 +78,24 @@ jobs:
                   fi
                   rm "$archive"
                 done
+              report_directory=$(mktemp -d)
+              report_args=()
+              while IFS= read -r artifact; do
+                artifact_id=$(jq -r '.id' <<< "$artifact")
+                artifact_name=$(jq -r '.name' <<< "$artifact")
+                platform=${artifact_name#test-}
+                platform=${platform%-report}
+                archive="$report_directory/$platform.zip"
+                if gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip" > "$archive"; then
+                  report_args+=("$platform=$archive")
+                fi
+              done < <(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts" |
+                jq -c '.artifacts[] | select(.expired == false and (.name | test("^test-(web|android|ios)-report$")))')
+              if [ "${#report_args[@]}" -gt 0 ]; then
+                python3 scripts/build-quality-report-site.py \
+                  packages/react/storybook-static "$pr_number" "$head_sha" "${report_args[@]}"
+              fi
+              rm -r "$report_directory"
             done
           node scripts/build-visual-report-site.mjs visual-report-inputs packages/react/storybook-static
 
@@ -108,6 +127,11 @@ jobs:
           else
             echo 'report_available=false' >> "$GITHUB_OUTPUT"
           fi
+          if [ -f "packages/react/storybook-static/quality-reports/pr-$pr_number/$SHA/index.html" ]; then
+            echo 'quality_report_available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'quality_report_available=false' >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:
@@ -135,6 +159,7 @@ jobs:
           CONCLUSION: ${{ needs.build.outputs.trigger_conclusion }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
           PR_NUMBER: ${{ needs.build.outputs.trigger_pr }}
+          QUALITY_REPORT_AVAILABLE: ${{ needs.build.outputs.quality_report_available }}
           REPORT_AVAILABLE: ${{ needs.build.outputs.report_available }}
           RUN_ID: ${{ needs.build.outputs.trigger_run_id }}
           SHA: ${{ needs.build.outputs.trigger_sha }}
@@ -148,14 +173,19 @@ jobs:
           page_root=${PAGE_URL%/}
           short_sha=${SHA:0:7}
           if [ "$CONCLUSION" = 'success' ]; then
-            result='✅ Visual regression passed.'
-            details="Screenshots matched for commit \`$short_sha\`. [View workflow]($run_url)."
-          elif [ "$REPORT_AVAILABLE" = 'true' ]; then
-            result='❌ Visual regression found differences.'
-            details="Commit \`$short_sha\`. [Review visual changes]($page_root/visual-reports/pr-$PR_NUMBER/$SHA/) · [View workflow]($run_url)"
+            result='✅ Visual, accessibility, and interaction checks passed.'
+            details="Commit \`$short_sha\`. [View workflow]($run_url)."
           else
-            result='❌ Visual regression failed before a visual report could be generated.'
-            details="Commit \`$short_sha\`. [View workflow and artifacts]($run_url#artifacts)."
+            result='❌ Visual, accessibility, or interaction checks failed.'
+            links=()
+            if [ "$REPORT_AVAILABLE" = 'true' ]; then
+              links+=("[Review visual changes]($page_root/visual-reports/pr-$PR_NUMBER/$SHA/)")
+            fi
+            if [ "$QUALITY_REPORT_AVAILABLE" = 'true' ]; then
+              links+=("[Review test failures]($page_root/quality-reports/pr-$PR_NUMBER/$SHA/)")
+            fi
+            links+=("[View workflow]($run_url)")
+            details="Commit \`$short_sha\`. $(IFS=' · '; echo "${links[*]}")"
           fi
           body=$(printf '%s\n\n%s\n\n%s' "$marker" "$result" "$details")
           comment_id=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq ".[] | select(.body | contains(\"$marker\")) | .id" | head -n 1)
