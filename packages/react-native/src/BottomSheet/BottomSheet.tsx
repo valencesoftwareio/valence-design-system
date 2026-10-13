@@ -29,6 +29,7 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
 
   return (
     <GorhomBottomSheet
+      accessible={false}
       index={open ? 0 : -1}
       snapPoints={['50%']}
       enableDynamicSizing
