@@ -57,7 +57,14 @@ commands.push(
 );
 
 openStory('components-picker--playground');
-commands.push('- tapOn: "Frequency"', '- tapOn: "Monthly"', '- assertVisible: "Monthly"');
+
+if (platform === 'android') {
+  commands.push('- tapOn: "Frequency"', '- tapOn: "Monthly"');
+} else {
+  commands.push('- swipe:', '    start: 50%, 29%', '    end: 50%, 22%', '    duration: 400');
+}
+
+commands.push('- assertVisible: "Monthly"');
 
 openStory('components-datepicker--playground');
 commands.push(
