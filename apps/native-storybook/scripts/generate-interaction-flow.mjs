@@ -61,7 +61,7 @@ commands.push('- tapOn: "Frequency"', '- tapOn: "Monthly"', '- assertVisible: "M
 
 openStory('components-datepicker--playground');
 commands.push(
-  '- tapOn: "Due date"',
+  '- tapOn: "Sep 30, 2026"',
   '- assertVisible: "Cancel"',
   '- tapOn: "Cancel"',
   '- assertNotVisible: "Cancel"',
