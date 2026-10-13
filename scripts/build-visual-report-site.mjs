@@ -186,7 +186,7 @@ const createBaselineGallery = () => {
               .sort((left, right) => left.mode.localeCompare(right.mode))
               .map(
                 (screenshot) => `<figure>
-                  <a href="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}"><img src="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}" alt="${escapeHtml(`${component.label} ${titleCase(storyId)}, ${target.label}, ${screenshot.mode} mode`)}" loading="lazy"></a>
+                  <a href="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}" data-baseline="${escapeHtml(`${component.label} / ${titleCase(storyId)} / ${target.label} / ${titleCase(screenshot.mode)}`)}"><img src="../images/${target.id}/${encodeURIComponent(screenshot.fileName)}" alt="${escapeHtml(`${component.label} ${titleCase(storyId)}, ${target.label}, ${screenshot.mode} mode`)}" loading="lazy"></a>
                   <figcaption>${escapeHtml(titleCase(screenshot.mode))}</figcaption>
                 </figure>`,
               )
@@ -210,7 +210,7 @@ const createBaselineGallery = () => {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; script-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
     <title>${escapeHtml(component.label)} visual baselines</title>
     <style>
       :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
@@ -228,6 +228,16 @@ const createBaselineGallery = () => {
       figure a { display: block; aspect-ratio: 4 / 3; overflow: auto; background: color-mix(in srgb, CanvasText 5%, Canvas); }
       img { display: block; width: 100%; height: auto; }
       figcaption { padding: 10px 12px; color: GrayText; font-size: 14px; }
+      dialog { width: min(1200px, calc(100% - 32px)); max-width: none; padding: 0; overflow: hidden; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 12px; background: Canvas; color: CanvasText; }
+      dialog::backdrop { background: rgb(0 0 0 / 70%); }
+      .lightbox-header, .lightbox-controls { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+      .lightbox-header { justify-content: space-between; border-bottom: 1px solid color-mix(in srgb, CanvasText 20%, transparent); }
+      .lightbox-header strong { min-width: 0; }
+      .lightbox-image { display: flex; align-items: center; justify-content: center; min-height: 200px; max-height: calc(100vh - 160px); overflow: auto; background: color-mix(in srgb, CanvasText 5%, Canvas); }
+      .lightbox-image img { width: auto; max-width: 100%; max-height: calc(100vh - 160px); }
+      .lightbox-controls { justify-content: center; border-top: 1px solid color-mix(in srgb, CanvasText 20%, transparent); }
+      .lightbox-controls span { min-width: 80px; text-align: center; color: GrayText; }
+      button { min-height: 40px; padding: 8px 14px; border: 1px solid color-mix(in srgb, CanvasText 30%, transparent); border-radius: 8px; background: Canvas; color: CanvasText; font: inherit; cursor: pointer; }
       @media (max-width: 900px) { .platforms { grid-template-columns: 1fr; } }
       @media (max-width: 600px) { body { padding: 16px; } .modes { grid-template-columns: 1fr; } }
     </style>
@@ -238,7 +248,20 @@ const createBaselineGallery = () => {
       <h1>${escapeHtml(component.label)}</h1>
       <p class="summary">${stories.size} ${stories.size === 1 ? 'story' : 'stories'} across Web Desktop, Web Mobile, Android, and iOS</p>
       ${sections}
+      <dialog aria-labelledby="lightbox-title">
+        <div class="lightbox-header">
+          <strong id="lightbox-title"></strong>
+          <button type="button" data-close aria-label="Close baseline viewer">Close</button>
+        </div>
+        <div class="lightbox-image"><img alt=""></div>
+        <div class="lightbox-controls">
+          <button type="button" data-previous>Previous</button>
+          <span data-position></span>
+          <button type="button" data-next>Next</button>
+        </div>
+      </dialog>
     </main>
+    <script src="../gallery.js"></script>
   </body>
 </html>`;
     const outputDirectory = path.join(galleryRoot, component.id);
@@ -246,6 +269,56 @@ const createBaselineGallery = () => {
     mkdirSync(outputDirectory, { recursive: true });
     writeFileSync(path.join(outputDirectory, 'index.html'), html);
   }
+
+  writeFileSync(
+    path.join(galleryRoot, 'gallery.js'),
+    `const links = [...document.querySelectorAll('[data-baseline]')];
+const dialog = document.querySelector('dialog');
+const image = dialog.querySelector('img');
+const title = dialog.querySelector('#lightbox-title');
+const position = dialog.querySelector('[data-position]');
+let currentIndex = 0;
+let trigger;
+
+const showBaseline = (index) => {
+  currentIndex = (index + links.length) % links.length;
+  const link = links[currentIndex];
+
+  image.src = link.href;
+  image.alt = link.querySelector('img').alt;
+  title.textContent = link.dataset.baseline;
+  position.textContent = \`${'${currentIndex + 1}'} / ${'${links.length}'}\`;
+};
+
+links.forEach((link, index) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    trigger = link;
+    showBaseline(index);
+    dialog.showModal();
+  });
+});
+
+dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+dialog.querySelector('[data-previous]').addEventListener('click', () => showBaseline(currentIndex - 1));
+dialog.querySelector('[data-next]').addEventListener('click', () => showBaseline(currentIndex + 1));
+dialog.addEventListener('click', (event) => {
+  if (event.target === dialog) {
+    dialog.close();
+  }
+});
+dialog.addEventListener('close', () => trigger?.focus());
+dialog.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') {
+    showBaseline(currentIndex - 1);
+  }
+
+  if (event.key === 'ArrowRight') {
+    showBaseline(currentIndex + 1);
+  }
+});
+`,
+  );
 
   const cards = sortedComponents
     .map(
