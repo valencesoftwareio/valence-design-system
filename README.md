@@ -48,7 +48,7 @@ pnpm storybook:ios
 
 ## Visual changes
 
-Every pull request runs the `Visual` workflow. Component changes capture that component on web, Android, and iOS. Changes to shared tokens, themes, fonts, or visual-test setup capture the full system. Changes that cannot affect rendered components skip the workflow. Web runs at desktop and mobile widths. Native runs on a fixed Android emulator and iOS Simulator. All three cover the `hi-vis` light and dark themes.
+Draft pull requests run the fast CI checks without starting visual capture. Marking a pull request ready for review runs the affected component and anything that uses it on web, Android, and iOS. Later commits cancel the obsolete run and validate the new commit. Changes to shared tokens, themes, fonts, or visual-test setup capture the full system. Changes that cannot affect rendered components skip capture. Web runs at desktop and mobile widths. Native runs on a fixed Android emulator and iOS Simulator. All three cover the `hi-vis` light and dark themes.
 
 The same workflow checks web stories with axe and exercises the keyboard and focus behavior of complex controls with Playwright. Maestro runs the equivalent interaction flows against the Android and iOS builds. These checks cover Dialog, AlertDialog, Menu, Picker, DatePicker, Popover, and BottomSheet.
 

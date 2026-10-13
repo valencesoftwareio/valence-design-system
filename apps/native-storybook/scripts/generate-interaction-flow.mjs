@@ -4,7 +4,7 @@ if (!['android', 'ios'].includes(platform)) {
   throw new Error('Usage: generate-interaction-flow <android|ios>');
 }
 
-const commands = ['- stopApp'];
+const commands = [];
 const components = new Set(scope.split(','));
 let firstLink = true;
 
