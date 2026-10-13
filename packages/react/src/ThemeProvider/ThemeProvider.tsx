@@ -37,7 +37,11 @@ export const ThemeProvider = ({ preset = 'hi-vis', mode, theme, children }: Them
   const resolvedMode = mode ?? systemScheme;
 
   return (
-    <div data-preset={preset} data-theme={resolvedMode} style={toCssVars(theme ?? {})}>
+    <div
+      data-preset={preset}
+      data-theme={resolvedMode}
+      style={{ color: 'var(--color-text-primary)', ...toCssVars(theme ?? {}) }}
+    >
       {children}
     </div>
   );

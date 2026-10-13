@@ -10,6 +10,7 @@ const sharedPaths = [
   'apps/native-storybook/.rnstorybook/main.ts',
   'apps/native-storybook/.rnstorybook/preview.tsx',
   'apps/native-storybook/.rnstorybook/storybook.requires.ts',
+  'apps/native-storybook/scripts/generate-interaction-flow.mjs',
   'apps/native-storybook/scripts/generate-visual-flow.mjs',
   'apps/native-storybook/app.json',
   'apps/native-storybook/index.ts',
@@ -21,6 +22,7 @@ const sharedPaths = [
   'pnpm-lock.yaml',
   'scripts/compare-native-visuals.mjs',
   'scripts/capture-native-visuals.sh',
+  'scripts/test-native-interactions.sh',
   'tests/visual/web/interactions.spec.ts',
   'tests/visual/web/stories.visual.spec.ts',
 ];
