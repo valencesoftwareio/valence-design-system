@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.3.0...v0.4.0) (2026-10-13)
+
+
+### Features
+
+* add baseline gallery lightbox ([#35](https://github.com/valencesoftwareio/valence-design-system/issues/35)) ([899c67c](https://github.com/valencesoftwareio/valence-design-system/commit/899c67ce697a3dc2d04a75ae9a2340834e6090a7))
+
+
+### Bug Fixes
+
+* group visual baselines by component ([#33](https://github.com/valencesoftwareio/valence-design-system/issues/33)) ([7e8c49e](https://github.com/valencesoftwareio/valence-design-system/commit/7e8c49e0e801a588f56967cb38f63b11bd65aa71))
+
 ## [0.3.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.2.0...v0.3.0) (2026-10-02)
 
 
