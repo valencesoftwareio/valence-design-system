@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { URL } from 'node:url';
 
 const changedFiles = readFileSync(0, 'utf8').trim().split('\n').filter(Boolean);
 const components = new Set();
@@ -20,15 +21,21 @@ const sharedPaths = [
   'pnpm-lock.yaml',
   'scripts/compare-native-visuals.mjs',
   'scripts/capture-native-visuals.sh',
-  'scripts/list-affected-visual-components.mjs',
+  'tests/visual/web/interactions.spec.ts',
+  'tests/visual/web/stories.visual.spec.ts',
 ];
-const sharedDirectories = [
-  'packages/react/.storybook/',
-  'packages/tokens/',
-  'packages/types/',
-  'tests/visual/',
-];
+const sharedDirectories = ['packages/react/.storybook/', 'packages/tokens/', 'packages/types/'];
 const sharedNativeDirectories = new Set(['ThemeProvider', 'color', 'foundations', 'hooks']);
+const storyDirectory = new URL('../apps/native-storybook/.rnstorybook/stories/', import.meta.url);
+const componentNames = new Map(
+  readdirSync(storyDirectory)
+    .filter((file) => file.endsWith('.stories.tsx'))
+    .map((file) => {
+      const name = file.replace('.stories.tsx', '');
+
+      return [name.toLowerCase(), name];
+    }),
+);
 let captureAll = false;
 
 for (const file of changedFiles) {
@@ -46,6 +53,21 @@ for (const file of changedFiles) {
 
   if (nativeStory) {
     components.add(nativeStory[1]);
+    continue;
+  }
+
+  const baseline = file.match(/^tests\/visual\/.+\/components-([a-z0-9]+)--.+\.png$/);
+
+  if (baseline) {
+    const component = componentNames.get(baseline[1]);
+
+    if (component) {
+      components.add(component);
+    } else {
+      captureAll = true;
+      break;
+    }
+
     continue;
   }
 
