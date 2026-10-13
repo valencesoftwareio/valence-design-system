@@ -1,11 +1,14 @@
-const [platform] = process.argv.slice(2);
+const [platform, scope = '*'] = process.argv.slice(2);
 
 if (!['android', 'ios'].includes(platform)) {
   throw new Error('Usage: generate-interaction-flow <android|ios>');
 }
 
 const commands = ['- stopApp'];
+const components = new Set(scope.split(','));
 let firstLink = true;
+
+const includes = (component) => scope === '*' || components.has(component);
 
 const openStory = (storyId) => {
   commands.push(
@@ -32,63 +35,77 @@ const openStory = (storyId) => {
   );
 };
 
-openStory('components-dialog--default');
-commands.push(
-  '- tapOn: "Open dialog"',
-  '- assertVisible: "Account details"',
-  '- tapOn: "Done"',
-  '- assertNotVisible: "Account details"',
-);
-
-openStory('components-alertdialog--default');
-commands.push(
-  '- tapOn: "Open confirmation"',
-  '- assertVisible: "Confirm change"',
-  '- tapOn: "Cancel"',
-  '- assertNotVisible: "Confirm change"',
-);
-
-openStory('components-menu--default');
-commands.push(
-  '- tapOn: "Actions"',
-  '- assertVisible: "Edit"',
-  '- tapOn: "Archive"',
-  '- assertNotVisible: "Delete"',
-);
-
-openStory('components-picker--playground');
-
-if (platform === 'android') {
-  commands.push('- tapOn: "Frequency"', '- tapOn: "Monthly"');
-} else {
-  commands.push('- swipe:', '    start: 50%, 29%', '    end: 50%, 22%', '    duration: 400');
+if (includes('Dialog')) {
+  openStory('components-dialog--default');
+  commands.push(
+    '- tapOn: "Open dialog"',
+    '- assertVisible: "Account details"',
+    '- tapOn: "Done"',
+    '- assertNotVisible: "Account details"',
+  );
 }
 
-commands.push('- assertVisible: "Monthly"');
+if (includes('AlertDialog')) {
+  openStory('components-alertdialog--default');
+  commands.push(
+    '- tapOn: "Open confirmation"',
+    '- assertVisible: "Confirm change"',
+    '- tapOn: "Cancel"',
+    '- assertNotVisible: "Confirm change"',
+  );
+}
 
-openStory('components-datepicker--playground');
-commands.push(
-  '- tapOn: "Sep 30, 2026"',
-  '- assertVisible: "Cancel"',
-  '- tapOn: "Cancel"',
-  '- assertNotVisible: "Cancel"',
-);
+if (includes('Menu')) {
+  openStory('components-menu--default');
+  commands.push(
+    '- tapOn: "Actions"',
+    '- assertVisible: "Edit"',
+    '- tapOn: "Archive"',
+    '- assertNotVisible: "Delete"',
+  );
+}
 
-openStory('components-popover--default');
-commands.push(
-  '- tapOn:',
-  '    id: popover-trigger',
-  '- assertVisible: "Additional contextual information."',
-  '- tapOn: "Close sheet"',
-  '- assertNotVisible: "Additional contextual information."',
-);
+if (includes('Picker')) {
+  openStory('components-picker--playground');
 
-openStory('components-bottomsheet--default');
-commands.push(
-  '- tapOn: "Choose repeat schedule"',
-  '- assertVisible: "Choose which days this goal repeats."',
-  '- tapOn: "Close sheet"',
-  '- assertNotVisible: "Choose which days this goal repeats."',
-);
+  if (platform === 'android') {
+    commands.push('- tapOn: "Frequency"', '- tapOn: "Monthly"');
+  } else {
+    commands.push('- swipe:', '    start: 50%, 29%', '    end: 50%, 22%', '    duration: 400');
+  }
+
+  commands.push('- assertVisible: "Monthly"');
+}
+
+if (includes('DatePicker')) {
+  openStory('components-datepicker--playground');
+  commands.push(
+    '- tapOn: "Sep 30, 2026"',
+    '- assertVisible: "Cancel"',
+    '- tapOn: "Cancel"',
+    '- assertNotVisible: "Cancel"',
+  );
+}
+
+if (includes('Popover')) {
+  openStory('components-popover--default');
+  commands.push(
+    '- tapOn:',
+    '    id: popover-trigger',
+    '- assertVisible: "Additional contextual information."',
+    '- tapOn: "Close sheet"',
+    '- assertNotVisible: "Additional contextual information."',
+  );
+}
+
+if (includes('BottomSheet')) {
+  openStory('components-bottomsheet--default');
+  commands.push(
+    '- tapOn: "Choose repeat schedule"',
+    '- assertVisible: "Choose which days this goal repeats."',
+    '- tapOn: "Close sheet"',
+    '- assertNotVisible: "Choose which days this goal repeats."',
+  );
+}
 
 process.stdout.write(`appId: io.valencesoftware.storybook\n---\n${commands.join('\n')}\n`);

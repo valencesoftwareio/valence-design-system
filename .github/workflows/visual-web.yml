@@ -3,6 +3,20 @@ name: Visual
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to run
+        type: choice
+        options:
+          - all
+          - web
+          - android
+          - ios
+        default: all
+      scope:
+        description: Component name or * for all components
+        type: string
+        default: '*'
 
 permissions:
   contents: read
@@ -26,8 +40,11 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          MANUAL_SCOPE: ${{ inputs.scope }}
         run: |
-          if test -z "$BASE_SHA"; then
+          if test "${{ github.event_name }}" = workflow_dispatch; then
+            scope="$MANUAL_SCOPE"
+          elif test -z "$BASE_SHA"; then
             scope='*'
           else
             scope=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" |
@@ -37,7 +54,7 @@ jobs:
 
   compare:
     needs: changes
-    if: needs.changes.outputs.scope != ''
+    if: needs.changes.outputs.scope != '' && (github.event_name != 'workflow_dispatch' || inputs.platform == 'all' || inputs.platform == 'web')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -75,7 +92,7 @@ jobs:
 
   android:
     needs: changes
-    if: needs.changes.outputs.scope != ''
+    if: needs.changes.outputs.scope != '' && (github.event_name != 'workflow_dispatch' || inputs.platform == 'all' || inputs.platform == 'android')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -161,9 +178,18 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      - name: Upload Android interaction artifacts
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: debug-android-interactions
+          path: test-results/interactions/android/artifacts
+          if-no-files-found: ignore
+          retention-days: 14
+
   ios:
     needs: changes
-    if: needs.changes.outputs.scope != ''
+    if: needs.changes.outputs.scope != '' && (github.event_name != 'workflow_dispatch' || inputs.platform == 'all' || inputs.platform == 'ios')
     runs-on: macos-26
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -240,5 +266,14 @@ jobs:
         with:
           name: test-ios-report
           path: test-results/interactions/ios/report.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload iOS interaction artifacts
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: debug-ios-interactions
+          path: test-results/interactions/ios/artifacts
           if-no-files-found: ignore
           retention-days: 14
