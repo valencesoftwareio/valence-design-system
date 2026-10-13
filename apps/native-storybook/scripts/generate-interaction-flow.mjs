@@ -76,7 +76,8 @@ commands.push(
 
 openStory('components-popover--default');
 commands.push(
-  '- tapOn: "More information"',
+  '- tapOn:',
+  '    id: popover-trigger',
   '- assertVisible: "Additional contextual information."',
   '- tapOn: "Close sheet"',
   '- assertNotVisible: "Additional contextual information."',
