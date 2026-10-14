@@ -52,9 +52,10 @@
 
 ## Release impact
 
-<!-- The PR title determines the release: fix = patch, feat = minor, ! = major. -->
+<!-- Use fix, feat, or ! only for changes consumers receive in the published packages. Use ci, chore, docs, or test for internal-only changes. -->
 
 - [ ] The PR title reflects the intended release impact
+- [ ] Internal tooling, CI, tests, stories, and documentation are not presented as package features or fixes
 - [ ] Public API or migration notes are documented when required
 
 ## Risks and follow-up
