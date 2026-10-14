@@ -5,8 +5,8 @@
 
 ### Bug Fixes
 
-* add cross-platform accessibility coverage ([#38](https://github.com/valencesoftwareio/valence-design-system/issues/38)) ([4e791ec](https://github.com/valencesoftwareio/valence-design-system/commit/4e791ecd497dcbf8c1511ce2c7c93612356abfae))
-* align menu focus ring ([#39](https://github.com/valencesoftwareio/valence-design-system/issues/39)) ([790845c](https://github.com/valencesoftwareio/valence-design-system/commit/790845c0203a406d04f48f87e093e647b299390d))
+* correct themed text inheritance and bottom-sheet screen-reader semantics ([#38](https://github.com/valencesoftwareio/valence-design-system/issues/38)) ([4e791ec](https://github.com/valencesoftwareio/valence-design-system/commit/4e791ecd497dcbf8c1511ce2c7c93612356abfae))
+* align the Menu focus indicator with its border ([#39](https://github.com/valencesoftwareio/valence-design-system/issues/39)) ([790845c](https://github.com/valencesoftwareio/valence-design-system/commit/790845c0203a406d04f48f87e093e647b299390d))
 
 ## [0.3.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.2.0...v0.3.0) (2026-10-02)
 
