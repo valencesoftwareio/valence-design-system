@@ -44,11 +44,14 @@ for (const storyId of storyIds) {
 
     firstLink = false;
 
-    const visible = openStoryContent[storyId]
-      ? `      text: "${openStoryContent[storyId]}"`
-      : `      id: visual-story-${storyId}`;
-
-    commands.push('- extendedWaitUntil:', '    visible:', visible, '    timeout: 30000');
+    commands.push(
+      '- extendedWaitUntil:',
+      '    visible:',
+      openStoryContent[storyId]
+        ? `      text: "${openStoryContent[storyId]}"`
+        : `      id: visual-story-${storyId}`,
+      '    timeout: 30000',
+    );
 
     commands.push(
       '- waitForAnimationToEnd:',
