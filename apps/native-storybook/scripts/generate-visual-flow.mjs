@@ -29,6 +29,7 @@ for (const storyId of storyIds) {
         '    commands:',
         '      - tapOn:',
         '          text: "^Open$"',
+        `- openLink: valence-storybook://storybook?STORYBOOK_STORY_ID=${storyId}&preset=hi-vis&mode=${mode}`,
       );
     }
 
