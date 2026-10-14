@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { AccordionProps } from '@valencesoftwareio/types';
-import { Icon } from '../Icon/Icon';
+import { ChevronIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import styles from './Accordion.module.css';
 
@@ -22,7 +22,7 @@ export const Accordion = ({ title, expanded, onChange, children }: AccordionProp
           {title}
         </Typography>
         <span className={`${styles.chevron} ${expanded ? styles.expanded : ''}`}>
-          <Icon name="chevron" size={14} />
+          <ChevronIcon aria-hidden size={14} strokeWidth={1.6} absoluteStrokeWidth />
         </span>
       </button>
       {expanded && (

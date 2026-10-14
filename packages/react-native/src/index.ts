@@ -72,7 +72,29 @@ export { ProgressBar } from './ProgressBar/ProgressBar';
 
 export { Spinner } from './Spinner/Spinner';
 
-export { Icon } from './Icon/Icon';
+export {
+  ActivityIcon,
+  AlertIcon,
+  BackIcon,
+  CalendarIcon,
+  CheckIcon,
+  ChevronIcon,
+  CloseIcon,
+  CopyIcon,
+  CounterIcon,
+  EditIcon,
+  MenuIcon,
+  PauseIcon,
+  PlayIcon,
+  RefreshIcon,
+  ReorderIcon,
+  ResetIcon,
+  SearchIcon,
+  SettingsIcon,
+  StopIcon,
+  TargetIcon,
+  TimerIcon,
+} from './icons';
 
 export { Typography } from './Typography/Typography';
 
@@ -123,8 +145,6 @@ export type {
   SliderProps,
   ProgressBarProps,
   SpinnerProps,
-  IconProps,
-  IconName,
   IconSlot,
   TypographyVariant,
 } from '@valencesoftwareio/types';

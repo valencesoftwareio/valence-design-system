@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { Icon, IconButton } from '@valencesoftwareio/react-native';
+import { CloseIcon, IconButton, SettingsIcon } from '@valencesoftwareio/react-native';
 
 type Story = StoryObj<typeof IconButton>;
 
@@ -8,7 +8,7 @@ const meta: Meta<typeof IconButton> = { title: 'Components/IconButton', componen
 export const Default: Story = {
   args: {
     label: 'Settings',
-    icon: (color) => <Icon name="settings" color={color} />,
+    icon: (color) => <SettingsIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
     onPress: () => undefined,
   },
 };
@@ -18,7 +18,7 @@ export const Danger: Story = {
     ...Default.args,
     label: 'Delete',
     tone: 'danger',
-    icon: (color) => <Icon name="close" color={color} />,
+    icon: (color) => <CloseIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
   },
 };
 

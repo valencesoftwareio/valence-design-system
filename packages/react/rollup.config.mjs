@@ -11,6 +11,7 @@ export default {
     'react/jsx-runtime',
     '@internationalized/date',
     '@radix-ui/react-select',
+    'lucide-react',
     'react-aria-components',
     '@valencesoftwareio/tokens',
     '@valencesoftwareio/types',

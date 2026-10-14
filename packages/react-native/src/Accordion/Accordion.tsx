@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import type { AccordionProps } from '@valencesoftwareio/types';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Icon } from '../Icon/Icon';
+import { ChevronIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import { GEIST } from '../foundations/fonts';
 
@@ -29,7 +29,14 @@ export const Accordion = ({ title, expanded, onChange, children }: AccordionProp
           {title}
         </Typography>
         <View style={{ marginTop: 3, transform: [{ rotate: expanded ? '-90deg' : '90deg' }] }}>
-          <Icon name="chevron" size={14} color={theme.colorTextSecondary} />
+          <ChevronIcon
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            size={14}
+            color={theme.colorTextSecondary}
+            strokeWidth={1.6}
+            absoluteStrokeWidth
+          />
         </View>
       </Pressable>
       {expanded && (

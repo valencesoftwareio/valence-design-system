@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Pressable, View } from 'react-native';
 import type { ToastProps } from '@valencesoftwareio/types';
-import { Icon } from '../Icon/Icon';
+import { CloseIcon } from '../icons';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
 
@@ -101,7 +101,14 @@ export const Toast = ({
             justifyContent: 'center',
           }}
         >
-          <Icon name="close" size={16} color={colors.text} />
+          <CloseIcon
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            size={16}
+            color={colors.text}
+            strokeWidth={1.6}
+            absoluteStrokeWidth
+          />
         </Pressable>
       )}
     </View>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
 import { View } from 'react-native';
-import { Icon, Popover, Typography } from '@valencesoftwareio/react-native';
+import { Popover, SettingsIcon, Typography } from '@valencesoftwareio/react-native';
 
 type Story = StoryObj<typeof Popover>;
 
@@ -16,7 +16,7 @@ const PopoverExample = ({ initiallyOpen = false }: { initiallyOpen?: boolean }) 
       label="More information"
       trigger={
         <View testID="popover-trigger">
-          <Icon name="settings" />
+          <SettingsIcon strokeWidth={1.6} absoluteStrokeWidth />
         </View>
       }
       onOpenChange={setOpen}

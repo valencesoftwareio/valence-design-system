@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon } from '../Icon/Icon';
+import { ActivityIcon, ChevronIcon, MenuIcon } from '../icons';
 import { ListRow } from './ListRow';
 
 type Story = StoryObj<typeof ListRow>;
@@ -11,25 +11,35 @@ const meta: Meta<typeof ListRow> = {
 
 export const Default: Story = {
   args: {
-    icon: (color) => <Icon name="activity" color={color} />,
+    icon: (color) => (
+      <ActivityIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
     title: 'Pushups',
     subtitle: '40 / day · reminder 07:00',
-    trailingIcon: (color) => <Icon name="chevron" size={14} color={color} />,
+    trailingIcon: (color) => (
+      <ChevronIcon aria-hidden size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
   },
 };
 
 export const Reordering: Story = {
   args: {
-    icon: (color) => <Icon name="activity" color={color} />,
+    icon: (color) => (
+      <ActivityIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
     title: 'Pushups',
     subtitle: '40 / day · reminder 07:00',
-    trailingIcon: (color) => <Icon name="menu" size={20} color={color} />,
+    trailingIcon: (color) => (
+      <MenuIcon aria-hidden size={20} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
   },
 };
 
 export const Archived: Story = {
   args: {
-    icon: (color) => <Icon name="activity" color={color} />,
+    icon: (color) => (
+      <ActivityIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
     title: 'Pushups',
     subtitle: 'Stopped May 9',
     archived: true,

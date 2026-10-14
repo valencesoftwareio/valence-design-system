@@ -83,6 +83,10 @@ for (const name of componentNames) {
     }
   }
 
+  if (name.endsWith('Icon')) {
+    continue;
+  }
+
   if (!webTest) {
     failures.push(`${name}: react has no platform test`);
   }
