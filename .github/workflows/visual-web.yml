@@ -71,6 +71,10 @@ jobs:
               ios) ios_scope="$MANUAL_SCOPE" ;;
               web) web_scope="$MANUAL_SCOPE" ;;
             esac
+          elif [[ "${{ github.head_ref }}" == release-please--* ]]; then
+            android_scope=''
+            ios_scope=''
+            web_scope=''
           elif test -z "$BASE_SHA"; then
             android_scope='*'
             ios_scope='*'
