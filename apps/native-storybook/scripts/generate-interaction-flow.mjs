@@ -38,7 +38,9 @@ const openStory = (storyId) => {
 if (includes('Dialog')) {
   openStory('components-dialog--default');
   commands.push(
-    '- tapOn: "Open dialog"',
+    '- tapOn:',
+    '    text: "Open dialog"',
+    '    retryTapIfNoChange: true',
     '- assertVisible: "Account details"',
     '- tapOn: "Done"',
     '- assertNotVisible: "Account details"',

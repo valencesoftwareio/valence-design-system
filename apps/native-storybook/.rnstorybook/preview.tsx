@@ -103,7 +103,7 @@ export default {
   decorators: [
     (Story, context) => (
       <ValenceDecorator storyId={context.id}>
-        <Story />
+        <Story key={context.id} />
       </ValenceDecorator>
     ),
   ],
