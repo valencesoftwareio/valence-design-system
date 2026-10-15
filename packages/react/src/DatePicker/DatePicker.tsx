@@ -20,7 +20,7 @@ import {
   Text,
 } from 'react-aria-components';
 import type { DatePickerProps, DatePickerValue } from '@valencesoftwareio/types';
-import { CalendarIcon, ChevronIcon, CloseIcon } from '../icons';
+import { CalendarIcon, ChevronRightIcon, XIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import styles from './DatePicker.module.css';
 
@@ -98,7 +98,7 @@ export const DatePicker = ({
             aria-label={`Clear ${label}`}
             onClick={() => onChange?.(null)}
           >
-            <CloseIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
+            <XIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
           </button>
         )}
       </div>
@@ -116,7 +116,7 @@ export const DatePicker = ({
           <Calendar>
             <header className={styles.calendarHeader}>
               <Button slot="previous" className={styles.navigation} aria-label="Previous month">
-                <ChevronIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
+                <ChevronRightIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
               </Button>
               <Heading className={styles.heading} />
               <Button
@@ -124,7 +124,7 @@ export const DatePicker = ({
                 className={`${styles.navigation} ${styles.next}`}
                 aria-label="Next month"
               >
-                <ChevronIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
+                <ChevronRightIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
               </Button>
             </header>
             <CalendarGrid className={styles.grid}>

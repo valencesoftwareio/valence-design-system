@@ -6,7 +6,7 @@ import {
   ModalOverlay,
 } from 'react-aria-components';
 import type { DialogProps } from '@valencesoftwareio/types';
-import { CloseIcon } from '../icons';
+import { XIcon } from '../icons';
 import styles from './Dialog.module.css';
 
 export const Dialog = ({
@@ -33,7 +33,7 @@ export const Dialog = ({
             </Heading>
             {showCloseButton && (
               <AriaButton className={styles.close} aria-label="Close" onPress={onClose}>
-                <CloseIcon aria-hidden size={18} strokeWidth={1.6} absoluteStrokeWidth />
+                <XIcon aria-hidden size={18} strokeWidth={1.6} absoluteStrokeWidth />
               </AriaButton>
             )}
           </header>

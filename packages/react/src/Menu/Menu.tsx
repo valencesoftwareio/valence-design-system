@@ -6,7 +6,7 @@ import {
   Popover,
 } from 'react-aria-components';
 import type { MenuProps } from '@valencesoftwareio/types';
-import { ChevronIcon } from '../icons';
+import { ChevronRightIcon } from '../icons';
 import styles from './Menu.module.css';
 
 export const Menu = ({ label, items, disabled, onAction }: MenuProps) => {
@@ -14,7 +14,7 @@ export const Menu = ({ label, items, disabled, onAction }: MenuProps) => {
     <MenuTrigger>
       <AriaButton className={styles.trigger} isDisabled={disabled || !onAction}>
         {label}
-        <ChevronIcon aria-hidden size={14} strokeWidth={1.6} absoluteStrokeWidth />
+        <ChevronRightIcon aria-hidden size={14} strokeWidth={1.6} absoluteStrokeWidth />
       </AriaButton>
       <Popover className={styles.popover} placement="bottom end">
         <AriaMenu

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { ActivityIcon, ChevronIcon, ListRow, MenuIcon } from '@valencesoftwareio/react-native';
+import { ListRow } from '@valencesoftwareio/react-native';
+import { ActivityIcon, ChevronRightIcon, MenuIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof ListRow>;
 
@@ -14,7 +15,7 @@ export const Default: Story = {
     title: 'Pushups',
     subtitle: '40 / day · reminder 07:00',
     trailingIcon: (color) => (
-      <ChevronIcon size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+      <ChevronRightIcon size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ActivityIcon, ChevronIcon, MenuIcon } from '../icons';
+import { ActivityIcon, ChevronRightIcon, MenuIcon } from '../icons';
 import { ListRow } from './ListRow';
 
 type Story = StoryObj<typeof ListRow>;
@@ -17,7 +17,7 @@ export const Default: Story = {
     title: 'Pushups',
     subtitle: '40 / day · reminder 07:00',
     trailingIcon: (color) => (
-      <ChevronIcon aria-hidden size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+      <ChevronRightIcon aria-hidden size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
 };

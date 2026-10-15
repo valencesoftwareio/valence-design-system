@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { ActivityIcon, Chip } from '@valencesoftwareio/react-native';
+import { Chip } from '@valencesoftwareio/react-native';
+import { ActivityIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof Chip>;
 

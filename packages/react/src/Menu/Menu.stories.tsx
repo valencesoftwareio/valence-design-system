@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
-import { EditIcon } from '../icons';
+import { PencilIcon } from '../icons';
 import { Menu } from './Menu';
 
 type Story = StoryObj<typeof Menu>;
@@ -11,7 +11,7 @@ const items = [
     value: 'edit',
     label: 'Edit',
     icon: (color: string) => (
-      <EditIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+      <PencilIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
   { value: 'archive', label: 'Archive' },

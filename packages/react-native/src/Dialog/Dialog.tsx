@@ -1,12 +1,12 @@
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { DialogProps } from '@valencesoftwareio/types';
-import { CloseIcon } from '../icons';
+import { XIcon } from '../icons';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
 
 const closeIcon = (color: string) => (
-  <CloseIcon
+  <XIcon
     accessibilityElementsHidden
     importantForAccessibility="no-hide-descendants"
     size={18}

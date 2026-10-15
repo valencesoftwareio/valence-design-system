@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { EditIcon, Menu } from '@valencesoftwareio/react-native';
+import { Menu } from '@valencesoftwareio/react-native';
+import { PencilIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof Menu>;
 
@@ -8,7 +9,7 @@ const items = [
   {
     value: 'edit',
     label: 'Edit',
-    icon: (color: string) => <EditIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+    icon: (color: string) => <PencilIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
   },
   { value: 'archive', label: 'Archive' },
   { value: 'delete', label: 'Delete', danger: true },

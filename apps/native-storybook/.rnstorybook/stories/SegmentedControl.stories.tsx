@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import {
-  CheckIcon,
-  CounterIcon,
-  SegmentedControl,
-  TimerIcon,
-} from '@valencesoftwareio/react-native';
+import { SegmentedControl } from '@valencesoftwareio/react-native';
+import { CheckIcon, MoveHorizontalIcon, TimerIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof SegmentedControl>;
 
@@ -27,7 +23,9 @@ const options = [
   {
     value: 'count',
     label: 'Counter',
-    icon: (color: string) => <CounterIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+    icon: (color: string) => (
+      <MoveHorizontalIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
   },
 ];
 

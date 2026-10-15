@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SettingsIcon } from '../icons';
+import { SlidersHorizontalIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import { Popover } from './Popover';
 
@@ -15,7 +15,7 @@ const PopoverExample = ({ initiallyOpen = false }: { initiallyOpen?: boolean }) 
     <Popover
       open={open}
       label="More information"
-      trigger={<SettingsIcon aria-hidden strokeWidth={1.6} absoluteStrokeWidth />}
+      trigger={<SlidersHorizontalIcon aria-hidden strokeWidth={1.6} absoluteStrokeWidth />}
       onOpenChange={setOpen}
     >
       <Typography variant="body">Additional contextual information.</Typography>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { MenuProps } from '@valencesoftwareio/types';
-import { ChevronIcon } from '../icons';
+import { ChevronRightIcon } from '../icons';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
 
@@ -48,7 +48,7 @@ export const Menu = ({ label, items, disabled, onAction }: MenuProps) => {
           {label}
         </Typography>
         <View style={{ transform: [{ rotate: '90deg' }] }}>
-          <ChevronIcon
+          <ChevronRightIcon
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
             size={14}

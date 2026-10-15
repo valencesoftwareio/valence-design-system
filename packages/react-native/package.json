@@ -20,6 +20,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "default": "./dist/icons/index.js"
+    },
     "./useValenceFonts": {
       "types": "./dist/hooks/useValenceFonts.d.ts",
       "default": "./dist/hooks/useValenceFonts.js"

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { CloseIcon, IconButton, SettingsIcon } from '@valencesoftwareio/react-native';
+import { IconButton } from '@valencesoftwareio/react-native';
+import { SlidersHorizontalIcon, XIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof IconButton>;
 
@@ -8,7 +9,7 @@ const meta: Meta<typeof IconButton> = { title: 'Components/IconButton', componen
 export const Default: Story = {
   args: {
     label: 'Settings',
-    icon: (color) => <SettingsIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+    icon: (color) => <SlidersHorizontalIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
     onPress: () => undefined,
   },
 };
@@ -18,7 +19,7 @@ export const Danger: Story = {
     ...Default.args,
     label: 'Delete',
     tone: 'danger',
-    icon: (color) => <CloseIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+    icon: (color) => <XIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
   },
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CheckIcon, CounterIcon, TimerIcon } from '../icons';
+import { CheckIcon, MoveHorizontalIcon, TimerIcon } from '../icons';
 import { SegmentedControl } from './SegmentedControl';
 
 type Story = StoryObj<typeof SegmentedControl>;
@@ -28,7 +28,7 @@ const options = [
     value: 'count',
     label: 'Counter',
     icon: (color: string) => (
-      <CounterIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+      <MoveHorizontalIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
 ];

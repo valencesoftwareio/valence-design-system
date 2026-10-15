@@ -72,30 +72,6 @@ export { ProgressBar } from './ProgressBar/ProgressBar';
 
 export { Spinner } from './Spinner/Spinner';
 
-export {
-  ActivityIcon,
-  AlertIcon,
-  BackIcon,
-  CalendarIcon,
-  CheckIcon,
-  ChevronIcon,
-  CloseIcon,
-  CopyIcon,
-  CounterIcon,
-  EditIcon,
-  MenuIcon,
-  PauseIcon,
-  PlayIcon,
-  RefreshIcon,
-  ReorderIcon,
-  ResetIcon,
-  SearchIcon,
-  SettingsIcon,
-  StopIcon,
-  TargetIcon,
-  TimerIcon,
-} from './icons';
-
 export { Typography } from './Typography/Typography';
 
 export type { TypographyProps } from './Typography/Typography';

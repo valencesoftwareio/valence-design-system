@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import * as Select from '@radix-ui/react-select';
 import type { PickerProps } from '@valencesoftwareio/types';
-import { CheckIcon, ChevronIcon } from '../icons';
+import { CheckIcon, ChevronRightIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import styles from './Picker.module.css';
 
@@ -34,7 +34,7 @@ export const Picker = ({
         >
           <Select.Value placeholder={placeholder} />
           <Select.Icon className={styles.chevron}>
-            <ChevronIcon aria-hidden size={14} strokeWidth={1.6} absoluteStrokeWidth />
+            <ChevronRightIcon aria-hidden size={14} strokeWidth={1.6} absoluteStrokeWidth />
           </Select.Icon>
         </Select.Trigger>
         <Select.Content className={styles.content} position="popper" sideOffset={4}>

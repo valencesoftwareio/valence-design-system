@@ -120,9 +120,9 @@ Theme tokens are maintained in `packages/tokens/tokens`. The token build produce
 
 ## Icons
 
-The React and React Native packages expose the same curated set of [Lucide](https://lucide.dev) icons. Web apps import them from `@valencesoftwareio/react`; native apps such as Notch import them from `@valencesoftwareio/react-native`. Product logos and other brand artwork stay in the product that owns them.
+The React and React Native packages expose [Lucide](https://lucide.dev) through dedicated icon entry points. Web apps import icons from `@valencesoftwareio/react/icons`; native apps such as Notch import them from `@valencesoftwareio/react-native/icons`. Product logos and other brand artwork stay in the product that owns them.
 
-To expose another Lucide icon, add the same named export to `packages/react/src/icons/index.ts` and `packages/react-native/src/icons/index.ts`. The parity check catches names that exist on only one platform.
+The entry points re-export Lucide directly, so new icons become available when the matching Lucide dependencies are upgraded. Keeping icons outside the package roots prevents names such as `Menu` from colliding with Valence components.
 
 ## Fonts
 
