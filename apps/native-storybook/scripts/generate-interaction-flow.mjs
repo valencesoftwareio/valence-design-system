@@ -4,7 +4,7 @@ if (!['android', 'ios'].includes(platform)) {
   throw new Error('Usage: generate-interaction-flow <android|ios>');
 }
 
-const commands = ['- stopApp'];
+const commands = [];
 const components = new Set(scope.split(','));
 let firstLink = true;
 
@@ -38,7 +38,9 @@ const openStory = (storyId) => {
 if (includes('Dialog')) {
   openStory('components-dialog--default');
   commands.push(
-    '- tapOn: "Open dialog"',
+    '- tapOn:',
+    '    text: "Open dialog"',
+    '    retryTapIfNoChange: true',
     '- assertVisible: "Account details"',
     '- tapOn: "Done"',
     '- assertNotVisible: "Account details"',

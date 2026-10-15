@@ -12,6 +12,15 @@ const storyIds = execFileSync(process.execPath, ['scripts/list-visual-stories.mj
 })
   .trim()
   .split('\n');
+const openStoryContent = {
+  'components-alertdialog--open': 'Confirm change',
+  'components-alertdialog--open-danger': 'Confirm change',
+  'components-bottomsheet--open': 'Choose which days this goal repeats.',
+  'components-dialog--open': 'Account details',
+  'components-popover--open': 'Additional contextual information.',
+  'components-toast--open': 'Changes saved.',
+  'components-toast--open-danger': 'Unable to save changes.',
+};
 const commands = ['- stopApp'];
 let firstLink = true;
 
@@ -29,19 +38,20 @@ for (const storyId of storyIds) {
         '    commands:',
         '      - tapOn:',
         '          text: "^Open$"',
+        `- openLink: valence-storybook://storybook?STORYBOOK_STORY_ID=${storyId}&preset=hi-vis&mode=${mode}`,
       );
     }
 
     firstLink = false;
 
-    if (!storyId.includes('--open')) {
-      commands.push(
-        '- extendedWaitUntil:',
-        '    visible:',
-        `      id: visual-story-${storyId}`,
-        '    timeout: 30000',
-      );
-    }
+    commands.push(
+      '- extendedWaitUntil:',
+      '    visible:',
+      openStoryContent[storyId]
+        ? `      text: "${openStoryContent[storyId]}"`
+        : `      id: visual-story-${storyId}`,
+      '    timeout: 30000',
+    );
 
     commands.push(
       '- waitForAnimationToEnd:',
