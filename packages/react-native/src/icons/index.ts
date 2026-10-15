@@ -2,7 +2,7 @@ export {
   Activity as ActivityIcon,
   CircleAlert as AlertIcon,
   ChevronLeft as BackIcon,
-  Calendar as CalendarIcon,
+  CalendarIcon,
   Check as CheckIcon,
   ChevronRight as ChevronIcon,
   X as CloseIcon,
