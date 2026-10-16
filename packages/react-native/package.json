@@ -20,6 +20,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "default": "./dist/icons/index.js"
+    },
     "./useValenceFonts": {
       "types": "./dist/hooks/useValenceFonts.d.ts",
       "default": "./dist/hooks/useValenceFonts.js"
@@ -55,6 +59,7 @@
     "@react-native/normalize-colors": ">=0.74.0",
     "@valencesoftwareio/tokens": "workspace:*",
     "@valencesoftwareio/types": "workspace:*",
+    "lucide-react-native": "^1.57.0",
     "react-native-calendars": "^1.1314.0"
   },
   "devDependencies": {

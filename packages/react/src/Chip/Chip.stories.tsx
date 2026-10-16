@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon } from '../Icon/Icon';
+import { ActivityIcon } from '../icons';
 import { Chip } from './Chip';
 
 type Story = StoryObj<typeof Chip>;
@@ -10,7 +10,9 @@ const meta: Meta<typeof Chip> = {
   args: { onPress: () => undefined },
 };
 
-const icon = (color: string) => <Icon name="activity" color={color} />;
+const icon = (color: string) => (
+  <ActivityIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+);
 
 export const Default: Story = { args: { children: 'Pushups', icon } };
 

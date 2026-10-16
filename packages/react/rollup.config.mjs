@@ -4,19 +4,24 @@ import postcssImport from 'postcss-import';
 import postcssUrl from 'postcss-url';
 
 export default {
-  input: 'src/index.ts',
+  input: {
+    index: 'src/index.ts',
+    'icons/index': 'src/icons/index.ts',
+  },
   external: [
     'react',
     'react-dom',
     'react/jsx-runtime',
     '@internationalized/date',
     '@radix-ui/react-select',
+    'lucide-react',
     'react-aria-components',
     '@valencesoftwareio/tokens',
     '@valencesoftwareio/types',
   ],
   output: {
-    file: 'dist/index.js',
+    dir: 'dist',
+    entryFileNames: '[name].js',
     format: 'es',
   },
   plugins: [

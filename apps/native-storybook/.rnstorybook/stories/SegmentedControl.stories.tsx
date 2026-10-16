@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { Icon, SegmentedControl } from '@valencesoftwareio/react-native';
+import { SegmentedControl } from '@valencesoftwareio/react-native';
+import { CheckIcon, MoveHorizontalIcon, TimerIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof SegmentedControl>;
 
@@ -12,13 +13,19 @@ const options = [
   {
     value: 'checkbox',
     label: 'Checkbox',
-    icon: (color: string) => <Icon name="check" color={color} />,
+    icon: (color: string) => <CheckIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
   },
-  { value: 'time', label: 'Timer', icon: (color: string) => <Icon name="timer" color={color} /> },
+  {
+    value: 'time',
+    label: 'Timer',
+    icon: (color: string) => <TimerIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+  },
   {
     value: 'count',
     label: 'Counter',
-    icon: (color: string) => <Icon name="counter" color={color} />,
+    icon: (color: string) => (
+      <MoveHorizontalIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
   },
 ];
 

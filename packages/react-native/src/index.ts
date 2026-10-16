@@ -72,8 +72,6 @@ export { ProgressBar } from './ProgressBar/ProgressBar';
 
 export { Spinner } from './Spinner/Spinner';
 
-export { Icon } from './Icon/Icon';
-
 export { Typography } from './Typography/Typography';
 
 export type { TypographyProps } from './Typography/Typography';
@@ -123,8 +121,6 @@ export type {
   SliderProps,
   ProgressBarProps,
   SpinnerProps,
-  IconProps,
-  IconName,
   IconSlot,
   TypographyVariant,
 } from '@valencesoftwareio/types';

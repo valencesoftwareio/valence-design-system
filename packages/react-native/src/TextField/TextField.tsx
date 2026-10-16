@@ -3,7 +3,7 @@ import { AccessibilityInfo, TextInput, View } from 'react-native';
 import type { TextFieldProps } from '@valencesoftwareio/types';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { GEIST } from '../foundations/fonts';
-import { Icon } from '../Icon/Icon';
+import { SearchIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 
 type TextFieldComponentProps = TextFieldProps & { ref?: Ref<TextInput> };
@@ -74,7 +74,16 @@ export const TextField = ({
           boxShadow: isSearch && !disabled ? theme.shadowSurface : undefined,
         }}
       >
-        {isSearch && <Icon name="search" size={16} color={theme.colorTextMuted} />}
+        {isSearch && (
+          <SearchIcon
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            size={16}
+            color={theme.colorTextMuted}
+            strokeWidth={1.6}
+            absoluteStrokeWidth
+          />
+        )}
         <TextInput
           ref={ref}
           value={value}

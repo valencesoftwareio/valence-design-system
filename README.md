@@ -118,6 +118,12 @@ Theme tokens are maintained in `packages/tokens/tokens`. The token build produce
 
 `ThemeProvider` defaults to the `hi-vis` preset. A nested provider is a new theme boundary, so pass its `preset` explicitly when it should match its parent.
 
+## Icons
+
+The React and React Native packages expose [Lucide](https://lucide.dev) through dedicated icon entry points. Web apps import icons from `@valencesoftwareio/react/icons`; native apps such as Notch import them from `@valencesoftwareio/react-native/icons`. Product logos and other brand artwork stay in the product that owns them.
+
+The entry points re-export Lucide directly, so new icons become available when the matching Lucide dependencies are upgraded. Keeping icons outside the package roots prevents names such as `Menu` from colliding with Valence components.
+
 ## Fonts
 
 Geist font files are stored in `@valencesoftwareio/tokens/fonts`. The web package registers them through CSS. Native applications load them with the `useValenceFonts()` hook from `@valencesoftwareio/react-native`.

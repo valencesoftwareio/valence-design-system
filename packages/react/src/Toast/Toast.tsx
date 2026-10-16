@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { ToastProps } from '@valencesoftwareio/types';
-import { Icon } from '../Icon/Icon';
+import { XIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import styles from './Toast.module.css';
 
@@ -41,7 +41,7 @@ export const Toast = ({
       )}
       {onDismiss && (
         <button type="button" className={styles.dismiss} aria-label="Dismiss" onClick={onDismiss}>
-          <Icon name="close" size={16} />
+          <XIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />
         </button>
       )}
     </div>

@@ -4,7 +4,7 @@ import type { CalendarProps, DateData } from 'react-native-calendars';
 import { Modal, Pressable, View } from 'react-native';
 import type { DatePickerProps, DatePickerValue } from '@valencesoftwareio/types';
 import { Button } from '../Button/Button';
-import { Icon } from '../Icon/Icon';
+import { CalendarIcon, XIcon } from '../icons';
 import { GEIST } from '../foundations/fonts';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
@@ -253,7 +253,14 @@ export const DatePicker = ({
           >
             {displayedValue}
           </Typography>
-          <Icon name="calendar" size={18} color={isDisabled ? theme.colorTextMuted : undefined} />
+          <CalendarIcon
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            size={18}
+            color={isDisabled ? theme.colorTextMuted : theme.colorTextPrimary}
+            strokeWidth={1.6}
+            absoluteStrokeWidth
+          />
         </Pressable>
         {canClear && (
           <Pressable
@@ -268,7 +275,14 @@ export const DatePicker = ({
               borderRadius: theme.radiusControl,
             }}
           >
-            <Icon name="close" size={16} color={theme.colorTextSecondary} />
+            <XIcon
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              size={16}
+              color={theme.colorTextSecondary}
+              strokeWidth={1.6}
+              absoluteStrokeWidth
+            />
           </Pressable>
         )}
       </View>

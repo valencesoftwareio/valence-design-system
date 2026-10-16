@@ -7,6 +7,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.stories.tsx'],
   coverageThreshold: { global: { lines: 70, functions: 70, branches: 60, statements: 70 } },
   moduleNameMapper: {
+    '^lucide-react-native$': require.resolve('lucide-react-native'),
     '^react-native($|/.*)': `${path.dirname(require.resolve('react-native/package.json'))}/$1`,
   },
   transformIgnorePatterns: [

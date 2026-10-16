@@ -24,6 +24,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "default": "./dist/icons/index.js"
+    },
     "./index.css": "./dist/index.css"
   },
   "files": [
@@ -46,6 +50,7 @@
     "@radix-ui/react-select": "^2.3.7",
     "@valencesoftwareio/tokens": "workspace:*",
     "@valencesoftwareio/types": "workspace:*",
+    "lucide-react": "^1.57.0",
     "react-aria-components": "^1.21.1"
   },
   "devDependencies": {

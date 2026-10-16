@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon } from '../Icon/Icon';
+import { SlidersHorizontalIcon, XIcon } from '../icons';
 import { IconButton } from './IconButton';
 
 type Story = StoryObj<typeof IconButton>;
@@ -9,7 +9,9 @@ const meta: Meta<typeof IconButton> = { title: 'Components/IconButton', componen
 export const Default: Story = {
   args: {
     label: 'Settings',
-    icon: (color) => <Icon name="settings" color={color} />,
+    icon: (color) => (
+      <SlidersHorizontalIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
     onPress: () => undefined,
   },
 };
@@ -19,7 +21,7 @@ export const Danger: Story = {
     ...Default.args,
     label: 'Delete',
     tone: 'danger',
-    icon: (color) => <Icon name="close" color={color} />,
+    icon: (color) => <XIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />,
   },
 };
 

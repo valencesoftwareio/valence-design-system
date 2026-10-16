@@ -1,6 +1,6 @@
 import { useId, type Ref } from 'react';
 import type { TextFieldProps } from '@valencesoftwareio/types';
-import { Icon } from '../Icon/Icon';
+import { SearchIcon } from '../icons';
 import { Typography } from '../Typography/Typography';
 import styles from './TextField.module.css';
 
@@ -41,7 +41,7 @@ export const TextField = ({
       <div
         className={`${styles.control} ${isSearch ? styles.search : ''} ${error ? styles.error : ''} ${disabled ? styles.disabled : ''}`}
       >
-        {isSearch && <Icon name="search" size={16} />}
+        {isSearch && <SearchIcon aria-hidden size={16} strokeWidth={1.6} absoluteStrokeWidth />}
         <input
           ref={ref}
           id={inputId}
