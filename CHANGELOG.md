@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.3.1...v0.4.0) (2026-10-16)
+
+
+### Features
+
+* use Lucide icons across platforms ([#47](https://github.com/valencesoftwareio/valence-design-system/issues/47)) ([12bf5f0](https://github.com/valencesoftwareio/valence-design-system/commit/12bf5f01ff7ecb524c6eb7d8ffa772e6a6907fab))
+
 ## [0.3.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.3.0...v0.3.1) (2026-10-14)
 
 
