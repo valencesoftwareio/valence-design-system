@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SlidersHorizontalIcon } from '../icons';
+import { SlidersHorizontalIcon } from 'lucide-react';
 import { Typography } from '../Typography/Typography';
 import { Popover } from './Popover';
 

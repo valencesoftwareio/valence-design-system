@@ -6,7 +6,7 @@ import {
   SearchIcon,
   SettingsIcon,
   type LucideIcon,
-} from '../icons';
+} from 'lucide-react';
 
 type Story = StoryObj<typeof CheckIcon>;
 

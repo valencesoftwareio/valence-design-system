@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import type { AccordionProps } from '@valencesoftwareio/types';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { ChevronRightIcon } from '../icons';
+import { ChevronRightIcon } from 'lucide-react-native';
 import { Typography } from '../Typography/Typography';
 import { GEIST } from '../foundations/fonts';
 
