@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ActivityIcon } from '../icons';
+import { ActivityIcon } from 'lucide-react';
 import { Chip } from './Chip';
 
 type Story = StoryObj<typeof Chip>;

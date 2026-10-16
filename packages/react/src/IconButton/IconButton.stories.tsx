@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SlidersHorizontalIcon, XIcon } from '../icons';
+import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { IconButton } from './IconButton';
 
 type Story = StoryObj<typeof IconButton>;

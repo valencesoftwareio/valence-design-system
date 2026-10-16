@@ -6,7 +6,7 @@ import {
   Popover,
 } from 'react-aria-components';
 import type { MenuProps } from '@valencesoftwareio/types';
-import { ChevronRightIcon } from '../icons';
+import { ChevronRightIcon } from 'lucide-react';
 import styles from './Menu.module.css';
 
 export const Menu = ({ label, items, disabled, onAction }: MenuProps) => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CheckIcon, MoveHorizontalIcon, TimerIcon } from '../icons';
+import { CheckIcon, MoveHorizontalIcon, TimerIcon } from 'lucide-react';
 import { SegmentedControl } from './SegmentedControl';
 
 type Story = StoryObj<typeof SegmentedControl>;

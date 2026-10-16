@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { MenuProps } from '@valencesoftwareio/types';
-import { ChevronRightIcon } from '../icons';
+import { ChevronRightIcon } from 'lucide-react-native';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
 
