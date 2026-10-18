@@ -19,6 +19,12 @@
   "sideEffects": [
     "*.css"
   ],
+  "imports": {
+    "#src/*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

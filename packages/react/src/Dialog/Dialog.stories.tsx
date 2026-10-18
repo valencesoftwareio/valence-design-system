@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from '../Button/Button';
-import { Typography } from '../Typography/Typography';
+import { Button } from '#src/Button/Button';
+import { Typography } from '#src/Typography/Typography';
 import { Dialog } from './Dialog';
 
 type Story = StoryObj<typeof Dialog>;

@@ -1,5 +1,5 @@
 import type { StepButtonProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './StepButton.module.css';
 
 const TONE_CLASS: Record<StepButtonProps['tone'], string> = {

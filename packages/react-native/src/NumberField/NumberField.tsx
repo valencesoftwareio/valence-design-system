@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import type { NumberFieldProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from '#src/ThemeProvider/ThemeProvider';
+import { Typography } from '#src/Typography/Typography';
 
 export const NumberField = ({
   value,

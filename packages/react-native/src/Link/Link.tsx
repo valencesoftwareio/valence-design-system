@@ -1,7 +1,7 @@
 import { Linking, Pressable } from 'react-native';
 import type { LinkProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from '#src/ThemeProvider/ThemeProvider';
+import { Typography } from '#src/Typography/Typography';
 
 export const Link = ({ href, disabled, onPress, children }: LinkProps) => {
   const theme = useTheme();

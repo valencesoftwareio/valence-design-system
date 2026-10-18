@@ -1,5 +1,5 @@
 import type { AlertProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './Alert.module.css';
 
 export const Alert = ({ tone = 'info', title, children }: AlertProps) => {

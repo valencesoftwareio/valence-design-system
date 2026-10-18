@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 import { Surface } from './Surface';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 
 describe('<Surface />', () => {
   it('renders arbitrary content without adding interaction semantics', async () => {

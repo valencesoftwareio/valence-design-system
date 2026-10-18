@@ -4,6 +4,8 @@
     "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "emitDeclarationOnly": true,
+    "baseUrl": ".",
+    "paths": { "#src/*": ["src/*"] },
     "types": ["vitest/globals"]
   },
   "include": ["src", "vitest.setup.ts"]

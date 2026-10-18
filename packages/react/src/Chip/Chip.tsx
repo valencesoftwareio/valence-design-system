@@ -1,5 +1,5 @@
 import type { ChipProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './Chip.module.css';
 
 export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps) => {

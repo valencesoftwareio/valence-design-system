@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SlidersHorizontalIcon } from 'lucide-react';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import { Popover } from './Popover';
 
 type Story = StoryObj<typeof Popover>;

@@ -1,6 +1,6 @@
 import { useId, type CSSProperties } from 'react';
 import type { SegmentedControlProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './SegmentedControl.module.css';
 
 export const SegmentedControl = ({

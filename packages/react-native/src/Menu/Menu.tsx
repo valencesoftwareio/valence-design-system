@@ -3,8 +3,8 @@ import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { MenuProps } from '@valencesoftwareio/types';
 import { ChevronRightIcon } from 'lucide-react-native';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from '#src/ThemeProvider/ThemeProvider';
+import { Typography } from '#src/Typography/Typography';
 
 export const Menu = ({ label, items, disabled, onAction }: MenuProps) => {
   const theme = useTheme();

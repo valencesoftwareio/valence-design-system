@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 
 import { DeltaPill } from './DeltaPill';
-import { DEFAULT_THEME } from '../ThemeProvider/ThemeProvider';
+import { DEFAULT_THEME } from '#src/ThemeProvider/ThemeProvider';
 
 describe('<DeltaPill />', () => {
   it('renders a positive delta with a plus sign', async () => {

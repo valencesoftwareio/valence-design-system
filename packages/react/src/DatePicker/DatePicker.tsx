@@ -21,7 +21,7 @@ import {
 } from 'react-aria-components';
 import type { DatePickerProps, DatePickerValue } from '@valencesoftwareio/types';
 import { CalendarIcon, ChevronRightIcon, XIcon } from 'lucide-react';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './DatePicker.module.css';
 
 const DATE_VALUE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;

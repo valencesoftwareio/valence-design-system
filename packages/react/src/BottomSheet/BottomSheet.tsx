@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import type { BottomSheetProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './BottomSheet.module.css';
 
 export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps) => {

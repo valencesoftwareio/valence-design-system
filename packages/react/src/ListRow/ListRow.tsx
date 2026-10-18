@@ -1,5 +1,5 @@
 import type { ListRowProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from '#src/Typography/Typography';
 import styles from './ListRow.module.css';
 
 export const ListRow = ({

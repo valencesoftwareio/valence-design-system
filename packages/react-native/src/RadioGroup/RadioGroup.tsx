@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import type { RadioGroupProps } from '@valencesoftwareio/types';
-import { Radio } from '../Radio/Radio';
-import { Typography } from '../Typography/Typography';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
+import { Radio } from '#src/Radio/Radio';
+import { Typography } from '#src/Typography/Typography';
+import { useTheme } from '#src/ThemeProvider/ThemeProvider';
 
 export const RadioGroup = ({ options, value, onChange, disabled, label }: RadioGroupProps) => {
   const theme = useTheme();

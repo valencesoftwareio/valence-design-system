@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Animated, Pressable, View } from 'react-native';
 import type { RadioProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
-import { useReduceMotion } from '../hooks/useReduceMotion';
+import { useTheme } from '#src/ThemeProvider/ThemeProvider';
+import { Typography } from '#src/Typography/Typography';
+import { useReduceMotion } from '#src/hooks/useReduceMotion';
 
 export const Radio = ({ checked, onChange, disabled, label }: RadioProps) => {
   const theme = useTheme();
