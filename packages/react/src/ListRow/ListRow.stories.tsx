@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ActivityIcon, ChevronRightIcon, MenuIcon } from '../icons';
+import { ActivityIcon, ChevronRightIcon, MenuIcon } from 'lucide-react';
 import { ListRow } from './ListRow';
 
 type Story = StoryObj<typeof ListRow>;

@@ -1,7 +1,7 @@
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { DialogProps } from '@valencesoftwareio/types';
-import { XIcon } from '../icons';
+import { XIcon } from 'lucide-react-native';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { Typography } from '../Typography/Typography';
 

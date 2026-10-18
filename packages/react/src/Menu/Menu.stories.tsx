@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
-import { PencilIcon } from '../icons';
+import { PencilIcon } from 'lucide-react';
 import { Menu } from './Menu';
 
 type Story = StoryObj<typeof Menu>;

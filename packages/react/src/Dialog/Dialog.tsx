@@ -6,7 +6,7 @@ import {
   ModalOverlay,
 } from 'react-aria-components';
 import type { DialogProps } from '@valencesoftwareio/types';
-import { XIcon } from '../icons';
+import { XIcon } from 'lucide-react';
 import styles from './Dialog.module.css';
 
 export const Dialog = ({

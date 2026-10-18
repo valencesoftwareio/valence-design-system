@@ -1,6 +1,6 @@
 import { useId, type Ref } from 'react';
 import type { TextFieldProps } from '@valencesoftwareio/types';
-import { SearchIcon } from '../icons';
+import { SearchIcon } from 'lucide-react';
 import { Typography } from '../Typography/Typography';
 import styles from './TextField.module.css';
 

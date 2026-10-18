@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { AccordionProps } from '@valencesoftwareio/types';
-import { ChevronRightIcon } from '../icons';
+import { ChevronRightIcon } from 'lucide-react';
 import { Typography } from '../Typography/Typography';
 import styles from './Accordion.module.css';
 

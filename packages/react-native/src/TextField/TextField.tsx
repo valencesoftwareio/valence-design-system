@@ -3,7 +3,7 @@ import { AccessibilityInfo, TextInput, View } from 'react-native';
 import type { TextFieldProps } from '@valencesoftwareio/types';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 import { GEIST } from '../foundations/fonts';
-import { SearchIcon } from '../icons';
+import { SearchIcon } from 'lucide-react-native';
 import { Typography } from '../Typography/Typography';
 
 type TextFieldComponentProps = TextFieldProps & { ref?: Ref<TextInput> };

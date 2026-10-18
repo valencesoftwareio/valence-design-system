@@ -20,7 +20,7 @@ import {
   Text,
 } from 'react-aria-components';
 import type { DatePickerProps, DatePickerValue } from '@valencesoftwareio/types';
-import { CalendarIcon, ChevronRightIcon, XIcon } from '../icons';
+import { CalendarIcon, ChevronRightIcon, XIcon } from 'lucide-react';
 import { Typography } from '../Typography/Typography';
 import styles from './DatePicker.module.css';
 
