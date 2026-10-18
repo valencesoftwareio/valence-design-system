@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import type { IconButtonProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { Typography } from '#src/Typography/Typography';
-import { useReduceMotion } from '#src/hooks/useReduceMotion';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
+import { useReduceMotion } from 'hooks/useReduceMotion';
 
 export const IconButton = ({
   icon,

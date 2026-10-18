@@ -4,8 +4,8 @@ import type {
   TypographyProps as SharedTypographyProps,
   TypographyVariant,
 } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { GEIST } from '#src/foundations/fonts';
+import { useTheme } from 'ThemeProvider';
+import { GEIST } from 'foundations/fonts';
 
 export interface TypographyProps extends SharedTypographyProps, Omit<TextProps, 'children'> {}
 

@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { RadioGroupProps } from '@valencesoftwareio/types';
-import { Radio } from '#src/Radio/Radio';
-import { Typography } from '#src/Typography/Typography';
+import { Radio } from 'Radio';
+import { Typography } from 'Typography';
 import styles from './RadioGroup.module.css';
 
 export const RadioGroup = ({ options, value, onChange, disabled, label }: RadioGroupProps) => {

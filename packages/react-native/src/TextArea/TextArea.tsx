@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { TextInput, View } from 'react-native';
 import type { TextAreaProps } from '@valencesoftwareio/types';
-import { GEIST } from '#src/foundations/fonts';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { Typography } from '#src/Typography/Typography';
+import { GEIST } from 'foundations/fonts';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const TextArea = ({
   value,

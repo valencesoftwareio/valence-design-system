@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Accordion } from './Accordion';
-import { Surface } from '#src/Surface/Surface';
+import { Surface } from 'Surface';
 
 type Story = StoryObj<typeof Accordion>;
 

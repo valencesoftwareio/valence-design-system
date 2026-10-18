@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { Text } from 'react-native';
 
 import { SegmentedControl } from './SegmentedControl';
-import { DEFAULT_THEME } from '#src/ThemeProvider/ThemeProvider';
+import { DEFAULT_THEME } from 'ThemeProvider';
 
 const OPTIONS = [
   { value: 'day', label: 'Day' },

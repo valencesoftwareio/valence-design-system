@@ -1,9 +1,9 @@
 import { Pressable, View, type ViewStyle } from 'react-native';
 import type { ListRowProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { GEIST } from '#src/foundations/fonts';
-import { Typography } from '#src/Typography/Typography';
-import { useReduceMotion } from '#src/hooks/useReduceMotion';
+import { useTheme } from 'ThemeProvider';
+import { GEIST } from 'foundations/fonts';
+import { Typography } from 'Typography';
+import { useReduceMotion } from 'hooks/useReduceMotion';
 
 export const ListRow = ({
   icon,

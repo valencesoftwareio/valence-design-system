@@ -1,12 +1,12 @@
-export { ThemeProvider, useTheme } from './ThemeProvider/ThemeProvider';
+export { ThemeProvider, useTheme } from './ThemeProvider';
 
-export type { ThemeProviderProps } from './ThemeProvider/ThemeProvider';
+export type { ThemeProviderProps } from './ThemeProvider';
 
-export { Button } from './Button/Button';
+export { Button } from './Button';
 
-export { StepButton } from './StepButton/StepButton';
+export { StepButton } from './StepButton';
 
-export { Chip } from './Chip/Chip';
+export { Chip } from './Chip';
 
 export { DeltaPill } from './Pills/DeltaPill';
 
@@ -14,67 +14,67 @@ export { DurationPill } from './Pills/DurationPill';
 
 export { StatusBadge } from './Pills/StatusBadge';
 
-export { Link } from './Link/Link';
+export { Link } from './Link';
 
-export { IconButton } from './IconButton/IconButton';
+export { IconButton } from './IconButton';
 
-export { TextField } from './TextField/TextField';
+export { TextField } from './TextField';
 
-export { TextArea } from './TextArea/TextArea';
+export { TextArea } from './TextArea';
 
-export { SearchField } from './SearchField/SearchField';
+export { SearchField } from './SearchField';
 
-export { Picker } from './Picker/Picker';
+export { Picker } from './Picker';
 
-export { DatePicker } from './DatePicker/DatePicker';
+export { DatePicker } from './DatePicker';
 
-export { NumberField } from './NumberField/NumberField';
+export { NumberField } from './NumberField';
 
-export { Toggle } from './Toggle/Toggle';
+export { Toggle } from './Toggle';
 
-export { Radio } from './Radio/Radio';
+export { Radio } from './Radio';
 
-export { RadioGroup } from './RadioGroup/RadioGroup';
+export { RadioGroup } from './RadioGroup';
 
-export { Checkbox } from './Checkbox/Checkbox';
+export { Checkbox } from './Checkbox';
 
-export { SegmentedControl } from './SegmentedControl/SegmentedControl';
+export { SegmentedControl } from './SegmentedControl';
 
-export { Card } from './Card/Card';
+export { Card } from './Card';
 
-export { Surface } from './Surface/Surface';
+export { Surface } from './Surface';
 
-export { Divider } from './Divider/Divider';
+export { Divider } from './Divider';
 
-export { Accordion } from './Accordion/Accordion';
+export { Accordion } from './Accordion';
 
-export { BottomSheet } from './BottomSheet/BottomSheet';
+export { BottomSheet } from './BottomSheet';
 
-export { Dialog } from './Dialog/Dialog';
+export { Dialog } from './Dialog';
 
-export { AlertDialog } from './AlertDialog/AlertDialog';
+export { AlertDialog } from './AlertDialog';
 
-export { Alert } from './Alert/Alert';
+export { Alert } from './Alert';
 
-export { Toast } from './Toast/Toast';
+export { Toast } from './Toast';
 
-export { Tabs } from './Tabs/Tabs';
+export { Tabs } from './Tabs';
 
-export { Menu } from './Menu/Menu';
+export { Menu } from './Menu';
 
-export { Popover } from './Popover/Popover';
+export { Popover } from './Popover';
 
-export { ListRow } from './ListRow/ListRow';
+export { ListRow } from './ListRow';
 
-export { Slider } from './Slider/Slider';
+export { Slider } from './Slider';
 
-export { ProgressBar } from './ProgressBar/ProgressBar';
+export { ProgressBar } from './ProgressBar';
 
-export { Spinner } from './Spinner/Spinner';
+export { Spinner } from './Spinner';
 
-export { Typography } from './Typography/Typography';
+export { Typography } from './Typography';
 
-export type { TypographyProps } from './Typography/Typography';
+export type { TypographyProps } from './Typography';
 
 export { TYPOGRAPHY_VARIANTS } from '@valencesoftwareio/types';
 

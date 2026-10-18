@@ -8,7 +8,13 @@ const config: StorybookConfig = {
   addons: [],
   viteFinal: (config) =>
     mergeConfig(config, {
-      resolve: { alias: { '#src': fileURLToPath(new URL('../src', import.meta.url)) } },
+      resolve: {
+        tsconfigPaths: true,
+        alias: {
+          ThemeProvider: fileURLToPath(new URL('../src/ThemeProvider', import.meta.url)),
+          'index.css': fileURLToPath(new URL('../src/index.css', import.meta.url)),
+        },
+      },
     }),
 };
 

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Animated, Easing, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import type { DurationPillProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { alpha } from '#src/color/colorMix';
-import { useReduceMotion } from '#src/hooks/useReduceMotion';
-import { GEIST } from '#src/foundations/fonts';
+import { useTheme } from 'ThemeProvider';
+import { alpha } from 'color/colorMix';
+import { useReduceMotion } from 'hooks/useReduceMotion';
+import { GEIST } from 'foundations/fonts';
 
 const formatDuration = (totalSeconds: number): string => {
   if (!Number.isFinite(totalSeconds)) {

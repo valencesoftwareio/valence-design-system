@@ -1,9 +1,9 @@
 import { Pressable, View } from 'react-native';
 import type { AccordionProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
+import { useTheme } from 'ThemeProvider';
 import { ChevronRightIcon } from 'lucide-react-native';
-import { Typography } from '#src/Typography/Typography';
-import { GEIST } from '#src/foundations/fonts';
+import { Typography } from 'Typography';
+import { GEIST } from 'foundations/fonts';
 
 export const Accordion = ({ title, expanded, onChange, children }: AccordionProps) => {
   const theme = useTheme();

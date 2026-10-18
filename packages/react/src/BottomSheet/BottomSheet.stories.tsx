@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BottomSheet } from './BottomSheet';
-import { Button } from '#src/Button/Button';
+import { Button } from 'Button';
 
 type Story = StoryObj<typeof BottomSheet>;
 

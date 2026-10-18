@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { TextAreaProps } from '@valencesoftwareio/types';
-import { Typography } from '#src/Typography/Typography';
+import { Typography } from 'Typography';
 import styles from './TextArea.module.css';
 
 export const TextArea = ({

@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { Image, Text } from 'react-native';
 
 import { Card } from './Card';
-import { DEFAULT_THEME } from '#src/ThemeProvider/ThemeProvider';
+import { DEFAULT_THEME } from 'ThemeProvider';
 
 const PressableCard = () => {
   const [pressed, setPressed] = useState(false);

@@ -1,9 +1,9 @@
 import { Pressable } from 'react-native';
 import type { StepButtonProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { alpha } from '#src/color/colorMix';
-import { Typography } from '#src/Typography/Typography';
-import { useReduceMotion } from '#src/hooks/useReduceMotion';
+import { useTheme } from 'ThemeProvider';
+import { alpha } from 'color/colorMix';
+import { Typography } from 'Typography';
+import { useReduceMotion } from 'hooks/useReduceMotion';
 
 export const StepButton = ({ label, tone, disabled, onPress }: StepButtonProps) => {
   const theme = useTheme();

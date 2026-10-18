@@ -1,8 +1,8 @@
 import { Pressable } from 'react-native';
 import type { PopoverProps } from '@valencesoftwareio/types';
-import { BottomSheet } from '#src/BottomSheet/BottomSheet';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { Typography } from '#src/Typography/Typography';
+import { BottomSheet } from 'BottomSheet';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const Popover = ({ open, trigger, onOpenChange, children, label }: PopoverProps) => {
   const theme = useTheme();

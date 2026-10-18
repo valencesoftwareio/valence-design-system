@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 
 import { Typography } from './Typography';
-import { DEFAULT_THEME } from '#src/ThemeProvider/ThemeProvider';
+import { DEFAULT_THEME } from 'ThemeProvider';
 
 describe('<Typography />', () => {
   it('renders its text content', async () => {

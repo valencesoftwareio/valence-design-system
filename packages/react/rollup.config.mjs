@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
@@ -9,13 +9,15 @@ const sourceRoot = fileURLToPath(new URL('./src/', import.meta.url));
 const resolveInternalImport = {
   name: 'resolve-internal-import',
   resolveId(source) {
-    if (!source.startsWith('#src/')) {
+    if (source.startsWith('.') || source.startsWith('/')) {
       return null;
     }
 
-    const path = `${sourceRoot}${source.slice(5)}`;
+    const path = `${sourceRoot}${source}`;
 
-    return [path, `${path}.ts`, `${path}.tsx`].find(existsSync);
+    return [path, `${path}.ts`, `${path}.tsx`, `${path}/index.ts`, `${path}/index.tsx`].find(
+      (candidate) => existsSync(candidate) && statSync(candidate).isFile(),
+    );
   },
 };
 

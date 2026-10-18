@@ -1,9 +1,9 @@
 import { Pressable, View } from 'react-native';
 import type { ChipProps } from '@valencesoftwareio/types';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { lighten } from '#src/color/colorMix';
-import { Typography } from '#src/Typography/Typography';
-import { useReduceMotion } from '#src/hooks/useReduceMotion';
+import { useTheme } from 'ThemeProvider';
+import { lighten } from 'color/colorMix';
+import { Typography } from 'Typography';
+import { useReduceMotion } from 'hooks/useReduceMotion';
 
 export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps) => {
   const theme = useTheme();

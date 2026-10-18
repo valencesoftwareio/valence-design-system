@@ -3,11 +3,11 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import type { CalendarProps, DateData } from 'react-native-calendars';
 import { Modal, Pressable, View } from 'react-native';
 import type { DatePickerProps, DatePickerValue } from '@valencesoftwareio/types';
-import { Button } from '#src/Button/Button';
+import { Button } from 'Button';
 import { CalendarIcon, XIcon } from 'lucide-react-native';
-import { GEIST } from '#src/foundations/fonts';
-import { useTheme } from '#src/ThemeProvider/ThemeProvider';
-import { Typography } from '#src/Typography/Typography';
+import { GEIST } from 'foundations/fonts';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 const DATE_VALUE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 
