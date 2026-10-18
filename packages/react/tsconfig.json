@@ -5,7 +5,6 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "emitDeclarationOnly": true,
     "baseUrl": "src",
-    "paths": { "*": ["*"] },
     "types": ["vitest/globals"]
   },
   "include": ["src", "vitest.setup.ts"]
