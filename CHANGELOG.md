@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.4.0...v0.4.1) (2026-10-19)
+
+
+### Bug Fixes
+
+* avoid duplicate visual runs ([#51](https://github.com/valencesoftwareio/valence-design-system/issues/51)) ([0a23871](https://github.com/valencesoftwareio/valence-design-system/commit/0a238719088bd055a3536bff30820f888fc26bb9))
+
 ## [0.4.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.3.1...v0.4.0) (2026-10-19)
 
 
