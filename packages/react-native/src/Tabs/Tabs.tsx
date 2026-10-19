@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, View } from 'react-native';
 import type { TabsProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const Tabs = ({ options, value, onChange, label }: TabsProps) => {
   const theme = useTheme();

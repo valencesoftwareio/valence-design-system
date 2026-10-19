@@ -50,6 +50,18 @@ export default tseslint.config(
     rules: {
       curly: ['error', 'all'],
       'no-nested-ternary': 'error',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../*', '../**'],
+              message:
+                'Use a package-scoped absolute import instead of traversing parent directories.',
+            },
+          ],
+        },
+      ],
       'local/await-padding': 'error',
       'local/function-const-padding': 'error',
       'local/if-statement-padding': 'error',

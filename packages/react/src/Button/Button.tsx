@@ -1,7 +1,7 @@
 import type { Ref } from 'react';
 import type { ButtonKind, ButtonProps, TypographyVariant } from '@valencesoftwareio/types';
-import { Spinner } from '../Spinner/Spinner';
-import { Typography } from '../Typography/Typography';
+import { Spinner } from 'Spinner';
+import { Typography } from 'Typography';
 import styles from './Button.module.css';
 
 const KIND_CLASS: Record<ButtonKind, string> = {

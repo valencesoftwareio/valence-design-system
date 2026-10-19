@@ -6,8 +6,8 @@ import GorhomBottomSheet, {
 } from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomSheetProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps) => {
   const theme = useTheme();

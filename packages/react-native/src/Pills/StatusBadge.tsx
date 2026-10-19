@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import type { StatusBadgeProps } from '@valencesoftwareio/types';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const StatusBadge = ({ status, children }: StatusBadgeProps) => {
   const theme = useTheme();

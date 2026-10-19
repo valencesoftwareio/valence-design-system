@@ -1,7 +1,25 @@
+import { existsSync, statSync } from 'node:fs';
+import { fileURLToPath, URL } from 'node:url';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 import postcssImport from 'postcss-import';
 import postcssUrl from 'postcss-url';
+
+const sourceRoot = fileURLToPath(new URL('./src/', import.meta.url));
+const resolveInternalImport = {
+  name: 'resolve-internal-import',
+  resolveId(source) {
+    if (source.startsWith('.') || source.startsWith('/')) {
+      return null;
+    }
+
+    const path = `${sourceRoot}${source}`;
+
+    return [path, `${path}.ts`, `${path}.tsx`, `${path}/index.ts`, `${path}/index.tsx`].find(
+      (candidate) => existsSync(candidate) && statSync(candidate).isFile(),
+    );
+  },
+};
 
 export default {
   input: {
@@ -25,6 +43,7 @@ export default {
     format: 'es',
   },
   plugins: [
+    resolveInternalImport,
     esbuild({ target: 'es2022', jsx: 'automatic' }),
     postcss({
       extract: 'index.css',

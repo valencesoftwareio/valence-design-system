@@ -2,7 +2,7 @@ import { useId } from 'react';
 import * as Select from '@radix-ui/react-select';
 import type { PickerProps } from '@valencesoftwareio/types';
 import { CheckIcon, ChevronRightIcon } from 'lucide-react';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 import styles from './Picker.module.css';
 
 export const Picker = ({

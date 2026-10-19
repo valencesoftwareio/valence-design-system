@@ -1,5 +1,5 @@
 import type { CardProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 import styles from './Card.module.css';
 
 const STATUS_CLASS: Record<NonNullable<CardProps['status']>, string> = {

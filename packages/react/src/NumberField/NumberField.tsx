@@ -1,5 +1,5 @@
 import type { NumberFieldProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 import styles from './NumberField.module.css';
 
 export const NumberField = ({

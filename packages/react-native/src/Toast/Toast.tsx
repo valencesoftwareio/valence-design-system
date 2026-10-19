@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { Pressable, View } from 'react-native';
 import type { ToastProps } from '@valencesoftwareio/types';
 import { XIcon } from 'lucide-react-native';
-import { useTheme } from '../ThemeProvider/ThemeProvider';
-import { Typography } from '../Typography/Typography';
+import { useTheme } from 'ThemeProvider';
+import { Typography } from 'Typography';
 
 export const Toast = ({
   open,

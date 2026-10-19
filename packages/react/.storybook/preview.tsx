@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 import type { ThemePreset } from '@valencesoftwareio/tokens';
-import { ThemeProvider } from '../src/ThemeProvider/ThemeProvider';
-import '../src/index.css';
+import { ThemeProvider } from 'ThemeProvider';
+import 'index.css';
 import './preview.css';
 
 const PRESETS: ThemePreset[] = [

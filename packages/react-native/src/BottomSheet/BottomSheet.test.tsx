@@ -1,6 +1,6 @@
 import { render, screen, userEvent, waitFor } from '@testing-library/react-native';
 import { BottomSheet } from './BottomSheet';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 
 jest.mock('@gorhom/bottom-sheet');
 

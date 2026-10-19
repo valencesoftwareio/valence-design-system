@@ -1,5 +1,5 @@
 import type { StatusBadgeProps } from '@valencesoftwareio/types';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 import styles from './Pills.module.css';
 
 const statusClass: Record<StatusBadgeProps['status'], string> = {

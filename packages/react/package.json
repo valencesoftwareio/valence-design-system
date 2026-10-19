@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && rollup -c",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && rollup -c",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -70,6 +70,7 @@
     "rollup-plugin-esbuild": "^6.2.1",
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^10.6.0",
+    "tsc-alias": "^1.9.8",
     "typescript": "^5.9.3",
     "vite": "^8.3.1",
     "vitest": "^4.1.11"

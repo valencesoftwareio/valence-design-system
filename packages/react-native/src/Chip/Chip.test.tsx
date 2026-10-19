@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { Text } from 'react-native';
 
 import { Chip } from './Chip';
-import { DEFAULT_THEME } from '../ThemeProvider/ThemeProvider';
+import { DEFAULT_THEME } from 'ThemeProvider';
 
 const PressableChip = ({ disabled }: { disabled?: boolean }) => {
   const [pressed, setPressed] = useState(false);

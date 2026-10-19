@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Typography } from '../Typography/Typography';
+import { Typography } from 'Typography';
 import { Tabs } from './Tabs';
 
 type Story = StoryObj<typeof Tabs>;
