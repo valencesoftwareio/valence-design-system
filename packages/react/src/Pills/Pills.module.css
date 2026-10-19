@@ -24,8 +24,9 @@
   padding: 2px var(--spacing-sm);
   border-radius: var(--radius-pill);
   font-family: var(--font-family-mono);
-  font-size: calc(var(--type-eyebrow-size) / 16 * 1rem);
-  font-weight: var(--font-weight-semibold);
+  font-size: calc(var(--type-mono-size) / 16 * 1rem);
+  font-weight: var(--type-mono-weight);
+  letter-spacing: var(--type-mono-tracking);
   font-variant-numeric: tabular-nums;
 }
 .durationPaused {

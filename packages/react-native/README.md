@@ -4,14 +4,14 @@ This is the React Native half of the Valence design system: a genuinely separate
 
 ## Fonts
 
-The real Geist font files live in `@valencesoftwareio/tokens`'s `fonts/` directory, and this package loads them via `expo-font`. Call `useValenceFonts()` from your app's root and don't render your actual UI until it resolves to `true` — native has no font-fallback swap the way web's `font-display: swap` gives it one, so until the fonts finish loading, text renders silently in the OS's system font, with no error or warning to catch it. Gating the render on this hook is what makes that guaranteed rather than incidental:
+The real Geist font files live in `@valencesoftwareio/tokens`'s `fonts/` directory, and this package loads them via `expo-font`. Call `useValenceFonts()` from your app's root and don't render your actual UI until loading finishes. If loading fails, report the error and continue with the platform fallback font rather than blocking startup:
 
 ```tsx
 import { useValenceFonts } from '@valencesoftwareio/react-native/useValenceFonts';
 
 function App() {
-  const fontsLoaded = useValenceFonts();
-  if (!fontsLoaded) return null; // or a real loading state
+  const [fontsLoaded, fontError] = useValenceFonts();
+  if (!fontsLoaded && !fontError) return null;
   return <YourApp />;
 }
 ```

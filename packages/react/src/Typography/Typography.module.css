@@ -70,3 +70,10 @@
   font-weight: var(--type-control-label-weight);
   letter-spacing: var(--type-control-label-tracking);
 }
+.mono {
+  font-family: var(--font-family-mono);
+  margin: 0;
+  font-size: calc(var(--type-mono-size) / 16 * 1rem);
+  font-weight: var(--type-mono-weight);
+  letter-spacing: var(--type-mono-tracking);
+}

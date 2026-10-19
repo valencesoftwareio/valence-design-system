@@ -86,4 +86,13 @@ describe('<Typography />', () => {
 
     expect(screen.queryByRole('header')).not.toBeOnTheScreen();
   });
+
+  it('renders mono text in Geist Mono at the mono size', async () => {
+    await render(<Typography variant="mono">NTCH-1234</Typography>);
+
+    expect(screen.getByText('NTCH-1234')).toHaveStyle({
+      fontFamily: 'GeistMono-SemiBold',
+      fontSize: DEFAULT_THEME.typeMonoSize,
+    });
+  });
 });

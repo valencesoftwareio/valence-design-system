@@ -61,6 +61,11 @@
       "size": { "value": 13 },
       "weight": { "value": 600 },
       "tracking": { "value": "-0.005em" }
+    },
+    "mono": {
+      "size": { "value": 11 },
+      "weight": { "value": 600 },
+      "tracking": { "value": "0em" }
     }
   }
 }

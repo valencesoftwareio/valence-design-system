@@ -298,7 +298,8 @@ export type TypographyVariant =
   | 'numeral'
   | 'label'
   | 'badge'
-  | 'controlLabel';
+  | 'controlLabel'
+  | 'mono';
 
 export const TYPOGRAPHY_VARIANTS: TypographyVariant[] = [
   'display',
@@ -312,6 +313,7 @@ export const TYPOGRAPHY_VARIANTS: TypographyVariant[] = [
   'label',
   'badge',
   'controlLabel',
+  'mono',
 ];
 
 export interface TypographyProps {
