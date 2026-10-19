@@ -50,4 +50,11 @@ describe('<Typography />', () => {
       screen.getByRole('heading', { level: 1, name: 'Compact page title' }),
     ).toBeInTheDocument();
   });
+
+  it('does not expose mono text as a heading', () => {
+    render(<Typography variant="mono">NTCH-1234</Typography>);
+
+    expect(screen.getByText('NTCH-1234')).toBeInTheDocument();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+  });
 });

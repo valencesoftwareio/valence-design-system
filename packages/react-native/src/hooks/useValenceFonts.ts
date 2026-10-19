@@ -4,13 +4,11 @@ import geistSemibold from '@valencesoftwareio/tokens/fonts/Geist-SemiBold.ttf';
 import geistBold from '@valencesoftwareio/tokens/fonts/Geist-Bold.ttf';
 import geistMonoSemibold from '@valencesoftwareio/tokens/fonts/GeistMono-SemiBold.ttf';
 
-export function useValenceFonts(): boolean {
-  const [loaded] = useFonts({
+export function useValenceFonts() {
+  return useFonts({
     'Geist-Regular': geistRegular,
     'Geist-SemiBold': geistSemibold,
     'Geist-Bold': geistBold,
     'GeistMono-SemiBold': geistMonoSemibold,
   });
-
-  return loaded;
 }

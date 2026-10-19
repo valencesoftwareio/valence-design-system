@@ -82,7 +82,8 @@ export const DurationPill = ({ seconds, status = 'paused' }: DurationPillProps) 
       </Svg>
       <Text
         style={{
-          fontSize: theme.typeEyebrowSize,
+          fontSize: theme.typeMonoSize,
+          letterSpacing: theme.typeMonoSize * theme.typeMonoTracking,
           ...GEIST.monoSemibold,
           color: fg,
         }}

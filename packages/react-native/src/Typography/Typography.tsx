@@ -93,6 +93,12 @@ const variantStyle = (variant: TypographyVariant, theme: Theme): TextStyle => {
         letterSpacing: theme.typeControlLabelSize * theme.typeControlLabelTracking,
         ...weightStyle(theme.typeControlLabelWeight),
       };
+    case 'mono':
+      return {
+        fontSize: theme.typeMonoSize,
+        letterSpacing: theme.typeMonoSize * theme.typeMonoTracking,
+        ...GEIST.monoSemibold,
+      };
   }
 };
 
