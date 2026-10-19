@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.4.1...v0.5.0) (2026-10-19)
+
+
+### Features
+
+* add mono typography support ([#53](https://github.com/valencesoftwareio/valence-design-system/issues/53)) ([22c51ba](https://github.com/valencesoftwareio/valence-design-system/commit/22c51bafb3aa08e558bbb3e87e6e90a912ad4efa))
+
 ## [0.4.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.4.0...v0.4.1) (2026-10-19)
 
 
