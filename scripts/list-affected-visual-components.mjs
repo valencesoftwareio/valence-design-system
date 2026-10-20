@@ -43,6 +43,16 @@ const componentNames = new Map(
 const sourcePackage = platform === 'web' ? 'react' : 'react-native';
 const rootDirectory = new URL('../', import.meta.url).pathname;
 const sourceDirectory = join(rootDirectory, 'packages', sourcePackage, 'src');
+const tsconfig = ts.getParsedCommandLineOfConfigFile(
+  join(rootDirectory, 'packages', sourcePackage, 'tsconfig.json'),
+  {},
+  ts.sys,
+);
+
+if (!tsconfig) {
+  throw new Error(`Unable to read ${sourcePackage} TypeScript configuration.`);
+}
+
 let captureAll = false;
 
 function listTypeScriptFiles(directory, includeStories = false) {
@@ -76,11 +86,8 @@ function componentForStoryFile(file) {
 }
 
 function resolveImport(importer, specifier) {
-  if (!specifier.startsWith('.')) {
-    return undefined;
-  }
-
-  return ts.resolveModuleName(specifier, importer, {}, ts.sys).resolvedModule?.resolvedFileName;
+  return ts.resolveModuleName(specifier, importer, tsconfig.options, ts.sys).resolvedModule
+    ?.resolvedFileName;
 }
 
 function importedComponents(file) {
