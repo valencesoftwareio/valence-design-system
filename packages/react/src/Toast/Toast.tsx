@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type { ToastProps } from '@valencesoftwareio/types';
 import { XIcon } from 'lucide-react';
-import { Typography } from 'Typography';
+import { Typography } from '@/Typography';
 import styles from './Toast.module.css';
 
 export const Toast = ({

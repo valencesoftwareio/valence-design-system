@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import type { CheckboxProps } from '@valencesoftwareio/types';
-import { useTheme } from 'ThemeProvider';
-import { Typography } from 'Typography';
+import { useTheme } from '@/ThemeProvider';
+import { Typography } from '@/Typography';
 
 export const Checkbox = ({ checked, onChange, disabled, label }: CheckboxProps) => {
   const theme = useTheme();

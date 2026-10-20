@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type Ref } from 'react';
 import { AccessibilityInfo, TextInput, View } from 'react-native';
 import type { TextFieldProps } from '@valencesoftwareio/types';
-import { useTheme } from 'ThemeProvider';
-import { GEIST } from 'foundations/fonts';
+import { useTheme } from '@/ThemeProvider';
+import { GEIST } from '@/foundations/fonts';
 import { SearchIcon } from 'lucide-react-native';
-import { Typography } from 'Typography';
+import { Typography } from '@/Typography';
 
 type TextFieldComponentProps = TextFieldProps & { ref?: Ref<TextInput> };
 

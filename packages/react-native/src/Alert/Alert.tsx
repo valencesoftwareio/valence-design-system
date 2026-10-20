@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import type { AlertProps } from '@valencesoftwareio/types';
-import { useTheme } from 'ThemeProvider';
-import { Typography } from 'Typography';
+import { useTheme } from '@/ThemeProvider';
+import { Typography } from '@/Typography';
 
 export const Alert = ({ tone = 'info', title, children }: AlertProps) => {
   const theme = useTheme();

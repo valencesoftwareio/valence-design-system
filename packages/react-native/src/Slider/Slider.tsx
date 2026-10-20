@@ -1,6 +1,6 @@
 import NativeSlider from '@react-native-community/slider';
 import type { SliderProps } from '@valencesoftwareio/types';
-import { useTheme } from 'ThemeProvider';
+import { useTheme } from '@/ThemeProvider';
 
 export const Slider = ({
   value,

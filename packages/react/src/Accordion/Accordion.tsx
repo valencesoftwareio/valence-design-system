@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { AccordionProps } from '@valencesoftwareio/types';
 import { ChevronRightIcon } from 'lucide-react';
-import { Typography } from 'Typography';
+import { Typography } from '@/Typography';
 import styles from './Accordion.module.css';
 
 export const Accordion = ({ title, expanded, onChange, children }: AccordionProps) => {

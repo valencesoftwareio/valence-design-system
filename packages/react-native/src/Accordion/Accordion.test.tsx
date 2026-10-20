@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { Accordion } from './Accordion';
-import { Typography } from 'Typography';
+import { Typography } from '@/Typography';
 
 const AccordionExample = () => {
   const [expanded, setExpanded] = useState(false);

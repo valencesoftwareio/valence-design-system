@@ -1,5 +1,5 @@
 import type { SearchFieldProps } from '@valencesoftwareio/types';
-import { TextField } from 'TextField';
+import { TextField } from '@/TextField';
 
 export const SearchField = ({
   value,
