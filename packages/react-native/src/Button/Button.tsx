@@ -1,11 +1,11 @@
 import { useState, type Ref } from 'react';
 import { Pressable, View, type ViewStyle } from 'react-native';
 import type { ButtonProps, ButtonKind, TypographyVariant } from '@valencesoftwareio/types';
-import { useTheme } from 'ThemeProvider';
-import { lighten, alpha } from 'color/colorMix';
-import { Spinner } from 'Spinner';
-import { Typography } from 'Typography';
-import { useReduceMotion } from 'hooks/useReduceMotion';
+import { useTheme } from '@/ThemeProvider';
+import { lighten, alpha } from '@/color/colorMix';
+import { Spinner } from '@/Spinner';
+import { Typography } from '@/Typography';
+import { useReduceMotion } from '@/hooks/useReduceMotion';
 
 const TEXT_VARIANT: Record<ButtonKind, TypographyVariant> = {
   primary: 'controlLabel',

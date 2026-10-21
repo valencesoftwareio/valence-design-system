@@ -9,11 +9,11 @@ const sourceRoot = fileURLToPath(new URL('./src/', import.meta.url));
 const resolveInternalImport = {
   name: 'resolve-internal-import',
   resolveId(source) {
-    if (source.startsWith('.') || source.startsWith('/')) {
+    if (!source.startsWith('@/')) {
       return null;
     }
 
-    const path = `${sourceRoot}${source}`;
+    const path = `${sourceRoot}${source.slice(2)}`;
 
     return [path, `${path}.ts`, `${path}.tsx`, `${path}/index.ts`, `${path}/index.tsx`].find(
       (candidate) => existsSync(candidate) && statSync(candidate).isFile(),

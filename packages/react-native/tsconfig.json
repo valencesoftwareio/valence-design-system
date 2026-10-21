@@ -5,7 +5,10 @@
     "rootDir": "src",
     "jsx": "react-jsx",
     "lib": ["ES2022"],
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "types": ["react-native", "jest"]
   },
   "include": ["src"]

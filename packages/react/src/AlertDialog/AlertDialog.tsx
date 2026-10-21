@@ -1,8 +1,8 @@
 import { Dialog as AriaDialog, Heading, Modal, ModalOverlay } from 'react-aria-components';
 import type { AlertDialogProps } from '@valencesoftwareio/types';
-import { Button } from 'Button';
-import { Typography } from 'Typography';
-import styles from 'Dialog/Dialog.module.css';
+import { Button } from '@/Button';
+import { Typography } from '@/Typography';
+import styles from '@/Dialog/Dialog.module.css';
 
 export const AlertDialog = ({
   open,

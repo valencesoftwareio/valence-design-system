@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import type { AlertDialogProps } from '@valencesoftwareio/types';
-import { Button } from 'Button';
-import { Dialog } from 'Dialog';
-import { Typography } from 'Typography';
+import { Button } from '@/Button';
+import { Dialog } from '@/Dialog';
+import { Typography } from '@/Typography';
 
 export const AlertDialog = ({
   open,

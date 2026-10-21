@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Surface } from './Surface';
-import { ListRow } from 'ListRow';
-import { Divider } from 'Divider';
-import { Typography } from 'Typography';
+import { ListRow } from '@/ListRow';
+import { Divider } from '@/Divider';
+import { Typography } from '@/Typography';
 
 type Story = StoryObj<typeof Surface>;
 

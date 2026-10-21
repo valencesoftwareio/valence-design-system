@@ -1,5 +1,5 @@
 import type { DeltaPillProps } from '@valencesoftwareio/types';
-import { Typography } from 'Typography';
+import { Typography } from '@/Typography';
 import styles from './Pills.module.css';
 
 export const DeltaPill = ({ value, unit = '' }: DeltaPillProps) => {
