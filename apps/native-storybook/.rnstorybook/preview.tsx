@@ -26,7 +26,7 @@ interface ValenceDecoratorProps {
 }
 
 const ValenceDecorator = ({ children, storyId }: ValenceDecoratorProps) => {
-  const fontsLoaded = useValenceFonts();
+  const [fontsLoaded] = useValenceFonts();
   const visualConfig = useVisualConfig();
   const [preset, setPreset] = useState<ThemePreset>('hi-vis');
   const [mode, setMode] = useState<ThemeMode>('light');
