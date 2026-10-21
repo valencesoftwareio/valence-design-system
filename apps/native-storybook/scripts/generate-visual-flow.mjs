@@ -42,16 +42,16 @@ for (const storyId of storyIds) {
       );
     }
 
-    firstLink = false;
-
     commands.push(
       '- extendedWaitUntil:',
       '    visible:',
       openStoryContent[storyId]
         ? `      text: "${openStoryContent[storyId]}"`
         : `      id: visual-story-${storyId}`,
-      '    timeout: 30000',
+      `    timeout: ${platform === 'ios' && firstLink ? 60000 : 30000}`,
     );
+
+    firstLink = false;
 
     commands.push(
       '- waitForAnimationToEnd:',
