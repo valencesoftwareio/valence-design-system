@@ -53,6 +53,10 @@ if (!tsconfig) {
   throw new Error(`Unable to read ${sourcePackage} TypeScript configuration.`);
 }
 
+const baselineDirectory = platform === 'web' ? 'web' : `native/${platform}`;
+const baselinePattern = new RegExp(
+  `^tests/visual/${baselineDirectory}/.+/components-([a-z0-9]+)--.+\\.png$`,
+);
 let captureAll = false;
 
 function listTypeScriptFiles(directory, includeStories = false) {
@@ -186,8 +190,6 @@ function includeDependents() {
 }
 
 for (const file of changedFiles) {
-  const baselinePattern =
-    /^tests\/visual\/(?:web|native\/(?:android|ios))\/.+\/components-([a-z0-9]+)--.+\.png$/;
   const baseline = file.match(baselinePattern);
 
   if (baseline) {

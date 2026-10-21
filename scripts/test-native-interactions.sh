@@ -12,6 +12,11 @@ trap 'rm -f -- "$flow"' EXIT
 
 pnpm --dir apps/native-storybook exec node scripts/generate-interaction-flow.mjs \
   "$platform" "$scope" > "$flow"
+
+if [[ ! -s "$flow" ]]; then
+  exit 0
+fi
+
 maestro test \
   --format junit \
   --output "$report_directory/report.xml" \
