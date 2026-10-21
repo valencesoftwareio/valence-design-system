@@ -43,6 +43,10 @@ const componentNames = new Map(
 const sourcePackage = platform === 'web' ? 'react' : 'react-native';
 const rootDirectory = new URL('../', import.meta.url).pathname;
 const sourceDirectory = join(rootDirectory, 'packages', sourcePackage, 'src');
+const baselineDirectory = platform === 'web' ? 'web' : `native/${platform}`;
+const baselinePattern = new RegExp(
+  `^tests/visual/${baselineDirectory}/.+/components-([a-z0-9]+)--.+\\.png$`,
+);
 let captureAll = false;
 
 function listTypeScriptFiles(directory, includeStories = false) {
@@ -179,8 +183,6 @@ function includeDependents() {
 }
 
 for (const file of changedFiles) {
-  const baselinePattern =
-    /^tests\/visual\/(?:web|native\/(?:android|ios))\/.+\/components-([a-z0-9]+)--.+\.png$/;
   const baseline = file.match(baselinePattern);
 
   if (baseline) {
