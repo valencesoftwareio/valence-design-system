@@ -113,4 +113,8 @@ if (includes('BottomSheet')) {
   );
 }
 
+if (commands.length === 0) {
+  process.exit(0);
+}
+
 process.stdout.write(`appId: io.valencesoftware.storybook\n---\n${commands.join('\n')}\n`);
