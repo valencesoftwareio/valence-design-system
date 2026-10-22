@@ -9,12 +9,12 @@ minimumReleaseAge: 1440
 overrides:
   shell-quote: 1.11.0
 minimumReleaseAgeExclude:
-  - '@expo/cli@57.0.23 || 57.0.24'
+  - '@expo/cli@57.0.24'
   - '@expo/metro-file-map@57.0.3'
   - babel-preset-expo@57.0.11
-  - expo-modules-core@57.0.17 || 57.0.18
+  - expo-modules-core@57.0.18
   - expo-modules-jsi@57.1.0
-  - expo@57.0.21 || 57.0.22
+  - expo@57.0.22
   - '@expo/fingerprint@0.20.13'
   - '@expo/prebuild-config@57.0.16'
   - expo-asset@57.0.17
