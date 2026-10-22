@@ -5,7 +5,7 @@
     "url": "https://github.com/valencesoftwareio/valence-design-system.git",
     "directory": "packages/react-native"
   },
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Valence design system — React Native components.",
   "license": "MIT",
   "publishConfig": {

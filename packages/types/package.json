@@ -5,7 +5,7 @@
     "url": "https://github.com/valencesoftwareio/valence-design-system.git",
     "directory": "packages/types"
   },
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Canonical component prop contracts shared by @valencesoftwareio/react and @valencesoftwareio/react-native.",
   "license": "MIT",
   "publishConfig": {
