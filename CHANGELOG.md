@@ -2,7 +2,18 @@
 
 ## [0.5.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.5.0...v0.5.1) (2026-10-22)
 
-No public API changes. This release contains internal package build and development tooling maintenance.
+### Package fixes
+
+- resolve internal source aliases in the published React and React Native builds
+- wait for Geist fonts before native Storybook marks a story ready for visual capture
+
+### Development tooling
+
+- upgrade web Storybook to 10.6.3 and React Native Storybook to 10.7.0
+- align workspace development React versions with Expo SDK 57
+- resolve the critical Storybook origin-validation advisory
+
+No public component API changed in this release.
 
 ## [0.5.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.4.1...v0.5.0) (2026-10-19)
 
