@@ -20,14 +20,27 @@ const PressableChip = ({ disabled }: { disabled?: boolean }) => {
 describe('<Chip />', () => {
   const user = userEvent.setup();
 
-  it('renders with an accessible name', () => {
+  it('renders informational content without button semantics', () => {
     render(<Chip>Vegetarian</Chip>);
 
-    expect(screen.getByRole('button', { name: 'Vegetarian' })).toBeInTheDocument();
+    expect(screen.getByText('Vegetarian')).toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  it('provides the current foreground color to an informational icon renderer', () => {
+    render(
+      <Chip icon={(color) => <span data-testid="chip-icon" style={{ color }} />}>Vegetarian</Chip>,
+    );
+
+    expect(screen.getByTestId('chip-icon')).toHaveStyle({ color: 'var(--color-text-primary)' });
   });
 
   it('marks the chip as selected', () => {
-    render(<Chip selected>Vegetarian</Chip>);
+    render(
+      <Chip selected onPress={() => undefined}>
+        Vegetarian
+      </Chip>,
+    );
 
     expect(screen.getByRole('button', { name: 'Vegetarian' })).toHaveAttribute(
       'aria-pressed',
@@ -36,7 +49,7 @@ describe('<Chip />', () => {
   });
 
   it('does not mark the chip as selected by default', () => {
-    render(<Chip>Vegetarian</Chip>);
+    render(<Chip onPress={() => undefined}>Vegetarian</Chip>);
 
     expect(screen.getByRole('button', { name: 'Vegetarian' })).not.toHaveAttribute(
       'aria-pressed',
@@ -61,8 +74,24 @@ describe('<Chip />', () => {
   });
 
   it('marks the chip as disabled', () => {
-    render(<Chip disabled>Vegetarian</Chip>);
+    render(
+      <Chip disabled onPress={() => undefined}>
+        Vegetarian
+      </Chip>,
+    );
 
     expect(screen.getByRole('button', { name: 'Vegetarian' })).toBeDisabled();
+  });
+
+  it('uses the disabled background when selected and disabled', () => {
+    render(
+      <Chip selected disabled onPress={() => undefined}>
+        Vegetarian
+      </Chip>,
+    );
+
+    expect(screen.getByRole('button', { name: 'Vegetarian' })).toHaveStyle({
+      background: 'var(--color-background-subtle)',
+    });
   });
 });
