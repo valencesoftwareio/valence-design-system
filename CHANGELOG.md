@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.5.1...v0.5.2) (2026-11-01)
+
+
+### Bug Fixes
+
+* support informational chips ([#61](https://github.com/valencesoftwareio/valence-design-system/issues/61)) ([7f22ae9](https://github.com/valencesoftwareio/valence-design-system/commit/7f22ae94d06d664e8646b9d5454cc5502c22f2ac))
+
 ## [0.5.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.5.0...v0.5.1) (2026-10-22)
 
 ### Package fixes
