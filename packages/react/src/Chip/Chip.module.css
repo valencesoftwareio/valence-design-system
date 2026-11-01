@@ -8,26 +8,29 @@
   border: 1px solid var(--color-border-control);
   font-family: var(--font-family-sans);
   white-space: nowrap;
-  cursor: pointer;
   background: var(--color-background-raised);
   color: var(--color-text-primary);
+}
+
+.interactive {
+  cursor: pointer;
   transition:
     background 0.12s,
     transform 0.08s,
     box-shadow 0.12s;
 }
 
-.chip:active:not(:disabled) {
+.interactive:active:not(:disabled) {
   background: var(--color-border-primary);
   transform: scale(0.96);
 }
 
-.chip:focus-visible {
+.interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px var(--color-border-focus);
 }
 
-.chip:disabled {
+.interactive:disabled {
   cursor: not-allowed;
   background: var(--color-background-subtle);
   color: var(--color-text-muted);
@@ -51,10 +54,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chip {
+  .interactive {
     transition: none;
   }
-  .chip:active:not(:disabled) {
+  .interactive:active:not(:disabled) {
     transform: none;
   }
 }

@@ -16,6 +16,10 @@ const icon = (color: string) => (
 
 export const Default: Story = { args: { children: 'Pushups', icon } };
 
+export const Informational: Story = {
+  args: { children: 'Pushups', icon, onPress: undefined },
+};
+
 export const Selected: Story = { args: { children: 'Pushups', icon, selected: true } };
 
 export const Disabled: Story = { args: { children: 'Pushups', icon, disabled: true } };

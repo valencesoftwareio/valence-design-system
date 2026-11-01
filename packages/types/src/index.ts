@@ -18,11 +18,21 @@ export interface StepButtonProps extends Pressable, Disableable {
   tone: 'positive' | 'negative';
 }
 
-export interface ChipProps extends Pressable, Disableable {
-  selected?: boolean;
+export type ChipProps = {
   icon?: IconSlot;
   children: ReactNode;
-}
+} & (
+  | {
+      disabled?: never;
+      onPress?: never;
+      selected?: never;
+    }
+  | {
+      disabled?: boolean;
+      onPress: () => void;
+      selected?: boolean;
+    }
+);
 
 export interface DeltaPillProps {
   value: number;
