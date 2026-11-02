@@ -175,6 +175,7 @@ jobs:
           PR_NUMBER: ${{ inputs.pr_number }}
         run: |
           pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")"
+          test "$(jq -r '.state' <<< "$pr")" = "open"
           test "$(jq -r '.draft' <<< "$pr")" = true
           test "$(jq -r '.head.sha' <<< "$pr")" = "$HEAD_SHA"
           git add tests/visual/native
