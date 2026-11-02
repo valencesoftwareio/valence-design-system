@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { ListRow } from '@valencesoftwareio/react-native';
+import { Chip, ListRow } from '@valencesoftwareio/react-native';
 import { ActivityIcon, ChevronRightIcon, MenuIcon } from '@valencesoftwareio/react-native/icons';
 
 type Story = StoryObj<typeof ListRow>;
@@ -27,6 +27,20 @@ export const Reordering: Story = {
     subtitle: '40 / day · reminder 07:00',
     trailingIcon: (color) => (
       <MenuIcon size={20} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
+  },
+};
+
+export const WithTitleAccessory: Story = {
+  args: {
+    accessibilityLabel: 'Pushups, Counter, 40 per day, reminder 07:00',
+    icon: (color) => <ActivityIcon color={color} strokeWidth={1.6} absoluteStrokeWidth />,
+    onPress: () => undefined,
+    title: 'Pushups',
+    titleAccessory: <Chip>Counter</Chip>,
+    subtitle: '40 / day · reminder 07:00',
+    trailingIcon: (color) => (
+      <ChevronRightIcon size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
 };

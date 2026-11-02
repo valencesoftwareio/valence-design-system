@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ActivityIcon, ChevronRightIcon, MenuIcon } from 'lucide-react';
+import { Chip } from '@/Chip';
 import { ListRow } from './ListRow';
 
 type Story = StoryObj<typeof ListRow>;
@@ -31,6 +32,22 @@ export const Reordering: Story = {
     subtitle: '40 / day · reminder 07:00',
     trailingIcon: (color) => (
       <MenuIcon aria-hidden size={20} color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
+  },
+};
+
+export const WithTitleAccessory: Story = {
+  args: {
+    accessibilityLabel: 'Pushups, Counter, 40 per day, reminder 07:00',
+    icon: (color) => (
+      <ActivityIcon aria-hidden color={color} strokeWidth={1.6} absoluteStrokeWidth />
+    ),
+    onPress: () => undefined,
+    title: 'Pushups',
+    titleAccessory: <Chip>Counter</Chip>,
+    subtitle: '40 / day · reminder 07:00',
+    trailingIcon: (color) => (
+      <ChevronRightIcon aria-hidden size={14} color={color} strokeWidth={1.6} absoluteStrokeWidth />
     ),
   },
 };

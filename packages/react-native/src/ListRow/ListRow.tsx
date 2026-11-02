@@ -6,8 +6,10 @@ import { Typography } from '@/Typography';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 
 export const ListRow = ({
+  accessibilityLabel,
   icon,
   title,
+  titleAccessory,
   subtitle,
   trailingIcon,
   archived,
@@ -16,9 +18,9 @@ export const ListRow = ({
 }: ListRowProps) => {
   const theme = useTheme();
   const reduceMotion = useReduceMotion();
-  const accessibleLabel = [title, archived ? 'archived' : undefined, subtitle]
-    .filter(Boolean)
-    .join(', ');
+  const resolvedAccessibilityLabel =
+    accessibilityLabel ??
+    [title, archived ? 'archived' : undefined, subtitle].filter(Boolean).join(', ');
   const content = (
     <>
       {icon != null && (
@@ -40,16 +42,35 @@ export const ListRow = ({
         </View>
       )}
       <View style={{ flex: 1 }}>
-        <Typography
-          variant="body"
+        <View
           style={{
-            ...GEIST.bold,
-            color: theme.colorTextPrimary,
-            textDecorationLine: archived ? 'line-through' : 'none',
+            alignItems: 'center',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: theme.spacingSm,
           }}
         >
-          {title}
-        </Typography>
+          <Typography
+            variant="body"
+            style={{
+              ...GEIST.bold,
+              color: theme.colorTextPrimary,
+              flexShrink: 1,
+              textDecorationLine: archived ? 'line-through' : 'none',
+            }}
+          >
+            {title}
+          </Typography>
+          {titleAccessory && (
+            <View
+              pointerEvents="none"
+              accessibilityElementsHidden={Boolean(onPress)}
+              importantForAccessibility={onPress ? 'no-hide-descendants' : 'auto'}
+            >
+              {titleAccessory}
+            </View>
+          )}
+        </View>
         {subtitle && (
           <Typography variant="meta" style={{ color: theme.colorTextReadable, marginTop: 2 }}>
             {subtitle}
@@ -90,7 +111,7 @@ export const ListRow = ({
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
-        accessibilityLabel={accessibleLabel}
+        accessibilityLabel={resolvedAccessibilityLabel}
         style={({ pressed }) => ({
           ...rowStyle,
           transform: [{ scale: pressed && !reduceMotion ? 0.99 : 1 }],
