@@ -272,7 +272,6 @@ export interface ListRowProps extends Pressable {
   accessibilityLabel?: string;
   icon?: IconSlot;
   title: string;
-  /** Non-interactive content beside the title. Include meaningful content in accessibilityLabel. */
   titleAccessory?: ReactElement;
   subtitle?: string;
   trailingIcon?: IconSlot;
