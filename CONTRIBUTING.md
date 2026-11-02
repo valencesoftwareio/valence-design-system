@@ -8,9 +8,9 @@ request, run `pnpm verify`.
 Open pull requests that intentionally change rendered output as drafts. Run
 the web baseline-update workflow first, then run the native baseline-update
 workflow after the web baseline commit lands. Review the generated screenshots
-and commit the approved baselines before marking the pull request ready. This
-keeps the required visual checks meaningful, avoids competing baseline commits,
-and prevents expected failures against stale baselines.
+in the committed baseline diff before marking the pull request ready. This keeps
+the required visual checks meaningful, avoids competing baseline commits, and
+prevents expected failures against stale baselines.
 
 ## Package releases
 

@@ -9,12 +9,11 @@ on:
         type: number
 
 permissions:
-  actions: write
   contents: write
   pull-requests: read
 
 concurrency:
-  group: update-visual-web-${{ inputs.pr_number }}
+  group: update-visual-${{ inputs.pr_number }}
   cancel-in-progress: false
 
 jobs:
@@ -29,6 +28,7 @@ jobs:
         run: |
           pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")"
           test "$(jq -r '.state' <<< "$pr")" = "open"
+          test "$(jq -r '.draft' <<< "$pr")" = true
           test "$(jq -r '.head.repo.full_name' <<< "$pr")" = "$GITHUB_REPOSITORY"
           test "$(jq -r '.head.ref' <<< "$pr")" != "main"
           echo "head_ref=$(jq -r '.head.ref' <<< "$pr")" >> "$GITHUB_OUTPUT"
@@ -66,4 +66,3 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "test: update web visual baselines"
           git push --force-with-lease="refs/heads/$HEAD_REF:$HEAD_SHA" origin "HEAD:refs/heads/$HEAD_REF"
-          gh workflow run visual-web.yml --ref "$HEAD_REF"
