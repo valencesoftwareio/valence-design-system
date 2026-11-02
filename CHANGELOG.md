@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.5.2...v0.6.0) (2026-11-02)
+
+
+### Features
+
+* support list row title accessories ([#63](https://github.com/valencesoftwareio/valence-design-system/issues/63)) ([b4c9bf9](https://github.com/valencesoftwareio/valence-design-system/commit/b4c9bf942242ac9ac45c982c50c44731d5508d76))
+
 ## [0.5.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.5.1...v0.5.2) (2026-11-01)
 
 
