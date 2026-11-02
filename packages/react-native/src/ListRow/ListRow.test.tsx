@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { Text, View } from 'react-native';
 
+import { Chip } from '@/Chip';
 import { ListRow } from './ListRow';
 
 const PressableListRow = () => {
@@ -36,6 +37,12 @@ describe('<ListRow />', () => {
     expect(screen.getByText('Due Friday')).toBeOnTheScreen();
   });
 
+  it('renders a title accessory', async () => {
+    await render(<ListRow title="Groceries" titleAccessory={<Chip>Weekly</Chip>} />);
+
+    expect(screen.getByText('Weekly')).toBeOnTheScreen();
+  });
+
   it('is not a button when onPress is not provided', async () => {
     await render(<ListRow title="Groceries" />);
 
@@ -68,6 +75,32 @@ describe('<ListRow />', () => {
     expect(
       screen.getByRole('button', { name: 'Groceries, archived, Due Friday' }),
     ).toBeOnTheScreen();
+  });
+
+  it('uses a provided accessible name when pressable', async () => {
+    await render(
+      <ListRow
+        accessibilityLabel="Groceries, Weekly, Due Friday"
+        onPress={() => {}}
+        title="Groceries"
+        titleAccessory={<Chip>Weekly</Chip>}
+        subtitle="Due Friday"
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Groceries, Weekly, Due Friday' })).toBeOnTheScreen();
+  });
+
+  it('exposes only the row action when the title accessory is interactive', async () => {
+    await render(
+      <ListRow
+        onPress={() => {}}
+        title="Groceries"
+        titleAccessory={<View accessibilityRole="button" accessibilityLabel="Nested action" />}
+      />,
+    );
+
+    expect(screen.queryByRole('button', { name: 'Nested action' })).not.toBeOnTheScreen();
   });
 
   it('does not strike through the title when not archived', async () => {

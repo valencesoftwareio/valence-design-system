@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 type Pressable = { onPress?: () => void };
 type Disableable = { disabled?: boolean };
@@ -269,8 +269,10 @@ export interface PopoverProps extends Labeled {
 }
 
 export interface ListRowProps extends Pressable {
+  accessibilityLabel?: string;
   icon?: IconSlot;
   title: string;
+  titleAccessory?: ReactElement;
   subtitle?: string;
   trailingIcon?: IconSlot;
   archived?: boolean;

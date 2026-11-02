@@ -65,6 +65,19 @@
   gap: 2px;
 }
 
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.titleAccessory {
+  display: flex;
+  pointer-events: none;
+}
+
 .title {
   font-size: calc(var(--type-body-size) / 16 * 1rem);
   font-weight: var(--font-weight-bold);

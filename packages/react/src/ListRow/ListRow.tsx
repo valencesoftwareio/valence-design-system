@@ -3,17 +3,19 @@ import { Typography } from '@/Typography';
 import styles from './ListRow.module.css';
 
 export const ListRow = ({
+  accessibilityLabel,
   icon,
   title,
+  titleAccessory,
   subtitle,
   trailingIcon,
   archived,
   grouped,
   onPress,
 }: ListRowProps) => {
-  const accessibleLabel = [title, archived ? 'archived' : undefined, subtitle]
-    .filter(Boolean)
-    .join(', ');
+  const resolvedAccessibilityLabel =
+    accessibilityLabel ??
+    [title, archived ? 'archived' : undefined, subtitle].filter(Boolean).join(', ');
 
   return (
     <div
@@ -24,7 +26,7 @@ export const ListRow = ({
           type="button"
           className={styles.overlay}
           onClick={onPress}
-          aria-label={accessibleLabel}
+          aria-label={resolvedAccessibilityLabel}
         />
       )}
       {icon != null && (
@@ -33,7 +35,14 @@ export const ListRow = ({
         </span>
       )}
       <span className={styles.body} aria-hidden={Boolean(onPress)}>
-        <span className={styles.title}>{title}</span>
+        <span className={styles.titleRow}>
+          <span className={styles.title}>{title}</span>
+          {titleAccessory && (
+            <span className={styles.titleAccessory} inert={Boolean(onPress)}>
+              {titleAccessory}
+            </span>
+          )}
+        </span>
         {subtitle && (
           <Typography variant="meta" className={styles.subtitle}>
             {subtitle}
