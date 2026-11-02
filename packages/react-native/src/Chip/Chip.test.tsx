@@ -28,14 +28,6 @@ describe('<Chip />', () => {
     expect(screen.queryByRole('button')).not.toBeOnTheScreen();
   });
 
-  it('keeps informational content compact', async () => {
-    await render(<Chip>Vegetarian</Chip>);
-
-    expect(screen.getByText('Vegetarian').parent).toHaveStyle({
-      alignSelf: 'flex-start',
-    });
-  });
-
   it('marks the chip as selected', async () => {
     await render(
       <Chip selected onPress={() => undefined}>

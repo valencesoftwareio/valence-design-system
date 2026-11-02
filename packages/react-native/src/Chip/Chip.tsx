@@ -19,7 +19,7 @@ export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps)
       {icon != null && (
         <View>
           {typeof icon === 'string' || typeof icon === 'number' ? (
-            <Typography variant="label" style={{ color: fg }}>
+            <Typography variant={onPress ? 'label' : 'badge'} style={{ color: fg }}>
               {icon}
             </Typography>
           ) : (
@@ -27,7 +27,7 @@ export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps)
           )}
         </View>
       )}
-      <Typography variant="label" style={{ color: fg }}>
+      <Typography variant={onPress ? 'label' : 'badge'} style={{ color: fg }}>
         {children}
       </Typography>
     </>
@@ -39,6 +39,25 @@ export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps)
 
   if (isDisabled) {
     backgroundColor = theme.colorBackgroundSubtle;
+  }
+
+  if (!onPress) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          alignSelf: 'flex-start',
+          backgroundColor: theme.colorBackgroundSubtle,
+          borderRadius: theme.radiusPill,
+          flexDirection: 'row',
+          gap: theme.spacingXs,
+          paddingHorizontal: theme.spacingSm,
+          paddingVertical: 2,
+        }}
+      >
+        {content}
+      </View>
+    );
   }
 
   const style: ViewStyle = {
@@ -64,10 +83,6 @@ export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps)
 
     return theme.colorBorderPrimary;
   };
-
-  if (!onPress) {
-    return <View style={[style, { alignSelf: 'flex-start' }]}>{content}</View>;
-  }
 
   return (
     <Pressable

@@ -3,6 +3,15 @@
 Install Node 24 and pnpm 11, then run `pnpm install`. Before opening a pull
 request, run `pnpm verify`.
 
+## Visual changes
+
+Open pull requests that intentionally change rendered output as drafts. Run
+the web baseline-update workflow first, then run the native baseline-update
+workflow after the web baseline commit lands. Review the generated screenshots
+in the committed baseline diff before marking the pull request ready. This keeps
+the required visual checks meaningful, avoids competing baseline commits, and
+prevents expected failures against stale baselines.
+
 ## Package releases
 
 The four published packages use the same version. A release updates and

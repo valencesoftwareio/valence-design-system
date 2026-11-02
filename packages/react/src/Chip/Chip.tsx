@@ -10,19 +10,18 @@ export const Chip = ({ selected, disabled, icon, onPress, children }: ChipProps)
           {typeof icon === 'function' ? icon('currentColor') : icon}
         </span>
       )}
-      <Typography variant="label">{children}</Typography>
+      <Typography variant={onPress ? 'label' : 'badge'}>{children}</Typography>
     </>
   );
-  const className = `${styles.chip} ${selected ? styles.selected : ''}`;
 
   if (!onPress) {
-    return <span className={className}>{content}</span>;
+    return <span className={`${styles.chip} ${styles.informational}`}>{content}</span>;
   }
 
   return (
     <button
       type="button"
-      className={`${className} ${styles.interactive}`}
+      className={`${styles.chip} ${styles.interactive} ${selected ? styles.selected : ''}`}
       disabled={disabled}
       aria-pressed={selected}
       onClick={onPress}
