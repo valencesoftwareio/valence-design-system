@@ -36,6 +36,8 @@ export const TimePicker = ({
   const isDisabled = Boolean(disabled || !onChange);
   const displayedHour = hourInput ?? String(hour);
   const displayedMinute = minuteInput ?? String(minutes).padStart(2, '0');
+  const draftHour = Math.min(12, Math.max(1, Number(displayedHour) || hour));
+  const draftMinute = Math.min(59, Math.max(0, Number(displayedMinute) || 0));
   let hourBorderColor =
     focusedSegment === 'hour' ? theme.colorBorderFocus : theme.colorBorderControl;
   let minuteBorderColor =
@@ -83,17 +85,15 @@ export const TimePicker = ({
   };
 
   const commitHour = () => {
-    const nextHour = Math.min(12, Math.max(1, Number(displayedHour) || hour));
     setFocusedSegment(null);
     setHourInput(null);
-    updateValue(nextHour, minutes, period);
+    updateValue(draftHour, draftMinute, period);
   };
 
   const commitMinute = () => {
-    const nextMinutes = Math.min(59, Math.max(0, Number(displayedMinute) || 0));
     setFocusedSegment(null);
     setMinuteInput(null);
-    updateValue(hour, nextMinutes, period);
+    updateValue(draftHour, draftMinute, period);
   };
 
   return (
@@ -165,7 +165,7 @@ export const TimePicker = ({
                 accessibilityState={{ checked: selected, disabled: isDisabled }}
                 disabled={isDisabled}
                 key={option.value}
-                onPress={() => updateValue(hour, minutes, option.value)}
+                onPress={() => updateValue(draftHour, draftMinute, option.value)}
                 style={{
                   alignItems: 'center',
                   backgroundColor: selected

@@ -50,7 +50,7 @@
   color: var(--color-text-secondary);
 }
 
-.segment[data-focus-visible] {
+.segment[data-focused] {
   background: var(--color-background-subtle);
   box-shadow: 0 0 0 1px var(--color-border-focus);
 }

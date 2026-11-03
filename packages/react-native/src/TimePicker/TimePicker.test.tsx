@@ -28,6 +28,16 @@ describe('<TimePicker />', () => {
     expect(screen.getByRole('radio', { name: 'PM' })).toBeChecked();
   });
 
+  it('preserves an edited minute when the period changes', async () => {
+    await render(<ControlledTimePicker />);
+
+    await fireEvent(screen.getByLabelText('Minute'), 'changeText', '45');
+
+    await user.press(screen.getByRole('radio', { name: 'PM' }));
+
+    expect(screen.getByLabelText('Minute')).toHaveDisplayValue('45');
+  });
+
   it('exposes error guidance', async () => {
     await render(
       <TimePicker error helperText="Choose a reminder time." label="Reminder time" value="09:30" />,
