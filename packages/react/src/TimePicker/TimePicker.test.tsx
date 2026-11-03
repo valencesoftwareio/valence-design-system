@@ -35,6 +35,16 @@ describe('<TimePicker />', () => {
     expect(hour).toHaveFocus();
   });
 
+  it('focuses a clicked time segment', async () => {
+    render(<ControlledTimePicker />);
+
+    const minute = screen.getByRole('spinbutton', { name: /minute, Reminder time/ });
+
+    await user.click(minute);
+
+    expect(minute).toHaveFocus();
+  });
+
   it('changes the period', async () => {
     render(<ControlledTimePicker />);
 

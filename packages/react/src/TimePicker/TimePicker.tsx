@@ -48,7 +48,13 @@ export const TimePicker = ({
           }
         }}
       >
-        {(segment) => <DateSegment className={styles.segment} segment={segment} />}
+        {(segment) => (
+          <DateSegment
+            className={styles.segment}
+            onClick={(event) => event.currentTarget.focus()}
+            segment={segment}
+          />
+        )}
       </DateInput>
       {helperText ? (
         <Text className={`${styles.helper} ${error ? styles.helperError : ''}`} slot="description">
