@@ -40,7 +40,14 @@ export const TimePicker = ({
       <Label className={styles.label}>
         <Typography variant="label">{label}</Typography>
       </Label>
-      <DateInput className={styles.input}>
+      <DateInput
+        className={styles.input}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            event.currentTarget.querySelector<HTMLElement>('[role="spinbutton"]')?.focus();
+          }
+        }}
+      >
         {(segment) => <DateSegment className={styles.segment} segment={segment} />}
       </DateInput>
       {helperText ? (
