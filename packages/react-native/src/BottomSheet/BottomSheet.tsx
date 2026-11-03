@@ -31,7 +31,6 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
     <GorhomBottomSheet
       accessible={false}
       index={open ? 0 : -1}
-      snapPoints={['50%']}
       enableDynamicSizing
       enablePanDownToClose
       maxDynamicContentSize={Math.max(0, height - insets.top)}
