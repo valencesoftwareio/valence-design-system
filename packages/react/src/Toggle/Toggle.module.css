@@ -10,6 +10,15 @@
   cursor: not-allowed;
 }
 
+.wrap[data-label-position='start'] {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.wrap[data-label-position='start'] .text {
+  order: -1;
+}
+
 .input {
   position: absolute;
   width: 1px;

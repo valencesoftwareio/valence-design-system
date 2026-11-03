@@ -6,7 +6,13 @@ import { alpha } from '@/color/colorMix';
 import { Typography } from '@/Typography';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 
-export const Toggle = ({ checked, onChange, disabled, label }: ToggleProps) => {
+export const Toggle = ({
+  checked,
+  onChange,
+  disabled,
+  label,
+  labelPosition = 'end',
+}: ToggleProps) => {
   const theme = useTheme();
   const isDisabled = disabled || !onChange;
   const [anim] = useState(() => new Animated.Value(checked ? 1 : 0));
@@ -33,6 +39,14 @@ export const Toggle = ({ checked, onChange, disabled, label }: ToggleProps) => {
     inputRange: [0, 1],
     outputRange: [0, I18nManager.isRTL ? -20 : 20],
   });
+  const labelContent = (
+    <Typography
+      variant="body"
+      style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
+    >
+      {label}
+    </Typography>
+  );
 
   return (
     <Pressable
@@ -46,8 +60,11 @@ export const Toggle = ({ checked, onChange, disabled, label }: ToggleProps) => {
         flexDirection: 'row',
         alignItems: 'center',
         gap: theme.spacingMd,
+        justifyContent: labelPosition === 'start' ? 'space-between' : undefined,
+        width: labelPosition === 'start' ? '100%' : undefined,
       }}
     >
+      {labelPosition === 'start' ? labelContent : null}
       <Animated.View
         style={{
           width: theme.controlSwitchWidth,
@@ -75,12 +92,7 @@ export const Toggle = ({ checked, onChange, disabled, label }: ToggleProps) => {
           }}
         />
       </Animated.View>
-      <Typography
-        variant="body"
-        style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
-      >
-        {label}
-      </Typography>
+      {labelPosition === 'end' ? labelContent : null}
     </Pressable>
   );
 };
