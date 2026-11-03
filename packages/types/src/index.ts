@@ -132,6 +132,7 @@ export interface NumberFieldProps extends Disableable, Labeled {
 export interface ToggleProps extends Disableable, Labeled {
   checked: boolean;
   onChange?: (checked: boolean) => void;
+  labelPosition?: 'start' | 'end';
 }
 
 export interface RadioProps extends Disableable, Labeled {
