@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.6.1...v0.6.2) (2026-11-03)
+
+
+### Bug Fixes
+
+* **react-native:** size bottom sheets to content ([#67](https://github.com/valencesoftwareio/valence-design-system/issues/67)) ([a87b6bc](https://github.com/valencesoftwareio/valence-design-system/commit/a87b6bc9fca2c92af607ba403fff03ec615c8d65))
+
 ## [0.6.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.6.0...v0.6.1) (2026-11-02)
 
 
