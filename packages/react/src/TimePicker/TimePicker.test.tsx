@@ -16,17 +16,25 @@ describe('<TimePicker />', () => {
   it('changes the minute', async () => {
     render(<ControlledTimePicker />);
 
-    await user.click(screen.getByLabelText('Increase Minute'));
+    const minute = screen.getByRole('spinbutton', { name: /minute, Reminder time/ });
 
-    expect(screen.getByText('31')).toBeInTheDocument();
+    await user.click(minute);
+
+    await user.keyboard('{ArrowUp}');
+
+    expect(minute).toHaveValue(31);
   });
 
   it('changes the period', async () => {
     render(<ControlledTimePicker />);
 
-    await user.click(screen.getByRole('radio', { name: 'PM' }));
+    const period = screen.getByRole('spinbutton', { name: /AM\/PM, Reminder time/ });
 
-    expect(screen.getByRole('radio', { name: 'PM' })).toBeChecked();
+    await user.click(period);
+
+    await user.keyboard('{ArrowUp}');
+
+    expect(period).toHaveTextContent('PM');
   });
 
   it('exposes error guidance', () => {

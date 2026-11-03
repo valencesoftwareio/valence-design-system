@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { render, screen, userEvent } from '@testing-library/react-native';
+import { fireEvent, render, screen, userEvent } from '@testing-library/react-native';
 import type { TimePickerValue } from '@valencesoftwareio/types';
 import { TimePicker } from './TimePicker';
 
@@ -12,12 +12,12 @@ const ControlledTimePicker = () => {
 describe('<TimePicker />', () => {
   const user = userEvent.setup();
 
-  it('changes the minute', async () => {
+  it('accepts a minute', async () => {
     await render(<ControlledTimePicker />);
 
-    await user.press(screen.getByLabelText('Increase Minute'));
+    await fireEvent(screen.getByLabelText('Minute'), 'changeText', '45');
 
-    expect(screen.getByText('31')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Minute')).toHaveDisplayValue('45');
   });
 
   it('changes the period', async () => {

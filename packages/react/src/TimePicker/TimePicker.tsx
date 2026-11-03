@@ -1,14 +1,11 @@
+import { parseTime } from '@internationalized/date';
+import { DateInput, DateSegment, Label, Text, TimeField } from 'react-aria-components';
+import type { TimeValue } from 'react-aria-components';
 import type { TimePickerProps } from '@valencesoftwareio/types';
-import { NumberField } from '@/NumberField';
-import { SegmentedControl } from '@/SegmentedControl';
 import { Typography } from '@/Typography';
 import styles from './TimePicker.module.css';
 
 const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
-const PERIOD_OPTIONS = [
-  { label: 'AM', value: 'am' },
-  { label: 'PM', value: 'pm' },
-];
 
 export const TimePicker = ({
   disabled,
@@ -18,69 +15,39 @@ export const TimePicker = ({
   onChange,
   value,
 }: TimePickerProps) => {
-  const match = TIME_PATTERN.exec(value);
-
-  if (!match) {
+  if (!TIME_PATTERN.test(value)) {
     throw new RangeError(`TimePicker value must use HH:mm format, got ${value}.`);
   }
 
-  const hours = Number(match[1]);
-  const minutes = Number(match[2]);
-  const period = hours >= 12 ? 'pm' : 'am';
-  const hour = hours % 12 || 12;
-
-  const updateValue = (nextHour: number, nextMinutes: number, nextPeriod: string) => {
-    let nextHours = nextHour % 12;
-
-    if (nextPeriod === 'pm') {
-      nextHours += 12;
-    }
-
-    const nextValue = `${String(nextHours).padStart(2, '0')}:${String(nextMinutes).padStart(2, '0')}`;
-    onChange?.(nextValue);
+  const serializeValue = (time: TimeValue) => {
+    return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
 
   return (
-    <div
+    <TimeField
       className={styles.wrap}
-      data-disabled={disabled || undefined}
-      data-invalid={error || undefined}
+      granularity="minute"
+      hourCycle={12}
+      isDisabled={disabled || !onChange}
+      isInvalid={error}
+      onChange={(time) => {
+        if (time) {
+          onChange?.(serializeValue(time));
+        }
+      }}
+      value={parseTime(value)}
     >
-      <Typography variant="label" className={styles.label}>
-        {label}
-      </Typography>
-      <div className={styles.fields}>
-        <NumberField
-          disabled={disabled}
-          error={error}
-          label="Hour"
-          max={12}
-          min={1}
-          onChange={(nextHour) => updateValue(nextHour, minutes, period)}
-          value={hour}
-        />
-        <NumberField
-          disabled={disabled}
-          error={error}
-          label="Minute"
-          max={59}
-          min={0}
-          onChange={(nextMinutes) => updateValue(hour, nextMinutes, period)}
-          value={minutes}
-        />
-      </div>
-      <SegmentedControl
-        disabled={disabled}
-        label="Period"
-        onChange={(nextPeriod) => updateValue(hour, minutes, nextPeriod)}
-        options={PERIOD_OPTIONS}
-        value={period}
-      />
+      <Label className={styles.label}>
+        <Typography variant="label">{label}</Typography>
+      </Label>
+      <DateInput className={styles.input}>
+        {(segment) => <DateSegment className={styles.segment} segment={segment} />}
+      </DateInput>
       {helperText ? (
-        <Typography variant="meta" className={error ? styles.error : styles.helper}>
+        <Text className={`${styles.helper} ${error ? styles.helperError : ''}`} slot="description">
           {helperText}
-        </Typography>
+        </Text>
       ) : null}
-    </div>
+    </TimeField>
   );
 };
