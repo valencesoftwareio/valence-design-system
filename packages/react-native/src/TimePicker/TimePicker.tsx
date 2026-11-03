@@ -47,8 +47,8 @@ export const TimePicker = ({
       <Typography variant="label" style={{ color: theme.colorTextPrimary }}>
         {label}
       </Typography>
-      <View style={{ flexDirection: 'row', gap: theme.spacingSm }}>
-        <View style={{ flex: 1 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacingSm }}>
+        <View style={{ flexBasis: 148, flexGrow: 1 }}>
           <NumberField
             disabled={disabled}
             error={error}
@@ -59,7 +59,7 @@ export const TimePicker = ({
             value={hour}
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flexBasis: 148, flexGrow: 1 }}>
           <NumberField
             disabled={disabled}
             error={error}
