@@ -54,4 +54,10 @@ describe('<TimePicker />', () => {
 
     expect(screen.getByText('Choose a reminder time.')).toBeInTheDocument();
   });
+
+  it('keeps a hidden label available to assistive technology', () => {
+    render(<TimePicker hideLabel label="Reminder time" value="09:30" />);
+
+    expect(screen.getByRole('spinbutton', { name: /minute, Reminder time/ })).toBeInTheDocument();
+  });
 });

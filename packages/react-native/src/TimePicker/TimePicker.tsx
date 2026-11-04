@@ -15,6 +15,7 @@ export const TimePicker = ({
   disabled,
   error,
   helperText,
+  hideLabel,
   label,
   onChange,
   value,
@@ -98,9 +99,11 @@ export const TimePicker = ({
 
   return (
     <View style={[styles.wrap, { gap: theme.spacingMd }]}>
-      <Typography variant="label" style={{ color: theme.colorTextPrimary }}>
-        {label}
-      </Typography>
+      {hideLabel ? null : (
+        <Typography variant="label" style={{ color: theme.colorTextPrimary }}>
+          {label}
+        </Typography>
+      )}
       <View style={[styles.time, { gap: theme.spacingSm }]}>
         <View style={styles.segment}>
           <TextInput
@@ -145,49 +148,49 @@ export const TimePicker = ({
             Minute
           </Typography>
         </View>
-        <View
-          accessibilityLabel="Period"
-          accessibilityRole="radiogroup"
-          style={[
-            styles.period,
-            {
-              borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-              borderRadius: theme.radiusMd,
-            },
-          ]}
-        >
-          {PERIOD_OPTIONS.map((option, index) => {
-            const selected = option.value === period;
+      </View>
+      <View
+        accessibilityLabel="Period"
+        accessibilityRole="radiogroup"
+        style={[
+          styles.period,
+          {
+            borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
+            borderRadius: theme.radiusMd,
+          },
+        ]}
+      >
+        {PERIOD_OPTIONS.map((option, index) => {
+          const selected = option.value === period;
 
-            return (
-              <Pressable
-                accessibilityRole="radio"
-                accessibilityState={{ checked: selected, disabled: isDisabled }}
-                disabled={isDisabled}
-                key={option.value}
-                onPress={() => updateValue(draftHour, draftMinute, option.value)}
-                style={{
-                  alignItems: 'center',
-                  backgroundColor: selected
-                    ? theme.colorBackgroundSubtle
-                    : theme.colorBackgroundPrimary,
-                  borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-                  borderTopWidth: index === 0 ? 0 : 1,
-                  flex: 1,
-                  justifyContent: 'center',
-                  minHeight: 44,
-                }}
+          return (
+            <Pressable
+              accessibilityRole="radio"
+              accessibilityState={{ checked: selected, disabled: isDisabled }}
+              disabled={isDisabled}
+              key={option.value}
+              onPress={() => updateValue(draftHour, draftMinute, option.value)}
+              style={{
+                alignItems: 'center',
+                backgroundColor: selected
+                  ? theme.colorBackgroundSubtle
+                  : theme.colorBackgroundPrimary,
+                borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
+                borderLeftWidth: index === 0 ? 0 : 1,
+                flex: 1,
+                justifyContent: 'center',
+                minHeight: 44,
+              }}
+            >
+              <Typography
+                variant="controlLabel"
+                style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
               >
-                <Typography
-                  variant="controlLabel"
-                  style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
-                >
-                  {option.label}
-                </Typography>
-              </Pressable>
-            );
-          })}
-        </View>
+                {option.label}
+              </Typography>
+            </Pressable>
+          );
+        })}
       </View>
       {helperText ? (
         <Typography
@@ -211,10 +214,12 @@ const styles = StyleSheet.create({
     width: 96,
   },
   period: {
+    alignSelf: 'center',
     borderWidth: 1.5,
-    height: 93,
+    flexDirection: 'row',
+    height: 44,
     overflow: 'hidden',
-    width: 52,
+    width: 200,
   },
   segment: {
     alignItems: 'center',
