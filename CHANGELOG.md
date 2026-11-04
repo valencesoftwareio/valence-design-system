@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.0...v0.7.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **time-picker:** improve compact layouts ([#71](https://github.com/valencesoftwareio/valence-design-system/issues/71)) ([bc14bca](https://github.com/valencesoftwareio/valence-design-system/commit/bc14bca8f3f68ac2488656b3b926e9050ba607c3))
+
 ## [0.7.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.6.2...v0.7.0) (2026-11-04)
 
 
