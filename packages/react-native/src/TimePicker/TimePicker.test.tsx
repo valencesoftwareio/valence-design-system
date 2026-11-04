@@ -23,9 +23,9 @@ describe('<TimePicker />', () => {
   it('changes the period', async () => {
     await render(<ControlledTimePicker />);
 
-    await user.press(screen.getByRole('radio', { name: 'PM' }));
+    await user.press(screen.getByRole('button', { name: 'AM, switch to PM' }));
 
-    expect(screen.getByRole('radio', { name: 'PM' })).toBeChecked();
+    expect(screen.getByRole('button', { name: 'PM, switch to AM' })).toBeOnTheScreen();
   });
 
   it('preserves an edited minute when the period changes', async () => {
@@ -33,7 +33,7 @@ describe('<TimePicker />', () => {
 
     await fireEvent(screen.getByLabelText('Minute'), 'changeText', '45');
 
-    await user.press(screen.getByRole('radio', { name: 'PM' }));
+    await user.press(screen.getByRole('button', { name: 'AM, switch to PM' }));
 
     expect(screen.getByLabelText('Minute')).toHaveDisplayValue('45');
   });
