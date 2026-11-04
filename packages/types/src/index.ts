@@ -127,6 +127,7 @@ export interface TimePickerProps extends Disableable, Labeled {
   onChange?: (value: TimePickerValue) => void;
   error?: boolean;
   helperText?: string;
+  hideLabel?: boolean;
 }
 
 export interface NumberFieldProps extends Disableable, Labeled {

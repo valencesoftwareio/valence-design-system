@@ -11,6 +11,7 @@ export const TimePicker = ({
   disabled,
   error,
   helperText,
+  hideLabel,
   label,
   onChange,
   value,
@@ -37,7 +38,7 @@ export const TimePicker = ({
       }}
       value={parseTime(value)}
     >
-      <Label className={styles.label}>
+      <Label className={hideLabel ? styles.visuallyHidden : styles.label}>
         <Typography variant="label">{label}</Typography>
       </Label>
       <DateInput className={styles.input}>

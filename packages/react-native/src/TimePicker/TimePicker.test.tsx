@@ -45,4 +45,10 @@ describe('<TimePicker />', () => {
 
     expect(screen.getByText('Choose a reminder time.')).toBeOnTheScreen();
   });
+
+  it('hides the visible label when the surrounding view provides context', async () => {
+    await render(<TimePicker hideLabel label="Reminder time" value="09:30" />);
+
+    expect(screen.queryByText('Reminder time')).not.toBeOnTheScreen();
+  });
 });
