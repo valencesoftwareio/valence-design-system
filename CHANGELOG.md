@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.6.2...v0.7.0) (2026-11-04)
+
+
+### Features
+
+* **pickers:** add time picker ([#69](https://github.com/valencesoftwareio/valence-design-system/issues/69)) ([7554812](https://github.com/valencesoftwareio/valence-design-system/commit/7554812a5801362af3576f364e27081fa06ff903))
+
 ## [0.6.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.6.1...v0.6.2) (2026-11-03)
 
 
