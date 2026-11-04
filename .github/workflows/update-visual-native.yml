@@ -157,12 +157,12 @@ jobs:
         with:
           ref: ${{ needs.resolve.outputs.head_sha }}
 
-      - uses: actions/download-artifact@018cc2cf5baa6db3ef5f8a56943fffe632ef53 # v6.0.0
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: native-baselines-android
           path: tests/visual/native/android/baselines
 
-      - uses: actions/download-artifact@018cc2cf5baa6db3ef5f8a56943fffe632ef53 # v6.0.0
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: native-baselines-ios
           path: tests/visual/native/ios/baselines
