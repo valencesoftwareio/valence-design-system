@@ -20,6 +20,8 @@ export { IconButton } from './IconButton';
 
 export { TextField } from './TextField';
 
+export { TimePicker } from './TimePicker';
+
 export { TextArea } from './TextArea';
 
 export { SearchField } from './SearchField';
@@ -89,6 +91,8 @@ export type {
   LinkProps,
   IconButtonProps,
   TextFieldProps,
+  TimePickerProps,
+  TimePickerValue,
   TextAreaProps,
   SearchFieldProps,
   PickerProps,

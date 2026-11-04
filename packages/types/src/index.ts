@@ -120,6 +120,15 @@ export interface DatePickerProps extends Disableable, Labeled {
   helperText?: string;
 }
 
+export type TimePickerValue = string;
+
+export interface TimePickerProps extends Disableable, Labeled {
+  value: TimePickerValue;
+  onChange?: (value: TimePickerValue) => void;
+  error?: boolean;
+  helperText?: string;
+}
+
 export interface NumberFieldProps extends Disableable, Labeled {
   value: number;
   min?: number;
