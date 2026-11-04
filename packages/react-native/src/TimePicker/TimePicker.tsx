@@ -148,49 +148,49 @@ export const TimePicker = ({
             Minute
           </Typography>
         </View>
-      </View>
-      <View
-        accessibilityLabel="Period"
-        accessibilityRole="radiogroup"
-        style={[
-          styles.period,
-          {
-            borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-            borderRadius: theme.radiusMd,
-          },
-        ]}
-      >
-        {PERIOD_OPTIONS.map((option, index) => {
-          const selected = option.value === period;
+        <View
+          accessibilityLabel="Period"
+          accessibilityRole="radiogroup"
+          style={[
+            styles.period,
+            {
+              borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
+              borderRadius: theme.radiusMd,
+            },
+          ]}
+        >
+          {PERIOD_OPTIONS.map((option, index) => {
+            const selected = option.value === period;
 
-          return (
-            <Pressable
-              accessibilityRole="radio"
-              accessibilityState={{ checked: selected, disabled: isDisabled }}
-              disabled={isDisabled}
-              key={option.value}
-              onPress={() => updateValue(draftHour, draftMinute, option.value)}
-              style={{
-                alignItems: 'center',
-                backgroundColor: selected
-                  ? theme.colorBackgroundSubtle
-                  : theme.colorBackgroundPrimary,
-                borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-                borderLeftWidth: index === 0 ? 0 : 1,
-                flex: 1,
-                justifyContent: 'center',
-                minHeight: 44,
-              }}
-            >
-              <Typography
-                variant="controlLabel"
-                style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
+            return (
+              <Pressable
+                accessibilityRole="radio"
+                accessibilityState={{ checked: selected, disabled: isDisabled }}
+                disabled={isDisabled}
+                key={option.value}
+                onPress={() => updateValue(draftHour, draftMinute, option.value)}
+                style={{
+                  alignItems: 'center',
+                  backgroundColor: selected
+                    ? theme.colorBackgroundSubtle
+                    : theme.colorBackgroundPrimary,
+                  borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
+                  borderLeftWidth: index === 0 ? 0 : 1,
+                  flex: 1,
+                  justifyContent: 'center',
+                  minHeight: 44,
+                }}
               >
-                {option.label}
-              </Typography>
-            </Pressable>
-          );
-        })}
+                <Typography
+                  variant="controlLabel"
+                  style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
+                >
+                  {option.label}
+                </Typography>
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
       {helperText ? (
         <Typography
@@ -211,15 +211,15 @@ const styles = StyleSheet.create({
     fontVariant: ['tabular-nums'],
     height: 72,
     textAlign: 'center',
-    width: 96,
+    width: 80,
   },
   period: {
-    alignSelf: 'center',
     borderWidth: 1.5,
     flexDirection: 'row',
-    height: 44,
+    height: 72,
+    marginBottom: 21,
     overflow: 'hidden',
-    width: 200,
+    width: 104,
   },
   segment: {
     alignItems: 'center',
