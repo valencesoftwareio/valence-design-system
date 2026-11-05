@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.1...v0.7.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* **time-picker:** keep period controls inline ([#73](https://github.com/valencesoftwareio/valence-design-system/issues/73)) ([b1bad8c](https://github.com/valencesoftwareio/valence-design-system/commit/b1bad8c2a905796bfbe2f4db4668c44d212570a7))
+
 ## [0.7.1](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.0...v0.7.1) (2026-11-04)
 
 
