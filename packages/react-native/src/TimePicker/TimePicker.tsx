@@ -6,10 +6,6 @@ import { Typography } from '@/Typography';
 import { useTheme } from '@/ThemeProvider';
 
 const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
-const PERIOD_OPTIONS = [
-  { label: 'AM', value: 'am' },
-  { label: 'PM', value: 'pm' },
-];
 
 export const TimePicker = ({
   disabled,
@@ -33,7 +29,7 @@ export const TimePicker = ({
   const hour = hours % 12 || 12;
   const [hourInput, setHourInput] = useState<string | null>(null);
   const [minuteInput, setMinuteInput] = useState<string | null>(null);
-  const [focusedSegment, setFocusedSegment] = useState<'hour' | 'minute' | null>(null);
+  const [focusedSegment, setFocusedSegment] = useState<'hour' | 'minute' | 'period' | null>(null);
   const isDisabled = Boolean(disabled || !onChange);
   const displayedHour = hourInput ?? String(hour);
   const displayedMinute = minuteInput ?? String(minutes).padStart(2, '0');
@@ -125,7 +121,7 @@ export const TimePicker = ({
             Hour
           </Typography>
         </View>
-        <Typography variant="display" style={{ color: theme.colorTextPrimary, marginBottom: 21 }}>
+        <Typography variant="display" style={{ color: theme.colorTextPrimary, marginTop: 14 }}>
           :
         </Typography>
         <View style={styles.segment}>
@@ -148,49 +144,32 @@ export const TimePicker = ({
             Minute
           </Typography>
         </View>
-      </View>
-      <View
-        accessibilityLabel="Period"
-        accessibilityRole="radiogroup"
-        style={[
-          styles.period,
-          {
-            borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-            borderRadius: theme.radiusMd,
-          },
-        ]}
-      >
-        {PERIOD_OPTIONS.map((option, index) => {
-          const selected = option.value === period;
-
-          return (
-            <Pressable
-              accessibilityRole="radio"
-              accessibilityState={{ checked: selected, disabled: isDisabled }}
-              disabled={isDisabled}
-              key={option.value}
-              onPress={() => updateValue(draftHour, draftMinute, option.value)}
-              style={{
-                alignItems: 'center',
-                backgroundColor: selected
-                  ? theme.colorBackgroundSubtle
-                  : theme.colorBackgroundPrimary,
-                borderColor: isDisabled ? theme.colorBorderPrimary : theme.colorBorderControl,
-                borderLeftWidth: index === 0 ? 0 : 1,
-                flex: 1,
-                justifyContent: 'center',
-                minHeight: 44,
-              }}
-            >
-              <Typography
-                variant="controlLabel"
-                style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
-              >
-                {option.label}
-              </Typography>
-            </Pressable>
-          );
-        })}
+        <Pressable
+          accessibilityLabel={`${period.toUpperCase()}, switch to ${period === 'am' ? 'PM' : 'AM'}`}
+          accessibilityRole="button"
+          accessibilityState={{ disabled: isDisabled }}
+          disabled={isDisabled}
+          onBlur={() => setFocusedSegment(null)}
+          onFocus={() => setFocusedSegment('period')}
+          onPress={() => updateValue(draftHour, draftMinute, period === 'am' ? 'pm' : 'am')}
+          style={({ pressed }) => [
+            styles.period,
+            {
+              backgroundColor: pressed ? theme.colorBackgroundSubtle : 'transparent',
+              borderRadius: theme.radiusMd,
+              outlineColor: theme.colorBorderFocus,
+              outlineStyle: 'solid',
+              outlineWidth: focusedSegment === 'period' ? 3 : 0,
+            },
+          ]}
+        >
+          <Typography
+            variant="numeral"
+            style={{ color: isDisabled ? theme.colorTextMuted : theme.colorTextPrimary }}
+          >
+            {period.toUpperCase()}
+          </Typography>
+        </Pressable>
       </View>
       {helperText ? (
         <Typography
@@ -209,28 +188,27 @@ const styles = StyleSheet.create({
     ...GEIST.bold,
     borderWidth: 1.5,
     fontVariant: ['tabular-nums'],
-    height: 72,
+    height: 64,
     textAlign: 'center',
-    width: 96,
+    width: 72,
   },
   period: {
-    alignSelf: 'center',
-    borderWidth: 1.5,
-    flexDirection: 'row',
-    height: 44,
-    overflow: 'hidden',
-    width: 200,
+    alignItems: 'center',
+    height: 64,
+    justifyContent: 'center',
+    width: 64,
   },
   segment: {
     alignItems: 'center',
     gap: 4,
   },
   time: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexDirection: 'row',
     justifyContent: 'center',
   },
   wrap: {
+    alignSelf: 'center',
     maxWidth: 320,
   },
 });
