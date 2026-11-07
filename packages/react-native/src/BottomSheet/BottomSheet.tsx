@@ -33,7 +33,7 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
       appearsOnIndex={0}
       disappearsOnIndex={-1}
       opacity={0.42}
-      pressBehavior="none"
+      pressBehavior="close"
       onPress={onClose}
     />
   );

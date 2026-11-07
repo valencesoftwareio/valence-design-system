@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 interface BackdropProps {
+  pressBehavior?: string;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
   onPress?: () => void;
@@ -69,13 +70,14 @@ export const BottomSheetModal = ({
 };
 
 export const BottomSheetBackdrop = ({
+  pressBehavior,
   onPress,
   accessibilityLabel,
   accessibilityRole,
 }: BackdropProps) => {
   return (
     <Pressable
-      onPress={onPress}
+      onPress={pressBehavior === 'none' ? undefined : onPress}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={accessibilityRole}
     />
