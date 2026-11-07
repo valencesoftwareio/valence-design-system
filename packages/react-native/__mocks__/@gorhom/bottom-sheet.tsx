@@ -25,26 +25,34 @@ interface ModalProps {
   keyboardBlurBehavior?: string;
   android_keyboardInputMode?: string;
   onDismiss?: () => void;
-  index?: number;
-  snapPoints?: Array<string | number>;
-  onChange?: (index: number) => void;
 }
 
 interface ModalHandle {
   present: () => void;
-  dismiss: () => void;
+  close: () => void;
 }
 
 export const BottomSheetModal = ({
   children,
   backdropComponent: Backdrop,
+  onDismiss,
   ref,
   ...props
 }: ModalProps) => {
   const [visible, setVisible] = useState(false);
+
+  const dismiss = () => {
+    setVisible(false);
+    onDismiss?.();
+  };
+
   useImperativeHandle(ref, () => ({
     present: () => setVisible(true),
-    dismiss: () => setVisible(false),
+    close: () => {
+      if (visible) {
+        dismiss();
+      }
+    },
   }));
 
   if (!visible) {
@@ -53,30 +61,12 @@ export const BottomSheetModal = ({
 
   return (
     <View testID="bottom-sheet" {...props}>
+      <Pressable testID="bottom-sheet-user-dismiss" onPress={dismiss} />
       {Backdrop && <Backdrop />}
       {children}
     </View>
   );
 };
-
-export const BottomSheet = ({
-  children,
-  index = -1,
-  backdropComponent: Backdrop,
-  ref: _ref,
-  ...props
-}: ModalProps) => {
-  const visible = index >= 0;
-
-  return visible ? (
-    <View testID="bottom-sheet" {...props}>
-      {Backdrop && <Backdrop onPress={() => props.onChange?.(-1)} />}
-      {children}
-    </View>
-  ) : null;
-};
-
-export default BottomSheet;
 
 export const BottomSheetBackdrop = ({
   onPress,

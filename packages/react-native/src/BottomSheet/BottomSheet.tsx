@@ -1,18 +1,29 @@
+import { useEffect, useRef } from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import GorhomBottomSheet, {
+import {
   BottomSheetBackdrop,
+  BottomSheetModal,
   BottomSheetScrollView,
   type BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomSheetProps } from '@valencesoftwareio/types';
-import { useTheme } from '@/ThemeProvider';
+import { ThemeContext, useTheme } from '@/ThemeProvider';
 import { Typography } from '@/Typography';
 
 export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
+  const sheet = useRef<BottomSheetModal>(null);
+
+  useEffect(() => {
+    if (open) {
+      sheet.current?.present();
+    } else {
+      sheet.current?.close();
+    }
+  }, [open]);
 
   const renderBackdrop = (props: BottomSheetBackdropProps) => (
     <BottomSheetBackdrop
@@ -22,15 +33,15 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
       appearsOnIndex={0}
       disappearsOnIndex={-1}
       opacity={0.42}
-      pressBehavior="close"
+      pressBehavior="none"
       onPress={onClose}
     />
   );
 
   return (
-    <GorhomBottomSheet
+    <BottomSheetModal
+      ref={sheet}
       accessible={false}
-      index={open ? 0 : -1}
       enableDynamicSizing
       enablePanDownToClose
       maxDynamicContentSize={Math.max(0, height - insets.top)}
@@ -43,8 +54,8 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
       backgroundStyle={{ backgroundColor: theme.colorBackgroundPrimary }}
       handleIndicatorStyle={{ width: 36, height: 4, backgroundColor: theme.colorBorderControl }}
       style={{ boxShadow: theme.shadowOverlay }}
-      onChange={(index) => {
-        if (index === -1 && open) {
+      onDismiss={() => {
+        if (open) {
           onClose();
         }
       }}
@@ -56,9 +67,11 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <Typography variant="titleSm">{title}</Typography>
-        {children != null && <View style={{ marginTop: theme.spacingMd }}>{children}</View>}
+        <ThemeContext.Provider value={theme}>
+          <Typography variant="titleSm">{title}</Typography>
+          {children != null && <View style={{ marginTop: theme.spacingMd }}>{children}</View>}
+        </ThemeContext.Provider>
       </BottomSheetScrollView>
-    </GorhomBottomSheet>
+    </BottomSheetModal>
   );
 };

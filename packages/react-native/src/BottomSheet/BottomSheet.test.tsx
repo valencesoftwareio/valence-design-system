@@ -46,4 +46,42 @@ describe('<BottomSheet />', () => {
 
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it('requests closure when the sheet is dismissed', async () => {
+    const onClose = jest.fn();
+
+    await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await user.press(screen.getByTestId('bottom-sheet-user-dismiss'));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('reopens after a controlled dismissal', async () => {
+    const onClose = jest.fn();
+
+    const { rerender } = await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await rerender(
+      <BottomSheet open={false} title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await rerender(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    expect(await screen.findByText('Schedule')).toBeOnTheScreen();
+  });
 });
