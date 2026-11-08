@@ -17,6 +17,7 @@ export const TextField = ({
   inputMode,
   autoComplete,
   secureTextEntry,
+  selectTextOnFocus,
   maxLength,
   error,
   disabled,
@@ -93,6 +94,7 @@ export const TextField = ({
           inputMode={inputMode}
           autoComplete={autoComplete}
           secureTextEntry={secureTextEntry}
+          selectTextOnFocus={selectTextOnFocus}
           maxLength={maxLength}
           returnKeyType={isSearch ? 'search' : undefined}
           onSubmitEditing={onSubmit}

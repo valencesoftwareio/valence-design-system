@@ -15,6 +15,7 @@ export const TextField = ({
   inputMode,
   autoComplete,
   secureTextEntry,
+  selectTextOnFocus,
   maxLength,
   error,
   disabled,
@@ -55,6 +56,11 @@ export const TextField = ({
           disabled={disabled}
           readOnly={!onChangeText}
           onChange={(event) => onChangeText?.(event.target.value)}
+          onFocus={(event) => {
+            if (selectTextOnFocus) {
+              event.currentTarget.select();
+            }
+          }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               onSubmit?.();
