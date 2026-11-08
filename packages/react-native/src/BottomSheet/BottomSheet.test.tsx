@@ -88,10 +88,13 @@ describe('<BottomSheet />', () => {
 
   it('requests closure on hardware back while open', async () => {
     const onClose = jest.fn();
-    const addListener = jest.spyOn(BackHandler, 'addEventListener');
+    let pressBack = (): boolean | null | undefined => false;
 
-    const pressBack = () =>
-      addListener.mock.calls.at(-1)?.[1]({ type: 'hardwareBackPress', timeStamp: 0 });
+    jest.spyOn(BackHandler, 'addEventListener').mockImplementation((_eventName, handler) => {
+      pressBack = () => handler({ type: 'hardwareBackPress', timeStamp: 0 });
+
+      return { remove: jest.fn() };
+    });
 
     await render(
       <BottomSheet open title="Repeat" onClose={onClose}>
