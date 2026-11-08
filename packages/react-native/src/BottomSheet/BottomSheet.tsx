@@ -63,7 +63,7 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
       <BottomSheetScrollView
         contentContainerStyle={{
           paddingHorizontal: 16,
-          paddingBottom: Math.max(24, insets.bottom),
+          paddingBottom: insets.bottom + 24,
         }}
         keyboardShouldPersistTaps="handled"
       >
