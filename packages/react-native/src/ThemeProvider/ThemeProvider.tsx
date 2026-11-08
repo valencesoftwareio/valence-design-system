@@ -12,7 +12,7 @@ const DEFAULT_PRESET: ThemePreset = 'hi-vis';
 
 export const DEFAULT_THEME: Theme = themes[DEFAULT_PRESET].light;
 
-const ThemeContext = createContext<Theme>(DEFAULT_THEME);
+export const ThemeContext = createContext<Theme>(DEFAULT_THEME);
 
 export interface ThemeProviderProps {
   preset?: ThemePreset;

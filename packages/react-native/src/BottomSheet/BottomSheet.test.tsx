@@ -1,4 +1,5 @@
 import { render, screen, userEvent, waitFor } from '@testing-library/react-native';
+import { BackHandler } from 'react-native';
 import { BottomSheet } from './BottomSheet';
 import { Typography } from '@/Typography';
 
@@ -45,5 +46,63 @@ describe('<BottomSheet />', () => {
     await waitFor(() => expect(screen.queryByText('Schedule')).not.toBeOnTheScreen());
 
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('requests closure when the sheet is dismissed', async () => {
+    const onClose = jest.fn();
+
+    await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await user.press(screen.getByTestId('bottom-sheet-user-dismiss'));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('reopens after a controlled dismissal', async () => {
+    const onClose = jest.fn();
+
+    const { rerender } = await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await rerender(
+      <BottomSheet open={false} title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    await rerender(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    expect(await screen.findByText('Schedule')).toBeOnTheScreen();
+  });
+
+  it('requests closure on hardware back while open', async () => {
+    const onClose = jest.fn();
+    let pressBack = (): boolean | null | undefined => false;
+
+    jest.spyOn(BackHandler, 'addEventListener').mockImplementation((_eventName, handler) => {
+      pressBack = () => handler({ type: 'hardwareBackPress', timeStamp: 0 });
+
+      return { remove: jest.fn() };
+    });
+
+    await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    expect(pressBack()).toBe(true);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

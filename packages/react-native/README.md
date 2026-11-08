@@ -41,6 +41,8 @@ function App() {
 }
 ```
 
+Bottom sheets render at `BottomSheetModalProvider`, above navigation. Sheet content reads other context, such as navigation, from that position, so place the provider inside any provider your sheets need. The Valence theme is carried into sheets automatically.
+
 ## Sizing and touch targets
 
 Every interactive control in this package enforces a real minimum touch target, sized to comfortably clear the larger of the two major mobile platforms' own recommended minimums, so a single value works safely as a floor on both iOS and Android. That value, along with a handful of other native-specific control dimensions like field height and the slider handle size, is authored as a token the same way color and spacing are — the source to change if any of them ever need adjusting.
