@@ -33,6 +33,18 @@ describe('<TextField />', () => {
     expect(screen.getByLabelText('Name')).toHaveValue('Ada');
   });
 
+  it('selects its value when focused when requested', async () => {
+    render(<TextField label="Name" value="Ada" selectTextOnFocus />);
+
+    const field = screen.getByLabelText('Name');
+
+    await user.click(field);
+
+    expect(field).toHaveFocus();
+    expect(field).toHaveProperty('selectionStart', 0);
+    expect(field).toHaveProperty('selectionEnd', 3);
+  });
+
   it('does not update the value when disabled', async () => {
     render(<ControlledTextField disabled />);
 

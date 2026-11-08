@@ -71,6 +71,7 @@ export interface TextFieldProps extends Disableable, Labeled {
   autoComplete?:
     'off' | 'name' | 'email' | 'username' | 'current-password' | 'new-password' | 'tel' | 'url';
   secureTextEntry?: boolean;
+  selectTextOnFocus?: boolean;
   maxLength?: number;
   error?: boolean;
   helperText?: string;
