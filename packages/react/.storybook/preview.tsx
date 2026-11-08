@@ -43,6 +43,7 @@ const preview: Preview = {
     mode: 'light',
   },
   parameters: { layout: 'fullscreen' },
+  loaders: [() => Promise.all([...document.fonts].map((font) => font.load()))],
   decorators: [
     (Story, context) => (
       <ThemeProvider preset={context.globals.preset} mode={context.globals.mode}>
