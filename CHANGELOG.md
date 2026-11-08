@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.2...v0.7.3) (2026-11-08)
+
+
+### Bug Fixes
+
+* **bottom-sheet:** present above navigation via BottomSheetModal ([#75](https://github.com/valencesoftwareio/valence-design-system/issues/75)) ([8188a3f](https://github.com/valencesoftwareio/valence-design-system/commit/8188a3f1b960d732a19030ff8b09b48a945bd902))
+
 ## [0.7.2](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.1...v0.7.2) (2026-11-05)
 
 
