@@ -1,4 +1,5 @@
 import { render, screen, userEvent, waitFor } from '@testing-library/react-native';
+import { BackHandler } from 'react-native';
 import { BottomSheet } from './BottomSheet';
 import { Typography } from '@/Typography';
 
@@ -83,5 +84,22 @@ describe('<BottomSheet />', () => {
     );
 
     expect(await screen.findByText('Schedule')).toBeOnTheScreen();
+  });
+
+  it('requests closure on hardware back while open', async () => {
+    const onClose = jest.fn();
+    const addListener = jest.spyOn(BackHandler, 'addEventListener');
+
+    const pressBack = () =>
+      addListener.mock.calls.at(-1)?.[1]({ type: 'hardwareBackPress', timeStamp: 0 });
+
+    await render(
+      <BottomSheet open title="Repeat" onClose={onClose}>
+        <Typography variant="body">Schedule</Typography>
+      </BottomSheet>,
+    );
+
+    expect(pressBack()).toBe(true);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

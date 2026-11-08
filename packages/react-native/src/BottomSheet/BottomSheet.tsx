@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { BackHandler, useWindowDimensions, View } from 'react-native';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -24,6 +24,20 @@ export const BottomSheet = ({ open, title, onClose, children }: BottomSheetProps
       sheet.current?.close();
     }
   }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+      onClose();
+
+      return true;
+    });
+
+    return () => subscription.remove();
+  }, [open, onClose]);
 
   const renderBackdrop = (props: BottomSheetBackdropProps) => (
     <BottomSheetBackdrop
