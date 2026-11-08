@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.3...v0.8.0) (2026-11-08)
+
+
+### Features
+
+* support selecting text on focus ([#78](https://github.com/valencesoftwareio/valence-design-system/issues/78)) ([8810c35](https://github.com/valencesoftwareio/valence-design-system/commit/8810c3539466f90cbab5079531d9005a6c0a6407))
+
 ## [0.7.3](https://github.com/valencesoftwareio/valence-design-system/compare/v0.7.2...v0.7.3) (2026-11-08)
 
 
